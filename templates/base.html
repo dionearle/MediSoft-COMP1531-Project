@@ -14,33 +14,34 @@
 	<body>
 		<div style="padding: 50px">
 			<div class="ui secondary pointing menu">
-			  <a class="active item">
-			    Home
-			  </a>
-			  <a class="item">
-			    Messages
-			</a>
-			  <a class="item">
-			    Friends
-			  </a>
-			  <div class="right menu">
-			    <a class="ui item">
-			      Logout
-			    </a>
-			  </div>
+			  	<a class="active item">
+			    	Home
+			  	</a>
+			  	<a class="item">
+			    	Messages
+				</a>
+			  	<a class="item">	
+			    	Friends
+			  	</a>
+			  	<div class="right menu">
+			    	<a class="ui item">
+			      		Logout
+			    	</a>
+			  	</div>
 			</div>
 			<h1>Assignment 2</h1>
 			<hr/>
 			<br/>
-			{% block content %}{% endblock %}
-		<form id="loginBox">
+		{% block loginSuccess %}{% endblock %}
+		<form id="loginBox" method="POST">
+			<h1 id=loginTitle>Login</h1>
 	  		<div class="form-group">
 	    		<label for="loginEmail">Email address</label>
-	    		<input type="email" class="form-control" id="loginEmail" aria-describedby="emailHelp" placeholder="Enter email">
+	    		<input type="email" class="form-control" id="loginEmail" name="loginEmail" aria-describedby="emailHelp" placeholder="Enter email">
 	  		</div>
 	 		<div class="form-group">
 	    		<label for="loginPassword">Password</label>
-	    		<input type="password" class="form-control" id="loginPassword" placeholder="Password">
+	    		<input type="password" class="form-control" id="loginPassword" name="loginPassword" placeholder="Password">
 	  		</div>
   		
   			<button type="submit" class="btn btn-primary">Login</button>
