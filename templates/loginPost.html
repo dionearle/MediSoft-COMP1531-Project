@@ -13,3 +13,13 @@
 </div>
 {% endif %}
 {% endblock %}
+
+{% block username %}
+
+{% if success == True %}
+<a class="ui item">
+	{{ username }}
+</a>
+{% endif %}
+{% endblock %}
+

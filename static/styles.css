@@ -10,3 +10,9 @@
 #loginTitle {
 	text-align: center;
 }
+
+#username {
+	float: right;
+	margin-right: 5px;
+	margin-left: 500px;
+}

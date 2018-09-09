@@ -14,16 +14,17 @@
 	<body>
 		<div style="padding: 50px">
 			<div class="ui secondary pointing menu">
-			  	<a class="active item">
+			  	<a class="active item" href="/">
 			    	Home
 			  	</a>
-			  	<a class="item">
-			    	Messages
+			  	<a class="item" href="search">
+			    	Search
 				</a>
 			  	<a class="item">	
 			    	Friends
 			  	</a>
 			  	<div class="right menu">
+			  		{% block username %}{% endblock %}
 			    	<a class="ui item">
 			      		Logout
 			    	</a>
