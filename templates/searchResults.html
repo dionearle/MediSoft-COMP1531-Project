@@ -1,0 +1,22 @@
+{% extends 'search.html' %}
+{% block searchResults %}
+<table class="table">
+	<thead>
+		<tr>
+			<th scope="col">Email</th>
+			<th scope="col">Health Centre</th>
+		</tr>
+	</thead>
+	<tbody>
+	    {% for item in searchArray[1] %}
+
+	    <tr>
+	    	<th scope="row">{{ loop.index }}</th>
+	    	<td>{{ searchArray[1][loop.index - 1] }}</td>
+	    	<td>{{ searchArray[2][loop.index - 1] }}</td>
+	    </tr>
+	    {% endfor %}
+	</tbody>
+</table>
+
+{% endblock %}
