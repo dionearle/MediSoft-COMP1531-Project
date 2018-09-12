@@ -1,10 +1,17 @@
 {% extends 'search.html' %}
 {% block searchResults %}
-<table class="table">
+
+{% if option == "healthCentre" %}
+<table class="table" id="table">
 	<thead>
 		<tr>
-			<th scope="col">Email</th>
+			<th scope="col">Type</th>
 			<th scope="col">Health Centre</th>
+			<th scope="col">Name</th>
+			<th scope="col">Postcode</th>
+			<th scope="col">Phone</th>
+			<th scope="col">Suburb</th>
+			<th scope="col">Profile</th>
 		</tr>
 	</thead>
 	<tbody>
@@ -12,11 +19,19 @@
 
 	    <tr>
 	    	<th scope="row">{{ loop.index }}</th>
-	    	<td>{{ searchArray[1][loop.index - 1] }}</td>
-	    	<td>{{ searchArray[2][loop.index - 1] }}</td>
+	    	<td>{{ item["typeCentre"] }}</td>
+	    	<td>{{ item["name"] }}</td>
+	    	<td>{{ item["postcode"] }}</td>
+	    	<td>{{ item["phone"] }}</td>
+	    	<td>{{ item["suburb"] }}</td>
+	    	<td><button type="button" class="btn btn-primary">Profile Link</button></td>
 	    </tr>
 	    {% endfor %}
 	</tbody>
 </table>
+{% endif %}
 
+{% if option == "healthProvider" %}
+
+{% endif %}
 {% endblock %}

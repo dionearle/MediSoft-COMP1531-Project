@@ -44,7 +44,7 @@ def index():
 def search():
     if request.method == "POST":
         print("radio: " + str(request.form["radioSearch"]))
-        searchArray = searchFiles(request.form["searchText"], 0)
+        searchArray = searchFiles(request.form["searchText"], request.form["radioSearch"])
         if (searchArray[0] == True):
             return render_template("searchResults.html", searchArray=searchArray, option=request.form["radioSearch"])
     return render_template('search.html')
