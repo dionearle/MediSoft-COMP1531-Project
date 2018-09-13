@@ -47,4 +47,5 @@ def search():
         searchArray = searchFiles(request.form["searchText"], request.form["radioSearch"])
         if (searchArray[0] == True):
             return render_template("searchResults.html", searchArray=searchArray, option=request.form["radioSearch"])
+    
     return render_template('search.html')
