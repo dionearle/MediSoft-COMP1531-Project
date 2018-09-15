@@ -36,7 +36,7 @@ end
 # Unset irrelevant variables.
 deactivate nondestructive
 
-set -gx VIRTUAL_ENV "/tmp_amd/glass/export/glass/4/z5207215/cs1531/group-The_Bachelorettes/venv"
+set -gx VIRTUAL_ENV "/tmp_amd/reed/export/reed/2/z5162791/Desktop/cs1531/group-The_Bachelorettes/venv"
 
 set -gx _OLD_VIRTUAL_PATH $PATH
 set -gx PATH "$VIRTUAL_ENV/bin" $PATH

@@ -100,3 +100,13 @@ def loginSuccess():
 def logout():
     logout_user()
     return redirect(url_for('index'))
+    
+@app.route('/book', methods=['GET', 'POST'])
+@login_required
+def book():
+    if request.method == "POST":
+        
+    
+    return render_template('book.html')
+    
+    
