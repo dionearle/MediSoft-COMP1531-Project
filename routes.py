@@ -100,3 +100,36 @@ def loginSuccess():
 def logout():
     logout_user()
     return redirect(url_for('index'))
+
+@app.route('/profile', methods=['GET', 'POST'])
+def profile():
+    if request.method == "POST":
+        option = request.form["option"]
+        if option == "healthCentre" or option == "suburb":
+            typeCentre = request.form["typeCentre"]
+            name = request.form["name"]
+            postcode = request.form["postcode"]
+            phone = request.form["phone"]
+            suburb = request.form["suburb"]
+            return render_template("profile.html",option=option, typeCentre=typeCentre, name=name, postcode=postcode,
+            phone=phone, suburb=suburb)
+        elif option == "healthProvider":
+            user = request.form["user"]
+            typeCentre = request.form["typeCentre"]
+            name = request.form["name"]
+            postcode = request.form["postcode"]
+            phone = request.form["phone"]
+            suburb = request.form["suburb"]
+            return render_template("profile.html",option=option, user=user, typeCentre=typeCentre, name=name, postcode=postcode,
+            phone=phone, suburb=suburb)
+        elif option == "service":
+            user = request.form["user"]
+            service = request.form["service"]
+            typeCentre = request.form["typeCentre"]
+            name = request.form["name"]
+            postcode = request.form["postcode"]
+            phone = request.form["phone"]
+            suburb = request.form["suburb"]
+            return render_template("profile.html",option=option, user=user, service=service, typeCentre=typeCentre, name=name, postcode=postcode,
+            phone=phone, suburb=suburb)
+    return render_template("profile.html",typeCentre="test")
