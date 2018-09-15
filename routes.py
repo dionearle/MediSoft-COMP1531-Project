@@ -1,10 +1,10 @@
 from server import app
 from flask import request, render_template
 from users import User, Patient, Provider
+from search import searchFiles
 
 
-
-@app.route('/', methods=['POST', 'GET'])
+@app.route('/', methods=['GET','POST'])
 def index():
     if request.method == 'POST':
         with open("patient.csv", "r") as w:
@@ -39,3 +39,13 @@ def index():
 
         return render_template("loginPost.html", success=False) # if login failed, return an alert saying "Wrong email/password"
     return render_template("base.html") # runs when the user first opens the page
+
+@app.route('/search', methods=['GET', 'POST'])
+def search():
+    if request.method == "POST":
+        print("radio: " + str(request.form["radioSearch"]))
+        searchArray = searchFiles(request.form["searchText"], request.form["radioSearch"])
+        if (searchArray[0] == True):
+            return render_template("searchResults.html", searchArray=searchArray, option=request.form["radioSearch"])
+    
+    return render_template('search.html')
