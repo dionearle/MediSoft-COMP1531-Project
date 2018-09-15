@@ -11,7 +11,7 @@ def searchFiles(searchTerm, option):
             readLinesArray = w.readlines()
             for i in range(len(readLinesArray)):
 # 'Hospital', '1111', ' Sydney Children Hospital', '93821111 ', 'Randwick'
-                (typeCentre, postcode, name, phone, suburb) = readLinesArray[i].split(', ')
+                (typeCentre, postcode, name, phone, suburb) = readLinesArray[i].split(',')
                 print("name: " + name)
                 if (option == "healthCentre"):
                     term = name
@@ -20,11 +20,11 @@ def searchFiles(searchTerm, option):
                 term = term.lower()
                 if (term.find(searchTerm) != -1 or searchTerm == ""):
                     found = True
-                    resultDict["typeCentre"] = typeCentre[1:-1]
-                    resultDict["postcode"] = postcode[1:-1]
-                    resultDict["name"] = name[1:-1]
-                    resultDict["phone"] = phone[1:-2]
-                    resultDict["suburb"] = suburb[1:-2]
+                    resultDict["typeCentre"] = typeCentre
+                    resultDict["postcode"] = postcode
+                    resultDict["name"] = name
+                    resultDict["phone"] = phone
+                    resultDict["suburb"] = suburb
                     resultArray.append(resultDict.copy())
         if found == True:
             returnDict = [found, resultArray]
