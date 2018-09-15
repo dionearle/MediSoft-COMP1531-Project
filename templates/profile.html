@@ -11,6 +11,7 @@
             border: 1px solid;
         }
     </style>
+    <h2 style="text-align: center">Information</h2>
     <table class="table" id="information">
         <tr>
             <th>Centre Type</th>
@@ -32,10 +33,14 @@
             <th>Suburb</th>
             <td>{{ suburb }}</td>
         </tr>
+        <tr>
+            <th>Rating</th>
+            <td>{{ rating }}</td>
+        </tr>
 {% if option == "healthProvider" or option == "service" %}
         <tr>
-            <th>User</th>
-            <td>{{ user }}</td>
+            <th>Email</th>
+            <td>{{ email }}</td>
         </tr>
 {% endif %}
 {% if option == "service" %}

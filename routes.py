@@ -50,8 +50,8 @@ def search():
 
     return render_template('searchBox.html')
 
-@app.route('/profile', methods=['GET', 'POST'])
-def profile():
+@app.route('/profile/<name>', methods=['GET', 'POST'])
+def profile(name):
     if request.method == "POST":
         option = request.form["option"]
         if option == "healthCentre" or option == "suburb":
@@ -61,24 +61,24 @@ def profile():
             phone = request.form["phone"]
             suburb = request.form["suburb"]
             return render_template("profile.html",option=option, typeCentre=typeCentre, name=name, postcode=postcode,
-            phone=phone, suburb=suburb)
+            phone=phone, suburb=suburb, rating = 0)
         elif option == "healthProvider":
-            user = request.form["user"]
+            email = request.form["user"]
             typeCentre = request.form["typeCentre"]
             name = request.form["name"]
             postcode = request.form["postcode"]
             phone = request.form["phone"]
             suburb = request.form["suburb"]
-            return render_template("profile.html",option=option, user=user, typeCentre=typeCentre, name=name, postcode=postcode,
-            phone=phone, suburb=suburb)
+            return render_template("profile.html",option=option, email=email, typeCentre=typeCentre, name=name, postcode=postcode,
+            phone=phone, suburb=suburb, rating = 0)
         elif option == "service":
-            user = request.form["user"]
+            email = request.form["user"]
             service = request.form["service"]
             typeCentre = request.form["typeCentre"]
             name = request.form["name"]
             postcode = request.form["postcode"]
             phone = request.form["phone"]
             suburb = request.form["suburb"]
-            return render_template("profile.html",option=option, user=user, service=service, typeCentre=typeCentre, name=name, postcode=postcode,
-            phone=phone, suburb=suburb)
-    return render_template("profile.html",typeCentre="test")
+            return render_template("profile.html",option=option, email=email, service=service, typeCentre=typeCentre, name=name, postcode=postcode,
+            phone=phone, suburb=suburb, rating = 0)
+    return render_template("profile.html")
