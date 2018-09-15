@@ -38,7 +38,7 @@
 			  	<a class="item">	
 			    	Friends
 			  	</a>
-			  	<a class="item">	
+			  	<a class="item" href="book">	
 			    	Bookings
 			  	</a>
 			  	<div class="right menu">
@@ -51,11 +51,24 @@
 			<h1>Assignment 2</h1>
 			<hr/>
 			<br/>
-		</div>
-
-		<form>
-			<h1 id="success">You made it in!</h1>
-		</form>
+			
+			<h2> Select a health care provider </h2>
+				 
+                           	
+	        <h2> Select an appointment time </h2>
+                <select name="time" method="GET" action="book">
+                    <option value="{{times[0]}}" selected>{{times[0]}}</option>
+                    {% for time in times[1:] %}
+                        <option value="{{time}}">{{time}}</option>
+                    {% endfor %}
+                </select> 
+            <form method="POST">
+                <h2> Reason(optional) </h2>
+                <input name="bookReason" placeholder="Additional Reason" >
+                <button id="button" type="submit" class="btn btn-primary">Submit</button>
+            </form>
+        </div> 
+        
 	</body>
 
 </html>
