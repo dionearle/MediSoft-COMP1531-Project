@@ -37,7 +37,6 @@ def load_user(user_id):
 
 @app.route('/', methods=['GET','POST'])
 def index():
-<<<<<<< HEAD
     if current_user.is_authenticated == False:
         if request.method == 'POST':
             with open("patient.csv", "r") as w:
