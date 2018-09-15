@@ -37,6 +37,7 @@ def load_user(user_id):
 
 @app.route('/', methods=['GET','POST'])
 def index():
+<<<<<<< HEAD
     if current_user.is_authenticated == False:
         if request.method == 'POST':
             with open("patient.csv", "r") as w:
@@ -79,6 +80,7 @@ def index():
     else:
         return redirect(url_for('loginSuccess'))
 
+
 @app.route('/search', methods=['GET', 'POST'])
 @login_required
 def search():
@@ -100,6 +102,7 @@ def loginSuccess():
 def logout():
     logout_user()
     return redirect(url_for('index'))
+
 
 @app.route('/profile/<name>', methods=['GET', 'POST'])
 def profile(name):
