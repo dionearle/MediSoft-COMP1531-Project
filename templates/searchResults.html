@@ -1,4 +1,4 @@
-{% extends 'search.html' %}
+{% extends 'searchBox.html' %}
 {% block searchResults %}
 
 {% if option == "healthCentre" or option == "suburb" %}
@@ -24,7 +24,17 @@
 	    	<td>{{ item["postcode"] }}</td>
 	    	<td>{{ item["phone"] }}</td>
 	    	<td>{{ item["suburb"] }}</td>
-	    	<td><button type="button" class="btn btn-primary">Profile Link</button></td>
+			<td>
+		    	<form method='POST' action='/profile'>
+					<input type="hidden" value='{{ option }}' name="option"/>
+					<input type="hidden" value="{{ item["typeCentre"] }}" name="typeCentre"/>
+					<input type="hidden" value="{{ item["name"] }}" name="name"/>
+					<input type="hidden" value="{{ item["postcode"] }}" name="postcode"/>
+					<input type="hidden" value="{{ item["phone"] }}" name="phone"/>
+					<input type="hidden" value="{{ item["suburb"] }}" name="suburb"/>
+					<input type="submit" value="Profile Link"/>
+				</form>
+			</td>
 	    </tr>
 	    {% endfor %}
 	</tbody>
@@ -56,11 +66,22 @@
 	    	<td>{{ item["postcode"] }}</td>
 	    	<td>{{ item["phone"] }}</td>
 	    	<td>{{ item["suburb"] }}</td>
-	    	<td><button type="button" class="btn btn-primary">Profile Link</button></td>
+			<td>
+		    	<form method='POST' action='/profile'>
+					<input type="hidden" value='{{ option }}' name="option"/>
+					<input type="hidden" value="{{ item["user"] }}" name="user"/>
+					<input type="hidden" value="{{ item["typeCentre"] }}" name="typeCentre"/>
+					<input type="hidden" value="{{ item["name"] }}" name="name"/>
+					<input type="hidden" value="{{ item["postcode"] }}" name="postcode"/>
+					<input type="hidden" value="{{ item["phone"] }}" name="phone"/>
+					<input type="hidden" value="{{ item["suburb"] }}" name="suburb"/>
+					<input type="submit" value="Profile Link"/>
+				</form>
+			</td>
 	    </tr>
 	    {% endfor %}
 	</tbody>
-</table>	
+</table>
 {% endif %}
 
 {% if option == "service" %}
@@ -90,10 +111,22 @@
 	    	<td>{{ item["postcode"] }}</td>
 	    	<td>{{ item["phone"] }}</td>
 	    	<td>{{ item["suburb"] }}</td>
-	    	<td><button type="button" class="btn btn-primary">Profile Link</button></td>
+			<td>
+		    	<form method='POST' action='/profile'>
+					<input type="hidden" value='{{ option }}' name="option"/>
+					<input type="hidden" value="{{ item["user"] }}" name="user"/>
+					<input type="hidden" value="{{ item["service"] }}" name="service"/>
+					<input type="hidden" value="{{ item["typeCentre"] }}" name="typeCentre"/>
+					<input type="hidden" value="{{ item["name"] }}" name="name"/>
+					<input type="hidden" value="{{ item["postcode"] }}" name="postcode"/>
+					<input type="hidden" value="{{ item["phone"] }}" name="phone"/>
+					<input type="hidden" value="{{ item["suburb"] }}" name="suburb"/>
+					<input type="submit" value="Profile Link"/>
+				</form>
+			</td>
 	    </tr>
 	    {% endfor %}
 	</tbody>
-</table>	
+</table>
 {% endif %}
 {% endblock %}

@@ -19,8 +19,8 @@ def index():
 
                     patient = True # to detect later whether to check providers.csv file or not
                     break
-            
-            if patient == True: 
+
+            if patient == True:
                 userLoggedIn = Patient(email, password, True) # initialise Patient class
                 return render_template("loginPost.html", userType="Patient", success=True, username=userLoggedIn.email) # return html file
         with open("provider.csv", "r") as w:
@@ -47,5 +47,38 @@ def search():
         searchArray = searchFiles(request.form["searchText"], request.form["radioSearch"])
         if (searchArray[0] == True):
             return render_template("searchResults.html", searchArray=searchArray, option=request.form["radioSearch"])
-    
-    return render_template('search.html')
+
+    return render_template('searchBox.html')
+
+@app.route('/profile', methods=['GET', 'POST'])
+def profile():
+    if request.method == "POST":
+        option = request.form["option"]
+        if option == "healthCentre" or option == "suburb":
+            typeCentre = request.form["typeCentre"]
+            name = request.form["name"]
+            postcode = request.form["postcode"]
+            phone = request.form["phone"]
+            suburb = request.form["suburb"]
+            return render_template("profile.html",option=option, typeCentre=typeCentre, name=name, postcode=postcode,
+            phone=phone, suburb=suburb)
+        elif option == "healthProvider":
+            user = request.form["user"]
+            typeCentre = request.form["typeCentre"]
+            name = request.form["name"]
+            postcode = request.form["postcode"]
+            phone = request.form["phone"]
+            suburb = request.form["suburb"]
+            return render_template("profile.html",option=option, user=user, typeCentre=typeCentre, name=name, postcode=postcode,
+            phone=phone, suburb=suburb)
+        elif option == "service":
+            user = request.form["user"]
+            service = request.form["service"]
+            typeCentre = request.form["typeCentre"]
+            name = request.form["name"]
+            postcode = request.form["postcode"]
+            phone = request.form["phone"]
+            suburb = request.form["suburb"]
+            return render_template("profile.html",option=option, user=user, service=service, typeCentre=typeCentre, name=name, postcode=postcode,
+            phone=phone, suburb=suburb)
+    return render_template("profile.html",typeCentre="test")

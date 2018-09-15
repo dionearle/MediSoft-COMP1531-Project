@@ -70,7 +70,7 @@ def searchFiles(searchTerm, option):
             returnDict = [found, resultArray]
             print("returnDict: " + str(returnDict))
             return returnDict
-    return [False, []]   
+    return [False, []]
 
 
 if __name__ == '__main__':
