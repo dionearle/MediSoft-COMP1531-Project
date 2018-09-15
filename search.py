@@ -3,6 +3,7 @@
 def searchFiles(searchTerm, option):
 
     found = False
+    searchTerm = searchTerm.lower()
     if (option == "healthCentre" or option == "suburb"):
         resultArray = []
         resultDict = {}
@@ -16,7 +17,7 @@ def searchFiles(searchTerm, option):
                     term = name
                 elif (option == "suburb"):
                     term = suburb
-
+                term = term.lower()
                 if (term.find(searchTerm) != -1 or searchTerm == ""):
                     found = True
                     resultDict["typeCentre"] = typeCentre[1:-1]
@@ -38,6 +39,7 @@ def searchFiles(searchTerm, option):
             readLinesArray = w.readlines()
             for i in range(len(readLinesArray)):
                 (email, centre) = readLinesArray[i].split(',')
+                email = email.lower()
                 if (email.find(searchTerm) != -1 or searchTerm == ""):
                     found = True
                     centre = centre[:-1] # delete newline character
@@ -56,6 +58,7 @@ def searchFiles(searchTerm, option):
             readLinesArray = w.readlines()
             for i in range(len(readLinesArray)):
                 (email, password, service) = readLinesArray[i].split(',')
+                service = service.lower()
                 if (service.find(searchTerm) != -1 or searchTerm == ""):
                     found = True
                     service = service[:-1] # delete newline character
