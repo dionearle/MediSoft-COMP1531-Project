@@ -4,4 +4,8 @@ class Appointment(object):
 		self._patient = patient
 		self._date = date
 		self._time = time
+	@property
+	def provider(self):
+		return self._provider
+	
 	

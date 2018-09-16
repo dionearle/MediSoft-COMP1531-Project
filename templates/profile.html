@@ -11,7 +11,11 @@
             border: 1px solid;
         }
     </style>
+    {% if option == "healthProvider" or option == "service" %}
+    <form method="POST" action="/book/{{ email }}">
+    {% else %}
     <form method="POST" action="/book/{{ name }}">
+    {% endif %}
         <h2 style="text-align: center">Information</h2>
         <table class="table" id="information">
             <tr>
@@ -41,7 +45,7 @@
     {% if option == "healthProvider" or option == "service" %}
             <tr>
                 <th>Email</th>
-                <td>{{ email }}</td>
+                <td name="email">{{ email }}</td>
             </tr>
     {% endif %}
     {% if option == "service" %}

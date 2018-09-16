@@ -10,3 +10,4 @@ def addAppointment(provider_email, patient_email, date, time):
 			user.addAppointment(appointment)
 		if user.isPatient() == False and user.get_id() == provider_email:
 			user.addAppointment(appointment)
+	
