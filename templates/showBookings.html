@@ -1,17 +1,6 @@
-<!doctype html>
-<html>
-	<head>
-		<title>Login Page</title>
-	</head>
-	<body>
-
-	</body>
-</html>
-
 <!DOCTYPE html>
 <html>
 	<head>
-		
 		<meta charset="utf-8" />
     	<title>Assignment 2</title>
 		<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.2.9/semantic.min.css"/>
@@ -19,28 +8,24 @@
 		<link rel="stylesheet" href="{{ url_for('static', filename='stylesSearch.css') }}">
     	<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
     	<script src="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.2.9/semantic.min.js"></script>
-    	<style>
-		#success {
-			margin: 100px;
-		}
-		</style>
+
 		{% block head %}{% endblock %}
 	</head>
 	<body>
 		<div style="padding: 50px">
 			<div class="ui secondary pointing menu">
-			  	<a class="active item" href="/">
+			  	<a class="item" href="/">
 			    	Home
 			  	</a>
-			  	<a class="item" href="search">
+			  	<a class="item" href="/search">
 			    	Search
 				</a>
-			  	<a class="item" href="showBookings">	
+			  	<a class="active item" href="showBookings">	
 			    	Bookings
 			  	</a>
 			  	<div class="right menu">
 			  		{% block username %}{% endblock %}
-			    	<a class="ui item" href="{{url_for('logout')}}">
+			    	<a class="ui item">
 			      		Logout
 			    	</a>
 			  	</div>
@@ -49,10 +34,30 @@
 			<hr/>
 			<br/>
 		</div>
+	    <table class="table" id="table">
+			<thead>
+				<tr>
+					<th scope="col">#</th>
+					<th scope="col">Provider</th>
+					<th scope="col">Date</th>
+					<th scope="col">Time</th>
+					<th scope="col">Reason</th>
 
-		<form>
-			<h1 id="success">You made it in!</h1>
-		</form>
+				</tr>
+			</thead>
+			<tbody>
+			    {% for item in appointments %}
+
+			    <tr>
+			    	<th scope="row">{{ loop.index }}</th>
+			    	<!-- def __init__(self, provider, patient, date, time, reason): -->
+			    	<td>{{ item.provider }}</td>
+			    	<td>{{ item.time }}</td>
+			    	<td>{{ item.date }}</td>
+			    	<td>{{ item.reason }}</td>
+			    </tr>
+			    {% endfor %}
+			</tbody>
+		</table>
 	</body>
-
 </html>

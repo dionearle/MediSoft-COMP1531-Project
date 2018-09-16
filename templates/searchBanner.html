@@ -20,8 +20,8 @@
 			  	<a class="active item" href="/search">
 			    	Search
 				</a>
-			  	<a class="item">
-			    	Friends
+			  	<a class="item" href="showBookings">	
+			    	Bookings
 			  	</a>
 			  	<div class="right menu">
 			  		{% block username %}{% endblock %}
@@ -37,5 +37,7 @@
         {% block searchBox %}{% endblock %}
 		{% block searchResults %}{% endblock %}
         {% block profile %}{% endblock %}
+        {% block showBookings %}{% endblock %}
+    }
 	</body>
 </html>
