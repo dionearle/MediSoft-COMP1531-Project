@@ -1,5 +1,4 @@
 
-
 class User():
 	def __init__(self, email, password, patient):
 		self._email = email
@@ -15,7 +14,7 @@ class User():
 	def is_anonymous(self):
 		return False
 	def isPatient(self):
-		return _isPatient
+		return self._isPatient
 	def get_password(self):
 		return self._password
 
@@ -31,6 +30,13 @@ class HealthProvider(User):
 		self._profession = profession
 		self._rating = rating
 		self._workingHours = workingHours
-		self._centres = centres
+		self._centres = []
+	def addCentre(self, centre):
+		self._centres.append(centre)
+	def getListOfCentres(self):
+		return self._centres
+	def getProfession(self):
+		return self._profession
+
 
 

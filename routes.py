@@ -33,7 +33,6 @@ def index():
 @login_required
 def search():
     if request.method == "POST":
-        print("radio: " + str(request.form["radioSearch"]))
         searchArray = searchFiles(request.form["searchText"], request.form["radioSearch"])
         if (searchArray[0] == True):
             return render_template("searchResults.html", searchArray=searchArray, option=request.form["radioSearch"])
@@ -59,28 +58,28 @@ def profile(name):
         if option == "healthCentre" or option == "suburb":
             typeCentre = request.form["typeCentre"]
             name = request.form["name"]
-            postcode = request.form["postcode"]
+            abn = request.form["abn"]
             phone = request.form["phone"]
             suburb = request.form["suburb"]
-            return render_template("profile.html",option=option, typeCentre=typeCentre, name=name, postcode=postcode,
+            return render_template("profile.html",option=option, typeCentre=typeCentre, name=name, abn=abn,
             phone=phone, suburb=suburb, rating = 0)
         elif option == "healthProvider":
             email = request.form["user"]
             typeCentre = request.form["typeCentre"]
             name = request.form["name"]
-            postcode = request.form["postcode"]
+            abn = request.form["abn"]
             phone = request.form["phone"]
             suburb = request.form["suburb"]
-            return render_template("profile.html",option=option, email=email, typeCentre=typeCentre, name=name, postcode=postcode,
+            return render_template("profile.html",option=option, email=email, typeCentre=typeCentre, name=name, abn=abn,
             phone=phone, suburb=suburb, rating = 0)
         elif option == "service":
             email = request.form["user"]
             service = request.form["service"]
             typeCentre = request.form["typeCentre"]
             name = request.form["name"]
-            postcode = request.form["postcode"]
+            abn = request.form["abn"]
             phone = request.form["phone"]
             suburb = request.form["suburb"]
-            return render_template("profile.html",option=option, email=email, service=service, typeCentre=typeCentre, name=name, postcode=postcode,
+            return render_template("profile.html",option=option, email=email, service=service, typeCentre=typeCentre, name=name, abn=abn,
             phone=phone, suburb=suburb, rating = 0)
     return render_template("profile.html")

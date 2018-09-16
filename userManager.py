@@ -1,9 +1,8 @@
-from initialise import initialise_users
+from initialise import initialise_users, initialise_health_centres
 
 class UserManager(object):
-	def __init__(self):
-		self._users = initialise_users()
-		self._healthCentres = initialise_health_centres()
+	def __init__(self, centreManager):
+		self._users = initialise_users(centreManager)
 	def addUser(self, user):
 		self._users.append(user)
 	def getUsers(self):
@@ -19,3 +18,20 @@ class UserManager(object):
 		for user in self._users:
 			if user.get_id() == email:
 				return user
+		
+	def searchID(self, searchTerm):
+		searchTerm = searchTerm.lower()
+		returnArray = []
+		for user in self._users:
+			if user.get_id().lower().find(searchTerm) != -1:
+				returnArray.append(user)
+		return returnArray
+
+	def searchProfession(self, searchTerm):
+		searchTerm = searchTerm.lower()
+		returnArray = []
+		for user in self._users:
+			if user.isPatient() == False:
+				if user.getProfession().lower().find(searchTerm) != -1:
+					returnArray.append(user)
+		return returnArray

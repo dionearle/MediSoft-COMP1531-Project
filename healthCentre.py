@@ -8,4 +8,20 @@ class HealthCentre(object):
 		self._rating = rating
 		self._providers = providers
 		self._centre_type = centre_type
+	def getName(self):
+		return self._name
+
+	def getSuburb(self):
+		return self._suburb
+
+	def getPhone(self):
+		return self._phone
+	def getABN(self):
+		return self._abn
+	def getRating(self):
+		return self._rating
+	def getProviders(self):
+		return self._providers
+	def getCentreType(self):
+		return self._centre_type
 

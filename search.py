@@ -1,4 +1,6 @@
-
+from server import centreManager, userManager
+from centreManager import CentreManager
+from userManager import UserManager
 
 def searchFiles(searchTerm, option):
 
@@ -7,53 +9,53 @@ def searchFiles(searchTerm, option):
     if (option == "healthCentre" or option == "suburb"):
         resultArray = []
         resultDict = {}
-        with open("health_centres.csv", "r") as w:
-            readLinesArray = w.readlines()
-            for i in range(len(readLinesArray)):
-# 'Hospital', '1111', ' Sydney Children Hospital', '93821111 ', 'Randwick'
-                (typeCentre, postcode, name, phone, suburb) = readLinesArray[i].split(',')
-                print("name: " + name)
-                if (option == "healthCentre"):
-                    term = name
-                elif (option == "suburb"):
-                    term = suburb
-                term = term.lower()
-                if (term.find(searchTerm) != -1 or searchTerm == ""):
-                    found = True
-                    resultDict["typeCentre"] = typeCentre
-                    resultDict["postcode"] = postcode
-                    resultDict["name"] = name
-                    resultDict["phone"] = phone
-                    resultDict["suburb"] = suburb
-                    resultArray.append(resultDict.copy())
+        if (option == "healthCentre"):
+            centres = centreManager.searchHealthCentresByName(searchTerm)
+        else:
+            centres = centreManager.searchHealthCentresBySuburb(searchTerm)
+        if centres:
+            for centre in centres:
+                found = True
+                resultDict["typeCentre"] = centre.getCentreType()
+                resultDict["abn"] = centre.getABN()
+                resultDict["name"] = centre.getName()
+                resultDict["phone"] = centre.getPhone()
+                resultDict["suburb"] = centre.getSuburb()
+                resultArray.append(resultDict.copy())
+
+
         if found == True:
             returnDict = [found, resultArray]
             return returnDict
         else:
             returnDict = [found, []]
             return returnDict
-    elif (option == "healthProvider"):
+    elif (option == "healthProvider" or option == "service"):
         resultArray = []
         resultDict = {}
-        with open("provider_health_centre.csv") as w:
-            readLinesArray = w.readlines()
-            for i in range(len(readLinesArray)):
-                (email, centre) = readLinesArray[i].split(',')
-                email = email.lower()
-                if (email.find(searchTerm) != -1 or searchTerm == ""):
+
+        if option == "healthProvider":
+            providers = userManager.searchID(searchTerm)
+        else:
+            providers = userManager.searchProfession(searchTerm)
+        if providers:
+            for provider in providers:
+                centres = provider.getListOfCentres()
+                for centre in centres:
                     found = True
-                    centre = centre[:-1] # delete newline character
-                    returnArray = searchFiles(centre, "healthCentre")
+                    returnArray = searchFiles(centre[0].getName(), "healthCentre")
                     returnDict = returnArray[1][0]
-                    returnDict["user"] = email
+                    returnDict["user"] = provider.get_id()
+                    returnDict["service"] = provider.getProfession()
                     resultArray.append(returnDict)
+
         if found == True:
             returnDict = [found, resultArray]
-            print("returnDict: " + str(returnDict))
             return returnDict
     elif option == "service":
         resultArray = []
         resultDict = {}
+
         with open("provider.csv") as w:
             readLinesArray = w.readlines()
             for i in range(len(readLinesArray)):
@@ -68,7 +70,6 @@ def searchFiles(searchTerm, option):
                     resultArray.append(returnDict)
         if found == True:
             returnDict = [found, resultArray]
-            print("returnDict: " + str(returnDict))
             return returnDict
     return [False, []]
 

@@ -8,7 +8,7 @@
 			<th scope="col">#</th>
 			<th scope="col">Health Centre</th>
 			<th scope="col">Name</th>
-			<th scope="col">Postcode</th>
+			<th scope="col">ABN</th>
 			<th scope="col">Phone</th>
 			<th scope="col">Suburb</th>
 			<th scope="col">Profile</th>
@@ -21,7 +21,7 @@
 	    	<th scope="row">{{ loop.index }}</th>
 	    	<td>{{ item["typeCentre"] }}</td>
 	    	<td>{{ item["name"] }}</td>
-	    	<td>{{ item["postcode"] }}</td>
+	    	<td>{{ item["abn"] }}</td>
 	    	<td>{{ item["phone"] }}</td>
 	    	<td>{{ item["suburb"] }}</td>
 			<td>
@@ -29,7 +29,7 @@
 					<input type="hidden" value='{{ option }}' name="option"/>
 					<input type="hidden" value="{{ item["typeCentre"] }}" name="typeCentre"/>
 					<input type="hidden" value="{{ item["name"] }}" name="name"/>
-					<input type="hidden" value="{{ item["postcode"] }}" name="postcode"/>
+					<input type="hidden" value="{{ item["abn"] }}" name="abn"/>
 					<input type="hidden" value="{{ item["phone"] }}" name="phone"/>
 					<input type="hidden" value="{{ item["suburb"] }}" name="suburb"/>
 					<input type="submit" value="Profile Link"/>
@@ -49,7 +49,7 @@
 			<th scope="col">Email</th>
 			<th scope="col">Health Centre</th>
 			<th scope="col">Name</th>
-			<th scope="col">Postcode</th>
+			<th scope="col">ABN</th>
 			<th scope="col">Phone</th>
 			<th scope="col">Suburb</th>
 			<th scope="col">Profile</th>
@@ -63,7 +63,7 @@
 	    	<td>{{ item["user"] }} </td>
 	    	<td>{{ item["typeCentre"] }}</td>
 	    	<td>{{ item["name"] }}</td>
-	    	<td>{{ item["postcode"] }}</td>
+	    	<td>{{ item["abn"] }}</td>
 	    	<td>{{ item["phone"] }}</td>
 	    	<td>{{ item["suburb"] }}</td>
 			<td>
@@ -72,7 +72,7 @@
 					<input type="hidden" value="{{ item["user"] }}" name="user"/>
 					<input type="hidden" value="{{ item["typeCentre"] }}" name="typeCentre"/>
 					<input type="hidden" value="{{ item["name"] }}" name="name"/>
-					<input type="hidden" value="{{ item["postcode"] }}" name="postcode"/>
+					<input type="hidden" value="{{ item["abn"] }}" name="abn"/>
 					<input type="hidden" value="{{ item["phone"] }}" name="phone"/>
 					<input type="hidden" value="{{ item["suburb"] }}" name="suburb"/>
 					<input type="submit" value="Profile Link"/>
@@ -93,7 +93,7 @@
 			<th scope="col">Service</th>
 			<th scope="col">Health Centre</th>
 			<th scope="col">Name</th>
-			<th scope="col">Postcode</th>
+			<th scope="col">ABN</th>
 			<th scope="col">Phone</th>
 			<th scope="col">Suburb</th>
 			<th scope="col">Profile</th>
@@ -108,7 +108,7 @@
 	    	<td>{{ item["service"] }} </td>
 	    	<td>{{ item["typeCentre"] }}</td>
 	    	<td>{{ item["name"] }}</td>
-	    	<td>{{ item["postcode"] }}</td>
+	    	<td>{{ item["abn"] }}</td>
 	    	<td>{{ item["phone"] }}</td>
 	    	<td>{{ item["suburb"] }}</td>
 			<td>
@@ -118,7 +118,7 @@
 					<input type="hidden" value="{{ item["service"] }}" name="service"/>
 					<input type="hidden" value="{{ item["typeCentre"] }}" name="typeCentre"/>
 					<input type="hidden" value="{{ item["name"] }}" name="name"/>
-					<input type="hidden" value="{{ item["postcode"] }}" name="postcode"/>
+					<input type="hidden" value="{{ item["abn"] }}" name="abn"/>
 					<input type="hidden" value="{{ item["phone"] }}" name="phone"/>
 					<input type="hidden" value="{{ item["suburb"] }}" name="suburb"/>
 					<input type="submit" value="Profile Link"/>
