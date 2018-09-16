@@ -18,13 +18,14 @@ class UserManager(object):
 		for user in self._users:
 			if user.get_id() == email:
 				return user
-		
+
 	def searchID(self, searchTerm):
 		searchTerm = searchTerm.lower()
 		returnArray = []
 		for user in self._users:
-			if user.get_id().lower().find(searchTerm) != -1:
-				returnArray.append(user)
+			if user.isPatient() == False:
+				if user.get_id().lower().find(searchTerm) != -1:
+					returnArray.append(user)
 		return returnArray
 
 	def searchProfession(self, searchTerm):

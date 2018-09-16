@@ -52,6 +52,9 @@ def searchFiles(searchTerm, option):
         if found == True:
             returnDict = [found, resultArray]
             return returnDict
+        else:
+            returnDict = [found, []]
+            return returnDict
 
 if __name__ == '__main__':
     print(str(searchFiles("Hospital", "healthCentre")))
