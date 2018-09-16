@@ -1,4 +1,3 @@
-
 def getProviders():
     resultArray = []
     resultDict = {}
@@ -9,7 +8,5 @@ def getProviders():
                 email = email.lower()
                 returnDict["user"] = email
                 returnDict["centre"] = centre
-                resultArray.append(returnDict["centre"])  
-    return resultArray           
-
-
+                resultArray.append(returnDict["centre"])
+    return resultArray

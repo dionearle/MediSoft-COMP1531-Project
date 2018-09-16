@@ -3,8 +3,10 @@ from initialise import initialise_health_centres
 class centreManager(object):
 	def __init__(self):
 		self._healthCentres = initialise_health_centres()
+
 	def addHealthCentre(self, healthCentre):
 		self._healthCentres.append(healthCentre)
+        
 	def getHealthCentres(self):
 		return self._healthCentres
 

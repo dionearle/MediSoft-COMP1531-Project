@@ -6,7 +6,7 @@
 <a class="item" href="/search">
     Search
 </a>
-<a class="item" href="book">
+<a class="item" href="/appointments">
     Appointments
 </a>
 <div class="right menu">
@@ -24,6 +24,16 @@
       <div class="content">
           {% if current_user.is_authenticated %}
           Welcome to MediSoft!
+          <br>
+          {% if booked == true %}
+          <div class="ui success message">
+              <div class="header">
+                  Your appointment was successfully booked.
+              </div>
+              <p>You can view your current appointments from the appointments tab</p>
+          </div>
+          {% endif %}
+
           {% else %}
           Please login to access MediSoft
           {% endif %}

@@ -11,43 +11,57 @@
             border: 1px solid;
         }
     </style>
-    <h2 style="text-align: center">Profile page</h2>
-    <table class="table" id="information">
-        <tr>
-            <th>Centre Type</th>
-            <td>{{ typeCentre }}</td>
-        </tr>
-        <tr>
-            <th>Name</th>
-            <td>{{ name }}</td>
-        </tr>
-        <tr>
-            <th>ABN</th>
-            <td>{{ abn }}</td>
-        </tr>
-        <tr>
-            <th>Phone</th>
-            <td>{{ phone }}</td>
-        </tr>
-        <tr>
-            <th>Suburb</th>
-            <td>{{ suburb }}</td>
-        </tr>
-        <tr>
-            <th>Rating</th>
-            <td>{{ rating }}</td>
-        </tr>
-{% if option == "healthProvider" or option == "service" %}
-        <tr>
-            <th>Email</th>
-            <td>{{ email }}</td>
-        </tr>
-{% endif %}
-{% if option == "service" %}
-        <tr>
-            <th>Service</th>
-            <td>{{ service }}</td>
-        </tr>
-{% endif %}
-    </table>
+    {% if option == "healthProvider" or option == "service" %}
+    <form method="POST" action="/book/{{ email }}">
+    {% else %}
+    <form method="POST" action="/book/{{ name }}">
+    {% endif %}
+        <h2 style="text-align: center">Information</h2>
+        <table class="table" id="information">
+            <tr>
+                <th>Centre Type</th>
+                <td>{{ typeCentre }}</td>
+            </tr>
+            <tr>
+                <th>Name</th>
+                <td>{{ name }}</td>
+            </tr>
+            <tr>
+                <th>ABN</th>
+                <td>{{ abn }}</td>
+            </tr>
+            <tr>
+                <th>Phone</th>
+                <td>{{ phone }}</td>
+            </tr>
+            <tr>
+                <th>Suburb</th>
+                <td>{{ suburb }}</td>
+            </tr>
+            <tr>
+                <th>Rating</th>
+                <td>{{ rating }}</td>
+            </tr>
+    {% if option == "healthProvider" or option == "service" %}
+            <tr>
+                <th>Email</th>
+                <td name="email">{{ email }}</td>
+            </tr>
+    {% endif %}
+    {% if option == "service" %}
+            <tr>
+                <th>Service</th>
+                <td>{{ service }}</td>
+            </tr>
+    {% endif %}
+            <tr>
+                <td>
+
+                        <button id="appointmentButton" type="submit" class="btn btn-primary">Book Appointment</button>
+
+                </td>
+            </tr>
+
+        </table>
+    </form>
 {% endblock %}

@@ -6,6 +6,7 @@ class CentreManager(object):
 
 	def addHealthCentre(self, healthCentre):
 		self._healthCentres.append(healthCentre)
+        
 	def getHealthCentres(self):
 		return self._healthCentres
 
@@ -23,5 +24,3 @@ class CentreManager(object):
 			if centre.getSuburb().lower().find(suburb) != -1:
 				returnArray.append(centre)
 		return returnArray
-
-	

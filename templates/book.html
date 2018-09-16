@@ -1,12 +1,12 @@
 {% extends 'base.html' %}
-{% block book_banner %}
+{% block appointments_banner %}
 <a class="item" href="/">
     Home
 </a>
-<a class="item" href="/search">
+<a class="active item" href="/search">
     Search
 </a>
-<a class="active item" href="book">
+<a class="item" href="/appointments">
     Appointments
 </a>
 <div class="right menu">
@@ -15,22 +15,38 @@
     </a>
 </div>
 {% endblock %}
-{% block book %}
+{% block appointments %}
 
-<h2> Select a health care provider </h2>
+<div class="ui middle aligned center aligned grid">
+  <div class="column">
+    <h1 class="ui image header">
+      <div class="content">
+          Appointment booking for {{ name }}
+      </div>
+  </h1>
+  </div>
+</div>
 
-
-<h2> Select an appointment time </h2>
+<form method='POST' action='/bookAppointment/{{ name }}'>
+    <h2 class="ui header">
+        Select an available time
+    </h2>
     <select name="time" method="GET" action="book">
-        <option value="{{times[0]}}" selected>{{times[0]}}</option>
+        <option name="timeValue" value="{{times[0]}}" selected>{{times[0]}}</option>
         {% for time in times[1:] %}
             <option value="{{time}}">{{time}}</option>
         {% endfor %}
     </select>
-<form method="POST">
-    <h2> Reason(optional) </h2>
+    <h2 class="ui  header">
+        Reason (optional)
+    </h2>
     <input name="bookReason" placeholder="Additional Reason" >
-    <button id="button" type="submit" class="btn btn-primary">Submit</button>
+    <br>
+    <br>
+    <button class="ui labeled icon button">
+      <i class="edit icon"></i>
+        Submit
+    </button>
 </form>
 </div>
 
