@@ -40,7 +40,7 @@ deactivate () {
 # unset irrelevant variables
 deactivate nondestructive
 
-VIRTUAL_ENV="/tmp_amd/glass/export/glass/4/z5207215/cs1531/group-The_Bachelorettes/venv"
+VIRTUAL_ENV="/tmp_amd/reed/export/reed/2/z5162791/Desktop/cs1531/group-The_Bachelorettes/venv"
 export VIRTUAL_ENV
 
 _OLD_VIRTUAL_PATH="$PATH"
