@@ -1,68 +1,68 @@
-<!DOCTYPE html>
-<html>
-	<head>
-		<meta charset="utf-8" />
-    	<title>Assignment 2</title>
-		<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.2.9/semantic.min.css"/>
-		<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
-		<link rel="stylesheet" href="{{ url_for('static', filename='stylesSearch.css') }}">
-    	<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
-    	<script src="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.2.9/semantic.min.js"></script>
+{% extends 'base.html' %}
+{% block search_banner %}
+<a class="item" href="/">
+    Home
+</a>
+<a class="active item" href="/search">
+    Search
+</a>
+<a class="item" href="/book">
+    Appointments
+</a>
+<div class="right menu">
+    <a class="ui item" href="/logout">
+        Logout
+    </a>
+</div>
+{% endblock %}
+{% block search %}
+    <form id="searchBox" method="POST">
+        <h2 class="ui image header">
+          <div class="content">
+              Search for a Healthcare Service
+          </div>
+        </h2>
+        <div class="ui fluid action input">
+            <input type="text" id="searchText" name="searchText" placeholder="Leave blank to display all...">
+            <button class="ui button">Search</button>
+        </div>
+        <br>
+        <div class="grouped fields">
+        <label for="radioHealthCentre">Specify search criteria:</label>
+            <div class="field">
+              <div class="ui radio checkbox">
+                  <input class="form-check-input" type="radio" name="radioSearch" id="radioHealthCentre" value="healthCentre" checked>
+                  <label class="form-check-label" for="radioHealthCentre">
+                  Health Centre
+                  </label><br/>
+              </div>
+            </div>
+            <div class="field">
+              <div class="ui radio checkbox">
+                <input class="form-check-input" type="radio" name="radioSearch" id="radioHealthProvider" value="healthProvider" unchecked>
+                <label class="form-check-label" for="radioHealthProvider">
+                Health Provider
+                </label><br/>
+              </div>
+            </div>
+            <div class="field">
+              <div class="ui radio checkbox">
+                <input class="form-check-input" type="radio" name="radioSearch" id="radioSuburb" value="suburb" unchecked>
+                <label class="form-check-label" for="radioSuburb">
+                Suburb
+                </label><br/>
+              </div>
+            </div>
+            <div class="field">
+              <div class="ui radio checkbox">
+                <input class="form-check-input" type="radio" name="radioSearch" id="radioService" value="service" unchecked>
+                <label class="form-check-label" for="radioService">
+                Service
+                </label><br/>
+              </div>
+            </div>
+          </div>
+    </form>
 
-		{% block head %}{% endblock %}
-	</head>
-	<body>
-		<div style="padding: 50px">
-			<div class="ui secondary pointing menu">
-			  	<a class="item" href="/">
-			    	Home
-			  	</a>
-			  	<a class="active item" href="search">
-			    	Search
-				</a>
-			  	<a class="item">
-			    	Friends
-			  	</a>
-			  	<a class="item" href="book">	
-			    	Bookings
-			  	</a>
-			  	<div class="right menu">
-			  		{% block username %}{% endblock %}
-			    	<a class="ui item">
-			      		Logout
-			    	</a>
-			  	</div>
-			</div>
-			<h1>Assignment 2</h1>
-			<hr/>
-			<br/>
-		</div>
-		<form id="searchBox" method="POST">
-			<h1 id="searchTitle">Search</h1>
-			<div class="form-group">
-				<input type="text" class="form-control" id="searchText" name="searchText" placeholder="Leave empty if you want to search all">
-			</div>
-			<div class="form-check">
-			  	<input class="form-check-input" type="radio" name="radioSearch" id="radioHealthCentre" value="healthCentre" checked>
-			  	<label class="form-check-label" for="radioHealthCentre">
-			    By Health Centre
-			  	</label><br/>
-			  	<input class="form-check-input" type="radio" name="radioSearch" id="radioHealthProvider" value="healthProvider" unchecked>
-			  	<label class="form-check-label" for="radioHealthProvider">
-			    By Health Provider
-			  	</label><br/>
-			  	<input class="form-check-input" type="radio" name="radioSearch" id="radioSuburb" value="suburb" unchecked>
-			  	<label class="form-check-label" for="radioSuburb">
-			    By Suburb
-			  	</label><br/>
-			  	<input class="form-check-input" type="radio" name="radioSearch" id="radioService" value="service" unchecked>
-			  	<label class="form-check-label" for="radioService">
-			    By Service
-			  	</label><br/>
-			</div>
-			<button id="searchButton" type="submit" class="btn btn-primary">Search</button>
-		</form>
-		{% block searchResults %}{% endblock %}
-	</body>
-
-</html>
+    {% block searchResults %}{% endblock %}
+{% endblock %}
