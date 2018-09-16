@@ -21,7 +21,11 @@
 			<thead>
 				<tr>
 					<th scope="col">#</th>
-					<th scope="col">Provider</th>
+                    {% if current_user.isPatient() == True %}
+                        <th scope="col">Provider</th>
+                    {% else %}
+                        <th scope="col">Patient</th>
+                    {% endif %}
 					<th scope="col">Date</th>
 					<th scope="col">Time</th>
 					<th scope="col">Reason</th>
@@ -34,7 +38,12 @@
 			    <tr>
 			    	<th scope="row">{{ loop.index }}</th>
 			    	<!-- def __init__(self, provider, patient, date, time, reason): -->
-			    	<td>{{ item.provider }}</td>
+                    {% if current_user.isPatient() == True %}
+                        <td>{{ item.provider }}</td>
+                    {% else %}
+                        <td>{{ item.patient }}</td>
+                    {% endif %}
+                    <td>{{ item.provider }}</td>
 			    	<td>{{ item.time }}</td>
 			    	<td>{{ item.date }}</td>
 			    	<td>{{ item.reason }}</td>

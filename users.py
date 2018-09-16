@@ -29,7 +29,7 @@ class User(ABC):
 
     def addAppointment(self, appointment):
         self._appointments.append(appointment)
-        
+
     def getListOfAppointments(self):
         return self._appointments
 
