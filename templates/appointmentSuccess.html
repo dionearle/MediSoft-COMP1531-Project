@@ -52,19 +52,7 @@
 			<hr/>
 			<br/>
 			
-			<h1>Appointment booking for {{ name }}</h1>
-            <form method='POST' action='/bookAppointment/{{ name }}'>
-	        <h2> Select an appointment time </h2>
-                <select name="time" method="GET" action="book">
-                    <option name="timeValue" value="{{times[0]}}" selected>{{times[0]}}</option>
-                    {% for time in times[1:] %}
-                        <option value="{{time}}">{{time}}</option>
-                    {% endfor %}
-                </select> 
-                <h2> Reason(optional) </h2>
-                <input name="bookReason" placeholder="Additional Reason" >
-                <button id="button" type="submit" class="btn btn-primary">Submit</button>
-            </form>
+			<h1>Appointment Booked!</h1>
 
         </div> 
         

@@ -23,7 +23,7 @@ class UserManager(object):
 		searchTerm = searchTerm.lower()
 		returnArray = []
 		for user in self._users:
-			if user.get_id().lower().find(searchTerm) != -1:
+			if user.get_id().lower().find(searchTerm) != -1 and user.isPatient() == False:
 				returnArray.append(user)
 		return returnArray
 

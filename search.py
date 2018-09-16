@@ -41,6 +41,7 @@ def searchFiles(searchTerm, option):
         if providers:
             for provider in providers:
                 centres = provider.getListOfCentres()
+                print("hi")
                 for centre in centres:
                     found = True
                     returnArray = searchFiles(centre[0].getName(), "healthCentre")
@@ -51,6 +52,9 @@ def searchFiles(searchTerm, option):
 
         if found == True:
             returnDict = [found, resultArray]
+            return returnDict
+        else:
+            returnDict = [found, []]
             return returnDict
 
 if __name__ == '__main__':
