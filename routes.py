@@ -118,5 +118,4 @@ def reason():
 
 @app.route('/appointments', methods=['GET', 'POST'])
 def showBookings():
-
     return render_template('appointments.html', appointments=current_user.getListOfAppointments())
