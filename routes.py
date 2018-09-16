@@ -44,7 +44,7 @@ def search():
 @login_required
 def loginSuccess():
     currentID = current_user.get_id()
-    return render_template("loginSuccess.html", username="hi")
+    return render_template("loginSuccess.html")
 
 @app.route('/logout')
 def logout():
@@ -106,7 +106,7 @@ def bookAppointment(email):
     # find current user logged in and add the appointment
     # def addAppointment(provider_email, patient_email, date, time):
     # addAppointment(request.form['email'])
-    addAppointment(email, current_user.get_id(), str(request.form['time']), "0000", request.form['bookReason'])
+    addAppointment(email, current_user.get_id(), str(request.form['time']), request.form["date"], request.form['bookReason'])
     print(current_user.getListOfAppointments()[0].provider)
     return render_template('appointmentSuccess.html')
 

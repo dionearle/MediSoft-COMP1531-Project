@@ -24,6 +24,26 @@
 			margin: 100px;
 		}
 		</style>
+		<!--  jQuery -->
+		<script type="text/javascript" src="https://code.jquery.com/jquery-1.11.3.min.js"></script>
+		<!-- Bootstrap Date-Picker Plugin -->
+		<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.4.1/js/bootstrap-datepicker.min.js"></script>
+		<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.4.1/css/bootstrap-datepicker3.css"/>
+
+		<script>
+		    $(document).ready(function(){
+		      var date_input=$('input[name="date"]'); //our date input has the name "date"
+		      var container=$('.bootstrap-iso form').length>0 ? $('.bootstrap-iso form').parent() : "body";
+		      var options={
+		        format: 'mm/dd/yyyy',
+		        container: container,
+		        todayHighlight: true,
+		        autoclose: true,
+		      };
+		      date_input.datepicker(options);
+		    })
+		</script>
+
 		{% block head %}{% endblock %}
 	</head>
 	<body>
@@ -32,13 +52,10 @@
 			  	<a class="active item" href="/">
 			    	Home
 			  	</a>
-			  	<a class="item" href="search">
+			  	<a class="item" href="{{url_for('search')}}">
 			    	Search
 				</a>
-			  	<a class="item">	
-			    	Friends
-			  	</a>
-			  	<a class="item" href="showBookings">	
+			  	<a class="item" href="{{url_for('showBookings')}}">	
 			    	Bookings
 			  	</a>
 			  	<div class="right menu">
@@ -61,6 +78,10 @@
                         <option value="{{time}}">{{time}}</option>
                     {% endfor %}
                 </select> 
+                <div class="form-group"> <!-- Date input -->
+			        <label class="control-label" for="date"><h2>Date</h2></label>
+			        <input class="form-control" id="date" name="date" placeholder="MM/DD/YYY" type="text"/>
+			    </div>
                 <h2> Reason(optional) </h2>
                 <input name="bookReason" placeholder="Additional Reason" >
                 <button id="button" type="submit" class="btn btn-primary">Submit</button>

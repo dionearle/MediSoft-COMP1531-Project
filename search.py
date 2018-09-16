@@ -41,7 +41,6 @@ def searchFiles(searchTerm, option):
         if providers:
             for provider in providers:
                 centres = provider.getListOfCentres()
-                print("hi")
                 for centre in centres:
                     found = True
                     returnArray = searchFiles(centre[0].getName(), "healthCentre")
