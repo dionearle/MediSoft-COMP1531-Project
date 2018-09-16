@@ -10,6 +10,7 @@
     	<script src="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.2.9/semantic.min.js"></script>
 
 		{% block head %}{% endblock %}
+        {% block book_script %}{% endblock %}
 	</head>
 	<body>
 		<div style="padding: 50px">
@@ -23,6 +24,7 @@
                 {% block search_banner %}{% endblock %}
                 {% block book_banner %}{% endblock %}
                 {% block appointments_banner %}{% endblock %}
+                {% block profile_banner %}{% endblock %}
                 {% else %}
                 <div class="right menu">
                     <a class="ui item" href="/login">

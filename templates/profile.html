@@ -1,4 +1,20 @@
 {% extends 'base.html' %}
+{% block profile_banner %}
+<a class="item" href="/">
+    Home
+</a>
+<a class="active item" href="/search">
+    Search
+</a>
+<a class="item" href="/appointments">
+    Appointments
+</a>
+<div class="right menu">
+    <a class="ui item" href="/logout">
+        Logout
+    </a>
+</div>
+{% endblock %}
 {% block profile %}
     <style>
         #information {
@@ -16,7 +32,7 @@
     {% else %}
     <form method="POST" action="/book/{{ name }}">
     {% endif %}
-        <h2 style="text-align: center">Information</h2>
+        <h2 style="text-align: center">Profile page</h2>
         <table class="table" id="information">
             <tr>
                 <th>Centre Type</th>
@@ -42,26 +58,42 @@
                 <th>Rating</th>
                 <td>{{ rating }}</td>
             </tr>
-    {% if option == "healthProvider" or option == "service" %}
+    {% if option == "healthProvider"%}
             <tr>
                 <th>Email</th>
                 <td name="email">{{ email }}</td>
             </tr>
+            {% if current_user.isPatient() == True %}
+                    <tr>
+                        <td>
+                            <button class="ui labeled icon button">
+                              <i class="pencil icon"></i>
+                                Book appointment
+                            </button>
+                        </td>
+                    </tr>
+            {% endif %}
     {% endif %}
     {% if option == "service" %}
+            <tr>
+                <th>Email</th>
+                <td name="email">{{ email }}</td>
+            </tr>
             <tr>
                 <th>Service</th>
                 <td>{{ service }}</td>
             </tr>
+            {% if current_user.isPatient() == True %}
+                    <tr>
+                        <td>
+                            <button class="ui labeled icon button">
+                              <i class="pencil icon"></i>
+                                Book appointment
+                            </button>
+                        </td>
+                    </tr>
+            {% endif %}
     {% endif %}
-            <tr>
-                <td>
-
-                        <button id="appointmentButton" type="submit" class="btn btn-primary">Book Appointment</button>
-
-                </td>
-            </tr>
-
         </table>
     </form>
 {% endblock %}
