@@ -1,5 +1,7 @@
 
+
 class User():
+	_appointments = []
 	def __init__(self, email, password, patient):
 		self._email = email
 		self._password = password
@@ -17,6 +19,8 @@ class User():
 		return self._isPatient
 	def get_password(self):
 		return self._password
+	def addAppointment(self, appointment):
+		self._appointments.append(appointment)
 
 class Patient(User):
 	def __init__(self, email, password, medicare):
