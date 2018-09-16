@@ -45,7 +45,7 @@ def initialise_health_centres():
     with open('health_centres.csv') as w:
         reader = csv.DictReader(w)
         for row in reader:
-            centre = HealthCentre(row['name'], row['suburb'], row['phone'], row['abn'], 0, [], row['centre_type'])
+            centre = HealthCentre(row['name'], row['suburb'], row['phone'], row['abn'], 0, row['centre_type'])
             healthCentres.append(centre)
     return healthCentres
 
