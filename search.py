@@ -52,27 +52,6 @@ def searchFiles(searchTerm, option):
         if found == True:
             returnDict = [found, resultArray]
             return returnDict
-    elif option == "service":
-        resultArray = []
-        resultDict = {}
-
-        with open("provider.csv") as w:
-            readLinesArray = w.readlines()
-            for i in range(len(readLinesArray)):
-                (email, password, service) = readLinesArray[i].split(',')
-                service = service.lower()
-                if (service.find(searchTerm) != -1 or searchTerm == ""):
-                    found = True
-                    service = service[:-1] # delete newline character
-                    returnArray = searchFiles(email, "healthProvider")
-                    returnDict = returnArray[1][0]
-                    returnDict["service"] = service
-                    resultArray.append(returnDict)
-        if found == True:
-            returnDict = [found, resultArray]
-            return returnDict
-    return [False, []]
-
 
 if __name__ == '__main__':
     print(str(searchFiles("Hospital", "healthCentre")))
