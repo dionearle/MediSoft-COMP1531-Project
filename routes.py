@@ -97,18 +97,16 @@ def book(email):
                 '15:00-15:30', '15:30-16:00', '16:00-17:30', '16:30-17:00', '17:00-17:30', '17:30-18:00', 
                 '18:00-18:30', '18:30-19:00', '19:00-20:30', '19:30-20:00', '20:00-20:30', '20:30-21:00', 
                 '21:00-21:30', '21:30-22:00', '22:00-23:30', '22:30-23:00', '23:00-23:30', '23:30-00:00']
-    if request.method == 'POST':
-        # find provider and add the appointment
-        # find current user logged in and add the appointment
-        # def addAppointment(provider_email, patient_email, date, time):
-        # addAppointment(request.form['email'])
-        print("addAppointment: " + email)
     return render_template('book.html', times=times, name=email)  
 
 @app.route('/bookAppointment/<email>', methods=['GET', 'POST'])
 @login_required
 def bookAppointment(email):
-    addAppointment(email, current_user.get_id(), str(request.form['time']), "0000")
+    # find provider and add the appointment
+    # find current user logged in and add the appointment
+    # def addAppointment(provider_email, patient_email, date, time):
+    # addAppointment(request.form['email'])
+    addAppointment(email, current_user.get_id(), str(request.form['time']), "0000", request.form['bookReason'])
     print(current_user.getListOfAppointments()[0].provider)
     return render_template('appointmentSuccess.html')
 
@@ -119,3 +117,7 @@ def reason():
     processedText = text.upper()
     return processedText
 
+@app.route('/showBookings', methods=['GET', 'POST'])
+def showBookings():
+
+    return render_template('showBookings.html', appointments=current_user.getListOfAppointments())
