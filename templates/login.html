@@ -1,0 +1,44 @@
+{% extends 'base.html' %}
+{% block login %}
+<div class="ui middle aligned center aligned grid">
+  <div class="column">
+    <h2 class="ui image header">
+      <div class="content">
+        Log-in to your account
+      </div>
+    </h2>
+    <form method="POST" class="ui large form">
+      <div class="ui stacked secondary  segment">
+        <div class="field">
+          <div class="ui left icon input">
+            <i class="user icon"></i>
+            <input type="text" name="loginEmail" placeholder="E-mail address">
+          </div>
+        </div>
+        <div class="field">
+          <div class="ui left icon input">
+            <i class="lock icon"></i>
+            <input type="password" name="loginPassword" placeholder="Password">
+          </div>
+        </div>
+        <button class="ui fluid large teal submit button">Login</button>
+      </div>
+
+      {% if success == false %}
+      <div class="ui negative message">
+          <div class="header">
+              Incorrect username or password
+          </div>
+        <p>Please try again
+      </p></div>
+      {% endif %}
+
+    </form>
+
+    <div class="ui message">
+      Don't have an account? <a href="https://www.google.com?">Register</a>
+    </div>
+  </div>
+</div>
+
+{% endblock %}

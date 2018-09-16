@@ -1,0 +1,35 @@
+{% extends 'base.html' %}
+{% block home_banner %}
+<a class="active item" href="/">
+    Home
+</a>
+<a class="item" href="/search">
+    Search
+</a>
+<a class="item" href="book">
+    Appointments
+</a>
+<div class="right menu">
+    <a class="ui item" href="/logout">
+        Logout
+    </a>
+</div>
+{% endblock %}
+{% block welcome %}
+<br>
+<br>
+<div class="ui middle aligned center aligned grid">
+  <div class="column">
+    <h2 class="ui image header">
+      <div class="content">
+          {% if current_user.is_authenticated %}
+          Welcome to MediSoft!
+          {% else %}
+          Please login to access MediSoft
+          {% endif %}
+      </div>
+    </h2>
+  </div>
+</div>
+
+{% endblock %}
