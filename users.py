@@ -1,13 +1,13 @@
 from abc import ABC, abstractmethod
 
 class User(ABC):
-    _appointments = []
 
     @abstractmethod
     def __init__(self, email, password, patient):
         self._email = email
         self._password = password
         self._isPatient = patient
+        self._appointments = []
 
     def is_active(self):
         return True
@@ -28,6 +28,7 @@ class User(ABC):
         return self._password
 
     def addAppointment(self, appointment):
+        print("adding appointment!")
         self._appointments.append(appointment)
 
     def getListOfAppointments(self):
