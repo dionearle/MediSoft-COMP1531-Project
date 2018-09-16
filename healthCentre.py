@@ -24,5 +24,7 @@ class HealthCentre(object):
 		return self._centre_type
 	def addProvider(self, provider):
 		self._providers.append(provider)
+	def getProviders(self):
+		return self._providers
 
 
