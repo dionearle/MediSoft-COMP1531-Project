@@ -3,6 +3,7 @@ from flask_login import LoginManager,login_user, current_user, login_required, l
 from flask import request, render_template, redirect, url_for
 from users import User,  Patient, HealthProvider
 from search import searchFiles
+from bookAppointment import addAppointment
 import csv
 
 
@@ -84,11 +85,10 @@ def profile(name):
             phone=phone, suburb=suburb, rating = 0)
     return render_template("profile.html")
     
-@app.route('/book', methods=['GET', 'POST'])
+@app.route('/book/<name>', methods=['GET', 'POST'])
 @login_required
-def book():
-    if request.method == "GET":
-        times = ['00:00-00:30', '00:30-01:00', '01:00-01:30', '01:30-02:00', '02:00-02:30', '02:30-03:00', 
+def book(name):
+    times = ['00:00-00:30', '00:30-01:00', '01:00-01:30', '01:30-02:00', '02:00-02:30', '02:30-03:00', 
                 '03:00-03:30', '03:30-04:00', '04:00-04:30', '04:30-05:00', '05:00-05:30', '05:30-06:00', 
                 '06:00-06:30', '06:30-07:00', '07:00-07:30', '07:30-08:00', '08:00-08:30', '08:30-09:00', 
                 '09:00-09:30', '09:30-10:00', '10:00-10:30', '10:30-11:00', '11:00-11:30', '11:30-12:00',
@@ -97,9 +97,13 @@ def book():
                 '15:00-15:30', '15:30-16:00', '16:00-17:30', '16:30-17:00', '17:00-17:30', '17:30-18:00', 
                 '18:00-18:30', '18:30-19:00', '19:00-20:30', '19:30-20:00', '20:00-20:30', '20:30-21:00', 
                 '21:00-21:30', '21:30-22:00', '22:00-23:30', '22:30-23:00', '23:00-23:30', '23:30-00:00']
-                                
-    return render_template('book.html', times=times)  
-    
+    # if method == 'POST':
+    #     # find provider and add the appointment
+    #     # find current user logged in and add the appointment
+    #     # def addAppointment(provider_email, patient_email, date, time):
+    #     addAppointment(request.form["name"])
+    return render_template('book.html', times=times, name=name)  
+
 @app.route('/book', methods=['POST'])
 @login_required
 def reason():
