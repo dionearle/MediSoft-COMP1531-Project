@@ -1,9 +1,9 @@
-from server import app, login_manager, userManager
+from server import app, login_manager, userManager, appointmentManager
 from flask_login import LoginManager,login_user, current_user, login_required, logout_user
 from flask import request, render_template, redirect, url_for
 from users import User,  Patient, HealthProvider
 from search import searchFiles
-from bookAppointment import addAppointment
+from appointmentManager import AppointmentManager
 import csv
 
 
@@ -105,8 +105,7 @@ def bookAppointment(email):
     # find current user logged in and add the appointment
     # def addAppointment(provider_email, patient_email, date, time):
     # addAppointment(request.form['email'])
-    addAppointment(email, current_user.get_id(), str(request.form['time']), request.form["date"], request.form['bookReason'])
-    print(current_user.getListOfAppointments()[0].provider)
+    appointmentManager.addAppointment(userManager, email, current_user.get_id(), str(request.form['time']), request.form["date"], request.form['bookReason'])
     return render_template('index.html', booked=True)
 
 @app.route('/book', methods=['POST'])
@@ -118,4 +117,4 @@ def reason():
 
 @app.route('/appointments', methods=['GET', 'POST'])
 def showBookings():
-    return render_template('appointments.html', appointments=current_user.getListOfAppointments())
+    return render_template('appointments.html', appointments=appointmentManager.getAppointments(current_user))
