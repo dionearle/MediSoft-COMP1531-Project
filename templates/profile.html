@@ -49,5 +49,13 @@
             <td>{{ service }}</td>
         </tr>
 {% endif %}
+        <tr>
+            <td>
+                <form method="POST" action="/book/{{ name }}">
+                    <button id="appointmentButton" type="submit" class="btn btn-primary">Book Appointment</button>
+                </form>
+            </td>   
+        </tr>
+
     </table>
 {% endblock %}
