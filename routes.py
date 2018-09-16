@@ -1,33 +1,13 @@
-from server import app, login_manager, currentLoggedIn
+from server import app, login_manager, userManager
 from flask_login import LoginManager,login_user, current_user, login_required, logout_user
 from flask import request, render_template, redirect, url_for
-from users import User
+from users import User,  Patient, HealthProvider
 from search import searchFiles
 import csv
 
 
-
 def get_user(user_id):
-    userDict = {}
-
-    with open('provider.csv') as w:
-        reader = csv.DictReader(w)
-        for row in reader:
-            if (row['provider_email'] == user_id):
-                userDict['email'] = row['provider_email']
-                userDict['password'] = row['password']
-                break
-    with open('patient.csv') as w:
-        reader = csv.DictReader(w)
-        for row in reader:
-            if (row['patient_email'] == user_id):
-                userDict['email'] = row['patient_email']
-                userDict['password'] = row['password']
-
-                break
-
-    user_object = User(user_id, userDict['password'])
-    return user_object
+    return userManager.getID(user_id)
 
 @login_manager.user_loader
 def load_user(user_id):
@@ -39,46 +19,15 @@ def load_user(user_id):
 def index():
     if current_user.is_authenticated == False:
         if request.method == 'POST':
-            with open("patient.csv", "r") as w:
-                patient = False
-                readLinesArray = w.readlines() # interpret data in patient.csv as an array
-                for i in range(4):
-                    (email, password) = readLinesArray[i].split(',') # split data into email and password
-                    password = password[:-1]
-                    # if email and password match
-                    if email == request.form["loginEmail"] and \
-                        password == request.form["loginPassword"]:
+            if userManager.correctCredentials(request.form["loginEmail"], request.form["loginPassword"]) == True:
 
-                        patient = True # to detect later whether to check providers.csv file or not
-                        break
-                
-                if patient == True: 
-                    user = User(email, password)
-                    login_user(user)
-                    currentLoggedIn = email
-                    return redirect(url_for('loginSuccess'))
-
-            with open("provider.csv", "r") as w:
-                provider = False # for detecting whether login failed or not later
-                readLinesArray = w.readlines() # interpret data in provider.csv as an array
-                for i in range(8):
-                    (name, specialisation, password) = readLinesArray[i].split(',') # pretty much same as above
-                    password = password[:-1]
-                    if name == request.form["loginEmail"] and \
-                        password == request.form["loginPassword"]:
-                        provider = True
-                        break
-                if provider == True:
-                    user = User(name, password)
-                    login_user(user)
-                    currentLoggedIn = name
-                    print("currentLoggedIn: " + currentLoggedIn)
-                    return redirect(url_for('loginSuccess'))
+                user = userManager.getID(request.form["loginEmail"])
+                login_user(user)
+                return redirect(url_for('loginSuccess'))
             return render_template("loginPost.html", success=False) # if login failed, return an alert saying "Wrong email/password"
         return render_template("base.html") # runs when the user first opens the page
     else:
         return redirect(url_for('loginSuccess'))
-
 
 @app.route('/search', methods=['GET', 'POST'])
 @login_required
