@@ -1,0 +1,91 @@
+{% extends 'base.html' %}
+{% block update_profile_banner %}
+<a class="item" href="/">
+    Home
+</a>
+<a class="item" href="/search">
+    Search
+</a>
+<a class="item" href="/appointments">
+    Appointments
+</a>
+<a class="active item" href="/profile/{{ current_user.get_id() }}">
+    Profile
+</a>
+<div class="right menu">
+    <a class="ui item" href="/logout">
+        Logout
+    </a>
+</div>
+{% endblock %}
+{% block update_profile %}
+    <style>
+        #information {
+            display: block;
+            position: relative;
+            margin: 40px auto;
+            height: auto;
+            width: 500px;
+            padding: 20px;
+            border: 1px solid;
+        }
+    </style>
+
+    <form method="POST" action="/update/{{ current_user.get_id() }}">
+    <h2 style="text-align: center">Update Your Information</h2>
+
+    <table class="table" id="information">
+        <tr>
+            <th>Update email address</th>
+            <td>
+            <div class="ui input">
+                <input type="text" id="searchText" name="new_email" placeholder="New email ">
+            </div>
+            </td>
+        </tr>
+        <tr>
+            <th>Update password</th>
+            <td>
+            <div class="ui input">
+                <input type="text" id="searchText" name="new_password" placeholder="New password ">
+            </div>
+            </td>
+        </tr>
+    {% if current_user.isPatient() == True %}
+        <tr>
+            <th>Update medicare number</th>
+            <td>
+            <div class="ui input">
+                <input type="text" id="searchText" name="new_medicare" placeholder="New medicare ">
+            </div>
+            </td>
+        </tr>
+    {% else %}
+    <tr>
+        <th>Update profession</th>
+        <td>
+        <div class="ui input">
+            <input type="text" id="searchText" name="new_profession" placeholder="New profession ">
+        </div>
+        </td>
+    </tr>
+    <tr>
+        <th>Update provider number</th>
+        <td>
+        <div class="ui input">
+            <input type="text" id="searchText" name="new_providerNum" placeholder="New provider number ">
+        </div>
+        </td>
+    </tr>
+    {% endif %}
+        <tr>
+            <td>
+                <button class="ui labeled icon button">
+                  <i class="edit icon"></i>
+                    Submit changes
+                </button>
+            </td>
+        </tr>
+    </table>
+</form>
+{% endblock %}

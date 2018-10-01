@@ -55,34 +55,48 @@ def login():
 def profile(name):
     if request.method == "POST":
         option = request.form["option"]
+        name = request.form["name"]
+        typeCentre = request.form["typeCentre"]
+        phone = request.form["phone"]
+        suburb = request.form["suburb"]
+        abn = request.form["abn"]
         if option == "healthCentre" or option == "suburb":
-            typeCentre = request.form["typeCentre"]
-            name = request.form["name"]
-            abn = request.form["abn"]
-            phone = request.form["phone"]
-            suburb = request.form["suburb"]
             return render_template("profile.html",option=option, typeCentre=typeCentre, name=name, abn=abn,
             phone=phone, suburb=suburb, rating = 0)
         elif option == "healthProvider":
             email = request.form["user"]
-            typeCentre = request.form["typeCentre"]
-            name = request.form["name"]
-            abn = request.form["abn"]
-            phone = request.form["phone"]
-            suburb = request.form["suburb"]
             return render_template("profile.html",option=option, email=email, typeCentre=typeCentre, name=name, abn=abn,
             phone=phone, suburb=suburb, rating = 0)
         elif option == "service":
             email = request.form["user"]
             service = request.form["service"]
-            typeCentre = request.form["typeCentre"]
-            name = request.form["name"]
-            abn = request.form["abn"]
-            phone = request.form["phone"]
-            suburb = request.form["suburb"]
             return render_template("profile.html",option=option, email=email, service=service, typeCentre=typeCentre, name=name, abn=abn,
             phone=phone, suburb=suburb, rating = 0)
-    return render_template("profile.html")
+    return render_template("profile.html", option="self")
+
+@app.route('/update/<name>', methods=['GET', 'POST'])
+def update_profile(name):
+
+    if request.method == "POST":
+        new_email = request.form["new_email"]
+        if new_email != "":
+            current_user.set_email(request.form[new_email])
+        new_password = request.form["new_password"]
+        if new_password != "":
+            current_user.set_password(request.form[new_password])
+        if current_user.isPatient() == True:
+            new_medicare = request.form["new_medicare"]
+            if new_medicare != "":
+                current_user.set_medicare(request.form[new_medicare])
+        else:
+            new_profession = request.form["new_profession"]
+            if new_profession != "":
+                current_user.set_profession(request.form[new_profession])
+            new_providerNum = request.form["new_providerNum"]
+            if new_providerNum != "":
+                current_user.set_providerNum(request.form[new_providerNum])
+        return redirect(url_for('profile', name = current_user.get_id()))
+    return render_template("update_profile.html")
 
 @app.route('/book/<email>', methods=['GET', 'POST'])
 @login_required

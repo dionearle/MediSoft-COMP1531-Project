@@ -3,12 +3,27 @@
 <a class="item" href="/">
     Home
 </a>
+{% if option == "self" %}
+<a class="item" href="/search">
+    Search
+</a>
+{% else %}
 <a class="active item" href="/search">
     Search
 </a>
+{% endif %}
 <a class="item" href="/appointments">
     Appointments
 </a>
+{% if option == "self" %}
+<a class="active item" href="/profile/{{ current_user.get_id() }}">
+    Profile
+</a>
+{% else %}
+<a class="item" href="/profile/{{ current_user.get_id() }}">
+    Profile
+</a>
+{% endif %}
 <div class="right menu">
     <a class="ui item" href="/logout">
         Logout
@@ -27,13 +42,70 @@
             border: 1px solid;
         }
     </style>
+
     {% if option == "healthProvider" or option == "service" %}
     <form method="POST" action="/book/{{ email }}">
-    {% else %}
+    <h2 style="text-align: center">{{ email }}'s Profile</h2>
+    {% elif option == "healthCentre" or option == "suburb" %}
     <form method="POST" action="/book/{{ name }}">
+    <h2 style="text-align: center">{{ name }}'s Profile</h2>
+    {% else %}
+    <form method="GET" action="/update/{{ current_user.get_id() }}">
+    <h2 style="text-align: center">Your Profile</h2>
     {% endif %}
-        <h2 style="text-align: center">Profile page</h2>
-        <table class="table" id="information">
+
+    <table class="table" id="information">
+    {% if option == "self" %}
+        <tr>
+            <th>Email</th>
+            <td name="email">{{ current_user.get_id() }}</td>
+        </tr>
+        <tr>
+            <th>Password</th>
+            <td name="password">{{ current_user.get_password() }}</td>
+        </tr>
+    {% if current_user.isPatient() == True %}
+        <tr>
+            <th>Medicare</th>
+            <td name="medicare">{{ current_user.get_medicare() }}</td>
+        </tr>
+    {% else %}
+    <tr>
+        <th>Profession</th>
+        <td name="profession">{{ current_user.getProfession() }}</td>
+    </tr>
+    <tr>
+        <th>Provider Number</th>
+        <td name="profession">{{ current_user.get_providerNum() }}</td>
+    </tr>
+    <tr>
+        <th>Working Hours</th>
+        <td name="profession">{{ current_user.get_workingHours() }}</td>
+    </tr>
+    <tr>
+        <th>Rating</th>
+        <td name="profession">{{ current_user.get_rating() }}</td>
+    </tr>
+    <tr>
+        <th>Centres</th>
+        <td ></td>
+    </tr>
+    {% for item in current_user.getListOfCentres() %}
+    <tr>
+        <td>{{ item[0].getName() }}</td>
+        <td ></td>
+    </tr>
+    {% endfor %}
+    {% endif %}
+        <tr>
+            <td>
+                <button class="ui labeled icon button">
+                  <i class="edit icon"></i>
+                    Update Information
+                </button>
+            </td>
+        </tr>
+    {% else %}
             <tr>
                 <th>Centre Type</th>
                 <td>{{ typeCentre }}</td>
@@ -58,31 +130,17 @@
                 <th>Rating</th>
                 <td>{{ rating }}</td>
             </tr>
-    {% if option == "healthProvider"%}
+    {% if option == "service" or option == "healthProvider" %}
             <tr>
                 <th>Email</th>
                 <td name="email">{{ email }}</td>
             </tr>
-            {% if current_user.isPatient() == True %}
-                    <tr>
-                        <td>
-                            <button class="ui labeled icon button">
-                              <i class="pencil icon"></i>
-                                Book appointment
-                            </button>
-                        </td>
-                    </tr>
-            {% endif %}
-    {% endif %}
-    {% if option == "service" %}
-            <tr>
-                <th>Email</th>
-                <td name="email">{{ email }}</td>
-            </tr>
+            {% if option == "service" %}
             <tr>
                 <th>Service</th>
                 <td>{{ service }}</td>
             </tr>
+            {% endif %}
             {% if current_user.isPatient() == True %}
                     <tr>
                         <td>
@@ -93,7 +151,13 @@
                         </td>
                     </tr>
             {% endif %}
+    {% else %}
+    <tr>
+        <th>INSERT VIEW LIST OF PROVIDERS HERE</th>
+        <td>jeff</td>
+    </tr>
     {% endif %}
-        </table>
-    </form>
+    {% endif %}
+    </table>
+</form>
 {% endblock %}
