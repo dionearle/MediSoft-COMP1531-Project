@@ -1,4 +1,4 @@
-from server import app, login_manager, userManager, appointmentManager
+from server import app, login_manager, userManager, appointmentManager, centreManager
 from flask_login import LoginManager,login_user, current_user, login_required, logout_user
 from flask import request, render_template, redirect, url_for
 from users import User,  Patient, HealthProvider
@@ -61,8 +61,11 @@ def profile(name):
             abn = request.form["abn"]
             phone = request.form["phone"]
             suburb = request.form["suburb"]
+            centre = centreManager.searchHealthCentresByName(name)
+            print(str(centre))
+            print(str(centre[0].getProviders()))
             return render_template("profile.html",option=option, typeCentre=typeCentre, name=name, abn=abn,
-            phone=phone, suburb=suburb, rating = 0)
+            phone=phone, suburb=suburb, rating = 0, providers=centre[0].getProviders())
         elif option == "healthProvider":
             email = request.form["user"]
             typeCentre = request.form["typeCentre"]

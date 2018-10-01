@@ -12,10 +12,13 @@ def getCentres(centreManager, email):
         for row in reader:
             # provider_email,health_centre_name
             if row['provider_email'] == email:
-                centresArray.append(centreManager.searchHealthCentresByName(row['health_centre_name']))
+                centre = centreManager.searchHealthCentresByName(row['health_centre_name'])
+                centresArray.append(centre[0])
 
     
     return centresArray
+
+
 
 def initialise_users(centreManager):
     users = []

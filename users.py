@@ -56,3 +56,17 @@ class HealthProvider(User):
 
     def getProfession(self):
         return self._profession
+
+    @property
+    def providerNum(self):
+        return self._providerNum
+    
+    @property
+    def rating(self):
+        return self._rating
+
+    @property
+    def workingHours(self):
+        return self._workingHours
+    
+    

@@ -95,5 +95,45 @@
             {% endif %}
     {% endif %}
         </table>
+
+    
     </form>
+    
+    {% if option == "healthCentre" or option == "suburb" %}
+    <table class="table">
+    <thead>
+        <tr>
+            <th scope="col">#</th>
+            <th scope="col">Email</th>
+            <th scope="col">Provider Number</th>
+            <th scope="col">Profession</th>
+            <th scope="col">Rating</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for item in providers %}
+
+        <tr>
+            <th scope="row">{{ loop.index }}</th>
+            <td>{{ item.get_id() }} </td>
+            <td>{{ item.providerNum }}</td>
+            <td>{{ item.getProfession() }}</td>
+            <td>{{ item.rating }}</td>
+            <td>
+                <form method='POST' action='/profile/{{ item["name"] }}'>
+                    <input type="hidden" value='{{ option }}' name="option"/>
+                    <input type="hidden" value="{{ item["user"] }}" name="user"/>
+                    <input type="hidden" value="{{ item["typeCentre"] }}" name="typeCentre"/>
+                    <input type="hidden" value="{{ item["name"] }}" name="name"/>
+                    <input type="hidden" value="{{ item["abn"] }}" name="abn"/>
+                    <input type="hidden" value="{{ item["phone"] }}" name="phone"/>
+                    <input type="hidden" value="{{ item["suburb"] }}" name="suburb"/>
+                    <input type="submit" class="ui basic button" value="View Profile"/>
+                </form>
+            </td>
+        </tr>
+        {% endfor %}
+    </tbody>
+    </table>
+    {% endif %}
 {% endblock %}
