@@ -51,9 +51,18 @@ def login():
         return redirect(url_for('index'))
 
 
-@app.route('/profile/<name>', methods=['GET', 'POST'])
-def profile(name):
+@app.route('/profile/<typeUser>/<name>', methods=['GET', 'POST'])
+def profile(typeUser, name):
     if request.method == "POST":
+        print("typeUser: " + typeUser);
+        if typeUser == "centre":
+            centre = centreManager.searchHealthCentresByName(name)
+            print("hello this is centre how are you today lol")
+            return render_template("profile.html", option="healthCentre", centre=centre[0])
+        elif typeUser == "provider":
+            provider = userManager.searchID(name)
+            return render_template("profile.html", option="provider", provider=provider[0])
+
         option = request.form["option"]
         if option == "healthCentre" or option == "suburb":
             typeCentre = request.form["typeCentre"]

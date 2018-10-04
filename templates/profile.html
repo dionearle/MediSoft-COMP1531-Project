@@ -27,13 +27,40 @@
             border: 1px solid;
         }
     </style>
-    {% if option == "healthProvider" or option == "service" %}
-    <form method="POST" action="/book/{{ email }}">
+    {% if option == "provider" or option == "service" %}
+    <form method="POST" action="/book/{{ provider.get_id() }}">
     {% else %}
     <form method="POST" action="/book/{{ name }}">
     {% endif %}
-        <h2 style="text-align: center">Profile page</h2>
+
+    {% if option == "healthCentre" %}
+        <h2 style="text-align: center">Profile Page - Health Centre</h2>
         <table class="table" id="information">
+            <tr>
+                <th>Centre Type</th>
+                <td>{{ centre.getCentreType() }}</td>
+            </tr>
+            <tr>
+                <th>Name</th>
+                <td>{{ centre.getName() }}</td>
+            </tr>
+            <tr>
+                <th>ABN</th>
+                <td>{{ centre.getABN() }}</td>
+            </tr>
+            <tr>
+                <th>Phone</th>
+                <td>{{ centre.getPhone() }}</td>
+            </tr>
+            <tr>
+                <th>Suburb</th>
+                <td>{{ centre.getSuburb() }}</td>
+            </tr>
+            <tr>
+                <th>Rating</th>
+                <td>{{ centre.getRating() }}</td>
+            </tr>
+        <!-- <table class="table" id="information">
             <tr>
                 <th>Centre Type</th>
                 <td>{{ typeCentre }}</td>
@@ -94,11 +121,48 @@
                     </tr>
             {% endif %}
     {% endif %}
-        </table>
+        </table> -->
 
+        </table>
     
+    {% endif %}
+    {% if option == "provider" %}
+        <h2 style="text-align: center">Profile Page - Provider</h2>
+        <table class="table" id="information">
+            <tr>
+                <th>Profession</th>
+                <td>{{ provider.getProfession() }}</td>
+            </tr>
+            <tr>
+                <th>Email</th>
+                <td>{{ provider.get_id() }}</td>
+            </tr>
+            <tr>
+                <th>Working Hours</th>
+                <td>{{ provider.workingHours }}</td>
+            </tr>
+            <tr>
+                <th>Rating</th>
+                <td>{{ provider.rating }}</td>
+            </tr>
+            <tr>
+                <th>Provider Number</th>
+                <td>{{ provider.providerNum }}</td>
+            </tr>
+            {% if current_user.isPatient() == True %}
+                    <tr>
+                        <td>
+                            <button class="ui labeled icon button">
+                              <i class="pencil icon"></i>
+                                Book appointment
+                            </button>
+                        </td>
+                    </tr>
+            {% endif %}
+        </table>
+    {% endif %}
     </form>
-    
+
     {% if option == "healthCentre" or option == "suburb" %}
     <table class="table">
     <thead>
@@ -111,7 +175,7 @@
         </tr>
     </thead>
     <tbody>
-        {% for item in providers %}
+        {% for item in centre.getProviders() %}
 
         <tr>
             <th scope="row">{{ loop.index }}</th>
@@ -120,7 +184,7 @@
             <td>{{ item.getProfession() }}</td>
             <td>{{ item.rating }}</td>
             <td>
-                <form method='POST' action='/profile/{{ item["name"] }}'>
+                <form method='POST' action='/profile/provider/{{ item["name"] }}'>
                     <input type="hidden" value='{{ option }}' name="option"/>
                     <input type="hidden" value="{{ item["user"] }}" name="user"/>
                     <input type="hidden" value="{{ item["typeCentre"] }}" name="typeCentre"/>
@@ -136,4 +200,6 @@
     </tbody>
     </table>
     {% endif %}
+
+    
 {% endblock %}

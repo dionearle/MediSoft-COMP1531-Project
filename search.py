@@ -43,7 +43,7 @@ def searchFiles(searchTerm, option):
                 centres = provider.getListOfCentres()
                 for centre in centres:
                     found = True
-                    returnArray = searchFiles(centre[0].getName(), "healthCentre")
+                    returnArray = searchFiles(centre.getName(), "healthCentre")
                     returnDict = returnArray[1][0]
                     returnDict["user"] = provider.get_id()
                     returnDict["service"] = provider.getProfession()
