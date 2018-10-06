@@ -4,6 +4,7 @@ from flask import request, render_template, redirect, url_for
 from users import User,  Patient, HealthProvider
 from search import searchFiles
 from appointmentManager import AppointmentManager
+from save import saveData
 import csv
 
 
@@ -101,6 +102,9 @@ def update_profile(name):
             new_providerNum = request.form["new_providerNum"]
             if new_providerNum != "":
                 current_user.set_providerNum(new_providerNum)
+
+        # write all data to files
+        saveData(centreManager, userManager, appointmentManager)
         return render_template("profile.html", option="self")
     return render_template("update_profile.html")
 
@@ -126,6 +130,7 @@ def bookAppointment(email):
     # def addAppointment(provider_email, patient_email, date, time):
     # addAppointment(request.form['email'])
     appointmentManager.addAppointment(userManager, email, current_user.get_id(), str(request.form['time']), request.form["date"], request.form['bookReason'])
+    saveData(centreManager, userManager, appointmentManager)
     return render_template('index.html', booked=True)
 
 @app.route('/book', methods=['POST'])
