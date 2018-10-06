@@ -28,7 +28,6 @@ class User(ABC):
         return self._password
 
     def addAppointment(self, appointment):
-        print("adding appointment!")
         self._appointments.append(appointment)
 
     def getListOfAppointments(self):

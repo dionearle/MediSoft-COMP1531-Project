@@ -16,11 +16,11 @@
     Appointments
 </a>
 {% if option == "self" %}
-<a class="active item" href="/profile/{{ current_user.get_id() }}">
+<a class="active item" href="/profile/self/{{current_user.get_id()}}">
     Profile
 </a>
 {% else %}
-<a class="item" href="/profile/{{ current_user.get_id() }}">
+<a class="item" href="/profile/self/{{current_user.get_id()}}">
     Profile
 </a>
 {% endif %}
@@ -43,19 +43,19 @@
         }
     </style>
 
-    {% if option == "healthProvider" or option == "service" %}
-    <form method="POST" action="/book/{{ email }}">
-    <h2 style="text-align: center">{{ email }}'s Profile</h2>
+    {% if option == "provider" or option == "service" %}
+    <form method="POST" action="/book/{{ provider.get_id() }}">
+    <h2 style="text-align: center">{{ provider.get_id() }}'s Profile</h2>
     {% elif option == "healthCentre" or option == "suburb" %}
-    <form method="POST" action="/book/{{ name }}">
-    <h2 style="text-align: center">{{ name }}'s Profile</h2>
+    <form method="POST" action="/book/{{ centre.getName() }}">
+    <h2 style="text-align: center">{{ centre.getName() }}'s Profile</h2>
     {% else %}
     <form method="GET" action="/update/{{ current_user.get_id() }}">
     <h2 style="text-align: center">Your Profile</h2>
     {% endif %}
 
-    <table class="table" id="information">
     {% if option == "self" %}
+    <table class="table" id="information">
         <tr>
             <th>Email</th>
             <td name="email">{{ current_user.get_id() }}</td>
@@ -86,16 +86,6 @@
         <th>Rating</th>
         <td name="profession">{{ current_user.get_rating() }}</td>
     </tr>
-    <tr>
-        <th>Centres</th>
-        <td ></td>
-    </tr>
-    {% for item in current_user.getListOfCentres() %}
-    <tr>
-        <td>{{ item[0].getName() }}</td>
-        <td ></td>
-    </tr>
-    {% endfor %}
     {% endif %}
         <tr>
             <td>
@@ -105,59 +95,136 @@
                 </button>
             </td>
         </tr>
-    {% else %}
-            <tr>
-                <th>Centre Type</th>
-                <td>{{ typeCentre }}</td>
-            </tr>
-            <tr>
-                <th>Name</th>
-                <td>{{ name }}</td>
-            </tr>
-            <tr>
-                <th>ABN</th>
-                <td>{{ abn }}</td>
-            </tr>
-            <tr>
-                <th>Phone</th>
-                <td>{{ phone }}</td>
-            </tr>
-            <tr>
-                <th>Suburb</th>
-                <td>{{ suburb }}</td>
-            </tr>
-            <tr>
-                <th>Rating</th>
-                <td>{{ rating }}</td>
-            </tr>
-    {% if option == "service" or option == "healthProvider" %}
-            <tr>
-                <th>Email</th>
-                <td name="email">{{ email }}</td>
-            </tr>
-            {% if option == "service" %}
-            <tr>
-                <th>Service</th>
-                <td>{{ service }}</td>
-            </tr>
-            {% endif %}
-            {% if current_user.isPatient() == True %}
-                    <tr>
-                        <td>
-                            <button class="ui labeled icon button">
-                              <i class="pencil icon"></i>
-                                Book appointment
-                            </button>
-                        </td>
-                    </tr>
-            {% endif %}
-    {% else %}
+    </form>
+    {% if current_user.isPatient() == False %}
     <tr>
-        <th>INSERT VIEW LIST OF PROVIDERS HERE</th>
-        <td>jeff</td>
+        <th>Affiliated Health Centres:</th>
+        <td ></td>
     </tr>
-    {% endif %}
+    {% for item in current_user.getListOfCentres() %}
+    <tr>
+        <td>{{ item.getName() }}</td>
+        <td>
+            <form method='POST' action='/profile/centre/{{ item.getName() }}'>
+                <input type="hidden" value='{{ option }}' name="option"/>
+                <input type="hidden" value="{{ item["typeCentre"] }}" name="typeCentre"/>
+                <input type="hidden" value="{{ item["name"] }}" name="name"/>
+                <input type="hidden" value="{{ item["abn"] }}" name="abn"/>
+                <input type="hidden" value="{{ item["phone"] }}" name="phone"/>
+                <input type="hidden" value="{{ item["suburb"] }}" name="suburb"/>
+                <input type="submit" class="ui basic button" value="View Profile"/>
+            </form>
+        </td>
+    </tr>
+    {% endfor %}
     {% endif %}
     </table>
-</form>
+    {% else %}
+    <table class="table" id="information">
+    {% if option == "healthCentre" %}
+        <tr>
+            <th>Centre Type</th>
+            <td>{{ centre.getCentreType() }}</td>
+        </tr>
+        <tr>
+            <th>Name</th>
+            <td>{{ centre.getName() }}</td>
+        </tr>
+        <tr>
+            <th>ABN</th>
+            <td>{{ centre.getABN() }}</td>
+        </tr>
+        <tr>
+            <th>Phone</th>
+            <td>{{ centre.getPhone() }}</td>
+        </tr>
+        <tr>
+            <th>Suburb</th>
+            <td>{{ centre.getSuburb() }}</td>
+        </tr>
+        <tr>
+            <th>Rating</th>
+            <td>{{ centre.getRating() }}</td>
+        </tr>
+    {% endif %}
+    {% if option == "provider" %}
+        <tr>
+            <th>Profession</th>
+            <td>{{ provider.getProfession() }}</td>
+        </tr>
+        <tr>
+            <th>Email</th>
+            <td>{{ provider.get_id() }}</td>
+        </tr>
+        <tr>
+            <th>Working Hours</th>
+            <td>{{ provider.get_workingHours() }}</td>
+        </tr>
+        <tr>
+            <th>Rating</th>
+            <td>{{ provider.get_rating() }}</td>
+        </tr>
+        <tr>
+            <th>Provider Number</th>
+            <td>{{ provider.get_providerNum() }}</td>
+        </tr>
+        {% if current_user.isPatient() == True %}
+                <tr>
+                    <td>
+                        <button class="ui labeled icon button">
+                          <i class="pencil icon"></i>
+                            Book appointment
+                        </button>
+                    </td>
+                </tr>
+        {% endif %}
+    {% endif %}
+    </form>
+    {% if option == "healthCentre" or option == "suburb" %}
+    <tr>
+        <th>Affiliated Health Providers:</th>
+        <td ></td>
+    </tr>
+    {% for item in centre.getProviders() %}
+    <tr>
+        <td>{{ item.get_id() }}</td>
+        <td>
+            <form method='POST' action='/profile/provider/{{ item.get_id() }}'>
+                <input type="hidden" value='{{ option }}' name="option"/>
+                <input type="hidden" value="{{ item["user"] }}" name="user"/>
+                <input type="hidden" value="{{ item["typeCentre"] }}" name="typeCentre"/>
+                <input type="hidden" value="{{ item["name"] }}" name="name"/>
+                <input type="hidden" value="{{ item["abn"] }}" name="abn"/>
+                <input type="hidden" value="{{ item["phone"] }}" name="phone"/>
+                <input type="hidden" value="{{ item["suburb"] }}" name="suburb"/>
+                <input type="submit" class="ui basic button" value="View Profile"/>
+            </form>
+        </td>
+    </tr>
+    {% endfor %}
+    {% endif %}
+    {% if option == "provider" or option == "service" %}
+    <tr>
+        <th>Affiliated Health Centres:</th>
+        <td ></td>
+    </tr>
+    {% for item in provider.getListOfCentres() %}
+    <tr>
+        <td>{{ item.getName() }}</td>
+        <td>
+            <form method='POST' action='/profile/centre/{{ item.getName() }}'>
+                <input type="hidden" value='{{ option }}' name="option"/>
+                <input type="hidden" value="{{ item["typeCentre"] }}" name="typeCentre"/>
+                <input type="hidden" value="{{ item["name"] }}" name="name"/>
+                <input type="hidden" value="{{ item["abn"] }}" name="abn"/>
+                <input type="hidden" value="{{ item["phone"] }}" name="phone"/>
+                <input type="hidden" value="{{ item["suburb"] }}" name="suburb"/>
+                <input type="submit" class="ui basic button" value="View Profile"/>
+            </form>
+        </td>
+    </tr>
+    {% endfor %}
+    {% endif %}
+    </table>
+    {% endif %}
 {% endblock %}

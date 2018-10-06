@@ -10,6 +10,8 @@ app.config["SECRET_KEY"] = "Highly secret key"
 centreManager = CentreManager()
 userManager = UserManager(centreManager)
 appointmentManager = AppointmentManager()
+centreManager.addProviders(userManager)
+
 
 login_manager = LoginManager()
 login_manager.init_app(app)

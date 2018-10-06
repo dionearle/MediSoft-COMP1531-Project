@@ -12,9 +12,8 @@ def getCentres(centreManager, email):
         for row in reader:
             # provider_email,health_centre_name
             if row['provider_email'] == email:
-                centresArray.append(centreManager.searchHealthCentresByName(row['health_centre_name']))
-
-    
+                centre = centreManager.searchHealthCentresByName(row['health_centre_name'])
+                centresArray.append(centre[0])
     return centresArray
 
 def initialise_users(centreManager):
@@ -33,10 +32,7 @@ def initialise_users(centreManager):
         for row in reader:
             patient = Patient(row['patient_email'], row['password'], "0123456789")
             users.append(patient)
-
     return users
-
-
 
 def initialise_health_centres():
     healthCentres = []
@@ -48,4 +44,3 @@ def initialise_health_centres():
             centre = HealthCentre(row['name'], row['suburb'], row['phone'], row['abn'], 0, [], row['centre_type'])
             healthCentres.append(centre)
     return healthCentres
-

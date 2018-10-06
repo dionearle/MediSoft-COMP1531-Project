@@ -25,7 +25,7 @@
 	    	<td>{{ item["phone"] }}</td>
 	    	<td>{{ item["suburb"] }}</td>
 			<td>
-		    	<form method='POST' action='/profile/{{ item["name"] }}'>
+		    	<form method='POST' action='/profile/centre/{{ item["name"] }}'>
 					<input type="hidden" value='{{ option }}' name="option"/>
 					<input type="hidden" value="{{ item["typeCentre"] }}" name="typeCentre"/>
 					<input type="hidden" value="{{ item["name"] }}" name="name"/>
@@ -67,14 +67,7 @@
 	    	<td>{{ item["phone"] }}</td>
 	    	<td>{{ item["suburb"] }}</td>
 			<td>
-		    	<form method='POST' action='/profile/{{ item["name"] }}'>
-					<input type="hidden" value='{{ option }}' name="option"/>
-					<input type="hidden" value="{{ item["user"] }}" name="user"/>
-					<input type="hidden" value="{{ item["typeCentre"] }}" name="typeCentre"/>
-					<input type="hidden" value="{{ item["name"] }}" name="name"/>
-					<input type="hidden" value="{{ item["abn"] }}" name="abn"/>
-					<input type="hidden" value="{{ item["phone"] }}" name="phone"/>
-					<input type="hidden" value="{{ item["suburb"] }}" name="suburb"/>
+		    	<form method='POST' action='/profile/provider/{{ item["user"] }}'>
                     <input type="submit" class="ui basic button" value="View Profile"/>
 				</form>
 			</td>
@@ -112,7 +105,7 @@
 	    	<td>{{ item["phone"] }}</td>
 	    	<td>{{ item["suburb"] }}</td>
 			<td>
-		    	<form method='POST' action='/profile/{{ item["name"] }}'>
+		    	<form method='POST' action='/profile/provider/{{ item["user"] }}'>
 					<input type="hidden" value='{{ option }}' name="option"/>
 					<input type="hidden" value="{{ item["user"] }}" name="user"/>
 					<input type="hidden" value="{{ item["service"] }}" name="service"/>

@@ -1,4 +1,4 @@
-from server import app, login_manager, userManager, appointmentManager
+from server import app, login_manager, userManager, appointmentManager, centreManager
 from flask_login import LoginManager,login_user, current_user, login_required, logout_user
 from flask import request, render_template, redirect, url_for
 from users import User,  Patient, HealthProvider
@@ -41,7 +41,6 @@ def login():
     if current_user.is_authenticated == False:
         if request.method == 'POST':
             if userManager.correctCredentials(request.form["loginEmail"], request.form["loginPassword"]) == True:
-
                 user = userManager.getID(request.form["loginEmail"])
                 login_user(user)
                 return redirect(url_for('index'))
@@ -51,9 +50,18 @@ def login():
         return redirect(url_for('index'))
 
 
-@app.route('/profile/<name>', methods=['GET', 'POST'])
-def profile(name):
+@app.route('/profile/<typeUser>/<name>', methods=['GET', 'POST'])
+def profile(typeUser, name):
     if request.method == "POST":
+        if typeUser == "centre":
+            centre = centreManager.searchHealthCentresByName(name)
+            return render_template("profile.html", option="healthCentre", centre=centre[0])
+        elif typeUser == "provider":
+            if name == current_user.get_id():
+                return render_template("profile.html", option="self")
+            provider = userManager.searchID(name)
+            return render_template("profile.html", option="provider", provider=provider[0])
+
         option = request.form["option"]
         name = request.form["name"]
         typeCentre = request.form["typeCentre"]
@@ -61,8 +69,9 @@ def profile(name):
         suburb = request.form["suburb"]
         abn = request.form["abn"]
         if option == "healthCentre" or option == "suburb":
+            centre = centreManager.searchHealthCentresByName(name)
             return render_template("profile.html",option=option, typeCentre=typeCentre, name=name, abn=abn,
-            phone=phone, suburb=suburb, rating = 0)
+            phone=phone, suburb=suburb, rating = 0, providers=centre[0].getProviders())
         elif option == "healthProvider":
             email = request.form["user"]
             return render_template("profile.html",option=option, email=email, typeCentre=typeCentre, name=name, abn=abn,

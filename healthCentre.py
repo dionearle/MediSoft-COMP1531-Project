@@ -24,4 +24,8 @@ class HealthCentre(object):
 		return self._providers
 	def getCentreType(self):
 		return self._centre_type
-
+	def addProvider(self, provider):
+		self._providers.append(provider)
+	def __str__(self):
+		return "Health Centre " + self._name + ": " + self._suburb + ", " + self._phone + ", " + \
+		self._abn + ", " + str(self._rating) + ", " + self._centre_type + ", providers: " + str(self._providers)
