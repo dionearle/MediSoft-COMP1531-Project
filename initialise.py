@@ -16,6 +16,8 @@ def getCentres(centreManager, email):
                 centresArray.append(centre[0])
     return centresArray
 
+
+
 def initialise_users(centreManager):
     users = []
     with open('provider.csv') as w:

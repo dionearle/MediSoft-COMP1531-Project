@@ -17,6 +17,10 @@ class CentreManager(object):
 			if centre.getName().lower().find(name) != -1:
 				returnArray.append(centre)
 		return returnArray
+	def searchHealthCentresByObject(self, centre):
+		for index, localCentre in enumerate(self._healthCentres):
+			if localCentre is centre:
+				return index
 
 	def searchHealthCentresByObject(self, centre):
 		for index, localCentre in enumerate(self._healthCentres):
