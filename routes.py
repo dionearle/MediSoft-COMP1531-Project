@@ -87,24 +87,21 @@ def profile(typeUser, name):
 def update_profile(name):
 
     if request.method == "POST":
-        new_email = request.form["new_email"]
-        if new_email != "":
-            current_user.set_email(request.form[new_email])
         new_password = request.form["new_password"]
         if new_password != "":
-            current_user.set_password(request.form[new_password])
+            current_user.set_password(new_password)
         if current_user.isPatient() == True:
             new_medicare = request.form["new_medicare"]
             if new_medicare != "":
-                current_user.set_medicare(request.form[new_medicare])
+                current_user.set_medicare(new_medicare)
         else:
             new_profession = request.form["new_profession"]
             if new_profession != "":
-                current_user.set_profession(request.form[new_profession])
+                current_user.set_profession(new_profession)
             new_providerNum = request.form["new_providerNum"]
             if new_providerNum != "":
-                current_user.set_providerNum(request.form[new_providerNum])
-        return redirect(url_for('profile', name = current_user.get_id()))
+                current_user.set_providerNum(new_providerNum)
+        return render_template("profile.html", option="self")
     return render_template("update_profile.html")
 
 @app.route('/book/<email>', methods=['GET', 'POST'])
