@@ -143,3 +143,18 @@ def reason():
 @app.route('/appointments', methods=['GET', 'POST'])
 def showBookings():
     return render_template('appointments.html', appointments=appointmentManager.getAppointments(current_user))
+
+
+@app.route('/profile/updateRatings/<typeUser>/<name>', methods=['POST'])
+@login_required
+def updateRatings(name, typeUser):
+    if typeUser == 'centre':
+        centre = centreManager.searchHealthCentresByName(name)[0]
+        centre.updateRating(current_user.get_id(), int(request.form['updateRatingBox']))
+        saveData(centreManager, userManager, appointmentManager)
+        return redirect(url_for('profile', typeUser=typeUser, name=name), code=307)
+    elif typeUser == 'provider':
+        provider = userManager.getID(name)
+        provider.updateRating(current_user.get_id(), int(request.form['updateRatingBox']))
+        saveData(centreManager, userManager, appointmentManager)
+        return redirect(url_for('profile', typeUser=typeUser, name=name), code=307)

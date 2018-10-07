@@ -168,6 +168,7 @@
             <th>Provider Number</th>
             <td>{{ provider.get_providerNum() }}</td>
         </tr>
+
         {% if current_user.isPatient() == True %}
                 <tr>
                     <td>
@@ -179,7 +180,40 @@
                 </tr>
         {% endif %}
     {% endif %}
+
     </form>
+
+    <!-- Set Ratings -->
+    {% if option == "healthCentre" or option == "suburb" %}
+    <tr>
+    <form method='POST' action='/profile/updateRatings/centre/{{centre.getName()}}'>
+        <th>Enter New Rating (out of 10)</th>
+        <td>
+            <input type="number" id="updateRating" name="updateRatingBox" min="0" max="10" placeholder="Update Rating"/>
+        </td>
+        <td>
+            <input type="submit" class="ui basic button" value="Submit Rating"/>
+        </td>
+    </form>
+    </tr>
+
+    {% endif %}
+    {% if option == "provider" or option == "service" %}
+    <tr>
+        <form method='POST' action='/profile/updateRatings/provider/{{provider.get_id()}}'>
+            <th>Enter New Rating (out of 10)</th>
+            <td>
+                <input type="number" id="updateRating" name="updateRatingBox" min="0" max="10" placeholder="Update Rating"/>
+            </td>
+            <td>
+                <input type="submit" class="ui basic button" value="Submit Rating"/>
+            </td>
+        </form>
+    </tr>
+    {% endif %}
+
+
+
     {% if option == "healthCentre" or option == "suburb" %}
     <tr>
         <th>Affiliated Health Providers:</th>

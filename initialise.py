@@ -24,7 +24,7 @@ def initialise_users(centreManager):
         reader = csv.DictReader(w)
         for row in reader:
             # def __init__(self, email, password, providerNum, profession, rating, workingHours, centres):
-            provider = HealthProvider(row['provider_email'], row['password'], "", row['provider_type'], 0, 0, [])
+            provider = HealthProvider(row['provider_email'], row['password'], "", row['provider_type'], 0, [])
             centres = getCentres(centreManager, row['provider_email'])
             for centre in centres:
                 provider.addCentre(centre)
@@ -43,6 +43,6 @@ def initialise_health_centres():
     with open('health_centres.csv') as w:
         reader = csv.DictReader(w)
         for row in reader:
-            centre = HealthCentre(row['name'], row['suburb'], row['phone'], row['abn'], 0, [], row['centre_type'])
+            centre = HealthCentre(row['name'], row['suburb'], row['phone'], row['abn'], [], row['centre_type'])
             healthCentres.append(centre)
     return healthCentres

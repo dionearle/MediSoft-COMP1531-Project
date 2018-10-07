@@ -54,13 +54,23 @@ class Patient(User):
         return self._medicare
 
 class HealthProvider(User):
-    def __init__(self, email, password, providerNum, profession, rating, workingHours, centres):
+    def __init__(self, email, password, providerNum, profession, workingHours, centres):
         super().__init__(email, password, False)
         self._providerNum = providerNum
         self._profession = profession
-        self._rating = rating
+        self._overallRating = 5
+        self._listOfRatings = {}
         self._workingHours = workingHours
         self._centres = []
+
+    # private function only used by own class functions
+    def _getAverageOfDict(self, dictionary):
+        total = 0
+        count = 0
+        for key, value in dictionary.items():
+            total += value
+            count += 1
+        return int(total / count)
 
     def addCentre(self, centre):
         self._centres.append(centre)
@@ -74,8 +84,14 @@ class HealthProvider(User):
     def get_providerNum(self):
         return self._providerNum
 
+    def updateRating(self, username, newRating):
+        self._listOfRatings[username] = newRating
+        self._overallRating = self._getAverageOfDict(self._listOfRatings)
+        return self._overallRating    
+
     def get_rating(self):
-        return self._rating
+        return self._overallRating
+
 
     def get_workingHours(self):
         return self._workingHours
