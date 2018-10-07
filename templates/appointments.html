@@ -25,14 +25,16 @@
 				<tr>
 					<th scope="col">#</th>
                     {% if current_user.isPatient() == True %}
-                        <th scope="colgroup">Provider</th>
+                        <th scope="col">Provider</th>
                     {% else %}
                         <th scope="col">Patient</th>
                     {% endif %}
 					<th scope="col">Date</th>
 					<th scope="col">Time</th>
 					<th scope="col">Reason</th>
-
+                    {% if current_user.isPatient() == False %}
+                        <th scope="col"></th>
+                    {% endif %}
 				</tr>
 			</thead>
 			<tbody>
@@ -59,6 +61,13 @@
 			    	<td>{{ item.time }}</td>
 			    	<td>{{ item.date }}</td>
 			    	<td>{{ item.reason }}</td>
+                    {% if current_user.isPatient() == False %}
+                    <td>
+                        <form method='POST' action='/appointment/{{ item.patient }}'>
+                            <input type="submit" class="ui positive basic button" value="Start Appointment"/>
+                        </form>
+                    </td>
+                    {% endif %}
 			    </tr>
 			    {% endfor %}
 			</tbody>
