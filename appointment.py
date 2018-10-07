@@ -5,7 +5,7 @@ class Appointment(object):
 		self._date = date
 		self._time = time
 		self._reason = reason
-        
+
 	@property
 	def provider(self):
 		return self._provider

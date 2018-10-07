@@ -14,4 +14,3 @@ class AppointmentManager():
 				user.addAppointment(appointment)
 	def getAppointments(self, user):
 		return user.getListOfAppointments()
-

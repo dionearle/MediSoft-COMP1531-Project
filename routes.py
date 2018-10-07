@@ -62,6 +62,11 @@ def profile(typeUser, name):
                 return render_template("profile.html", option="self")
             provider = userManager.searchID(name)
             return render_template("profile.html", option="provider", provider=provider[0])
+        elif typeUser == "patient":
+            if name == current_user.get_id():
+                return render_template("profile.html", option="self")
+            patient = userManager.searchPatient(name)
+            return render_template("profile.html", option="patient", patient=patient[0])
 
         option = request.form["option"]
         name = request.form["name"]
