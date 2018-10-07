@@ -64,6 +64,18 @@
             <td name="email">{{ current_user.get_id() }}</td>
         </tr>
         <tr>
+            <th>First Name</th>
+            <td name="first_name">{{ current_user.getFirstName() }}</td>
+        </tr>
+        <tr>
+            <th>Last Name</th>
+            <td name="last_name">{{ current_user.getLastName() }}</td>
+        </tr>
+        <tr>
+            <th>Phone Number</th>
+            <td name="phone">{{ current_user.getPhone() }}</td>
+        </tr>
+        <tr>
             <th>Password</th>
             <td name="password">{{ current_user.get_password() }}</td>
         </tr>
@@ -130,8 +142,16 @@
             <td>{{ patient.get_id() }}</td>
         </tr>
         <tr>
-            <th>Password</th>
-            <td>{{ patient.get_password() }}</td>
+            <th>First Name</th>
+            <td>{{ patient.getFirstName() }}</td>
+        </tr>
+        <tr>
+            <th>Last Name</th>
+            <td>{{ patient.getLastName() }}</td>
+        </tr>
+        <tr>
+            <th>Phone Number</th>
+            <td>{{ patient.getPhone() }}</td>
         </tr>
         <tr>
             <th>Medicare</th>
@@ -140,12 +160,12 @@
     {% endif %}
     {% if option == "healthCentre" %}
         <tr>
-            <th>Centre Type</th>
-            <td>{{ centre.getCentreType() }}</td>
-        </tr>
-        <tr>
             <th>Name</th>
             <td>{{ centre.getName() }}</td>
+        </tr>
+        <tr>
+            <th>Centre Type</th>
+            <td>{{ centre.getCentreType() }}</td>
         </tr>
         <tr>
             <th>ABN</th>
@@ -166,12 +186,28 @@
     {% endif %}
     {% if option == "provider" %}
         <tr>
+            <th>Email</th>
+            <td>{{ provider.get_id() }}</td>
+        </tr>
+        <tr>
+            <th>First Name</th>
+            <td>{{ provider.getFirstName() }}</td>
+        </tr>
+        <tr>
+            <th>Last Name</th>
+            <td>{{ provider.getLastName() }}</td>
+        </tr>
+        <tr>
+            <th>Phone Number</th>
+            <td>{{ provider.getPhone() }}</td>
+        </tr>
+        <tr>
             <th>Profession</th>
             <td>{{ provider.getProfession() }}</td>
         </tr>
         <tr>
-            <th>Email</th>
-            <td>{{ provider.get_id() }}</td>
+            <th>Provider Number</th>
+            <td>{{ provider.get_providerNum() }}</td>
         </tr>
         <tr>
             <th>Working Hours</th>
@@ -180,10 +216,6 @@
         <tr>
             <th>Rating</th>
             <td>{{ provider.get_rating() }}</td>
-        </tr>
-        <tr>
-            <th>Provider Number</th>
-            <td>{{ provider.get_providerNum() }}</td>
         </tr>
 
         {% if current_user.isPatient() == True %}

@@ -93,6 +93,15 @@ def profile(typeUser, name):
 def update_profile(name):
 
     if request.method == "POST":
+        new_firstName = request.form["new_firstName"]
+        if new_firstName != "":
+            current_user.set_FirstName(new_firstName)
+        new_lastName = request.form["new_lastName"]
+        if new_lastName != "":
+            current_user.set_LastName(new_lastName)
+        new_phone = request.form["new_phone"]
+        if new_phone != "":
+            current_user.set_phone(new_phone)
         new_password = request.form["new_password"]
         if new_password != "":
             current_user.set_password(new_password)
