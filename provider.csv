@@ -1,9 +1,9 @@
-provider_email,provider_type,password
-toby@gmail.com,Pathologist,cs1531
-gary@gmail.com,GP,cs1531
-samuel@gmail.com,GP,cs1531
-sid@gmail.com,Pathologist,cs1531
-michael@gmail.com,Physiotherapist,cs1531
-anna@gmail.com,GP,cs1531
-thomas@gmail.com,Pharmacist,cs1531
-ian@gmail.com,Physiotherapist,cs1531
+provider_email,provider_type,password,first_name,last_name,phone,providerNum,workingHours
+toby@gmail.com,Pathologist,cs1531,Toby,Turner,0464199972,2148751135, 09:00-14:30
+gary@gmail.com,GP,cs1531, Gary, Busey, 0482334476, 6105350212, 11:30-13:00
+samuel@gmail.com,GP,cs1531, Samuel, Jackson, 0476993101, 1148350710, 07:00-19:00
+sid@gmail.com,Pathologist,cs1531, Sid, Wilson, 0425973122, 6642307341, 09:00-15:30
+michael@gmail.com,Physiotherapist,cs1531, Michael, Jordan, 0466901134, 1982431245, 08:30-16:30
+anna@gmail.com,GP,cs1531, Anna, Smith, 0417981005, 1185674212, 06:30-12:30
+thomas@gmail.com,Pharmacist,cs1531, Thomas, Cruise, 0422962445, 9205046601, 07:30-19:30
+ian@gmail.com,Physiotherapist,cs1531, Ian, Baker, 0481553241, 64890457042, 06:00-17:00

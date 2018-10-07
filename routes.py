@@ -62,6 +62,11 @@ def profile(typeUser, name):
                 return render_template("profile.html", option="self")
             provider = userManager.searchID(name)
             return render_template("profile.html", option="provider", provider=provider[0])
+        elif typeUser == "patient":
+            if name == current_user.get_id():
+                return render_template("profile.html", option="self")
+            patient = userManager.searchPatient(name)
+            return render_template("profile.html", option="patient", patient=patient[0])
 
         option = request.form["option"]
         name = request.form["name"]
@@ -88,6 +93,15 @@ def profile(typeUser, name):
 def update_profile(name):
 
     if request.method == "POST":
+        new_firstName = request.form["new_firstName"]
+        if new_firstName != "":
+            current_user.set_FirstName(new_firstName)
+        new_lastName = request.form["new_lastName"]
+        if new_lastName != "":
+            current_user.set_LastName(new_lastName)
+        new_phone = request.form["new_phone"]
+        if new_phone != "":
+            current_user.set_phone(new_phone)
         new_password = request.form["new_password"]
         if new_password != "":
             current_user.set_password(new_password)

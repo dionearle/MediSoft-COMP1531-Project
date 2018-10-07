@@ -49,6 +49,9 @@
     {% elif option == "healthCentre" or option == "suburb" %}
     <form method="POST" action="/book/{{ centre.getName() }}">
     <h2 style="text-align: center">{{ centre.getName() }}'s Profile</h2>
+    {% elif option == "patient" %}
+    <form method="POST" action="/appointment/{{ patient.get_id() }}">
+    <h2 style="text-align: center">{{ patient.get_id() }}'s Profile</h2>
     {% else %}
     <form method="GET" action="/update/{{ current_user.get_id() }}">
     <h2 style="text-align: center">Your Profile</h2>
@@ -59,6 +62,18 @@
         <tr>
             <th>Email</th>
             <td name="email">{{ current_user.get_id() }}</td>
+        </tr>
+        <tr>
+            <th>First Name</th>
+            <td name="first_name">{{ current_user.getFirstName() }}</td>
+        </tr>
+        <tr>
+            <th>Last Name</th>
+            <td name="last_name">{{ current_user.getLastName() }}</td>
+        </tr>
+        <tr>
+            <th>Phone Number</th>
+            <td name="phone">{{ current_user.getPhone() }}</td>
         </tr>
         <tr>
             <th>Password</th>
@@ -121,14 +136,36 @@
     </table>
     {% else %}
     <table class="table" id="information">
-    {% if option == "healthCentre" %}
+    {% if option == "patient" %}
         <tr>
-            <th>Centre Type</th>
-            <td>{{ centre.getCentreType() }}</td>
+            <th>Email</th>
+            <td>{{ patient.get_id() }}</td>
         </tr>
+        <tr>
+            <th>First Name</th>
+            <td>{{ patient.getFirstName() }}</td>
+        </tr>
+        <tr>
+            <th>Last Name</th>
+            <td>{{ patient.getLastName() }}</td>
+        </tr>
+        <tr>
+            <th>Phone Number</th>
+            <td>{{ patient.getPhone() }}</td>
+        </tr>
+        <tr>
+            <th>Medicare</th>
+            <td>{{ patient.get_medicare() }}</td>
+        </tr>
+    {% endif %}
+    {% if option == "healthCentre" %}
         <tr>
             <th>Name</th>
             <td>{{ centre.getName() }}</td>
+        </tr>
+        <tr>
+            <th>Centre Type</th>
+            <td>{{ centre.getCentreType() }}</td>
         </tr>
         <tr>
             <th>ABN</th>
@@ -149,12 +186,28 @@
     {% endif %}
     {% if option == "provider" %}
         <tr>
+            <th>Email</th>
+            <td>{{ provider.get_id() }}</td>
+        </tr>
+        <tr>
+            <th>First Name</th>
+            <td>{{ provider.getFirstName() }}</td>
+        </tr>
+        <tr>
+            <th>Last Name</th>
+            <td>{{ provider.getLastName() }}</td>
+        </tr>
+        <tr>
+            <th>Phone Number</th>
+            <td>{{ provider.getPhone() }}</td>
+        </tr>
+        <tr>
             <th>Profession</th>
             <td>{{ provider.getProfession() }}</td>
         </tr>
         <tr>
-            <th>Email</th>
-            <td>{{ provider.get_id() }}</td>
+            <th>Provider Number</th>
+            <td>{{ provider.get_providerNum() }}</td>
         </tr>
         <tr>
             <th>Working Hours</th>
@@ -163,10 +216,6 @@
         <tr>
             <th>Rating</th>
             <td>{{ provider.get_rating() }}</td>
-        </tr>
-        <tr>
-            <th>Provider Number</th>
-            <td>{{ provider.get_providerNum() }}</td>
         </tr>
 
         {% if current_user.isPatient() == True %}
@@ -186,10 +235,13 @@
     <!-- Set Ratings -->
     {% if option == "healthCentre" or option == "suburb" %}
     <tr>
+        <th>Rate this health centre (from 0 to 10):</th>
+        <td></td>
+    </tr>
+    <tr>
     <form method='POST' action='/profile/updateRatings/centre/{{centre.getName()}}'>
-        <th>Enter New Rating (out of 10)</th>
         <td>
-            <input type="number" id="updateRating" name="updateRatingBox" min="0" max="10" placeholder="Update Rating"/>
+            <input type="number" id="updateRating" name="updateRatingBox" min="0" max="10" placeholder=" 0 - 10"/>
         </td>
         <td>
             <input type="submit" class="ui basic button" value="Submit Rating"/>
@@ -200,10 +252,13 @@
     {% endif %}
     {% if option == "provider" or option == "service" %}
     <tr>
+        <th>Rate this provider (from 0 to 10):</th>
+        <td></td>
+    </tr>
+    <tr>
         <form method='POST' action='/profile/updateRatings/provider/{{provider.get_id()}}'>
-            <th>Enter New Rating (out of 10)</th>
             <td>
-                <input type="number" id="updateRating" name="updateRatingBox" min="0" max="10" placeholder="Update Rating"/>
+                <input type="number" id="updateRating" name="updateRatingBox" min="0" max="10" placeholder=" 0 - 10"/>
             </td>
             <td>
                 <input type="submit" class="ui basic button" value="Submit Rating"/>

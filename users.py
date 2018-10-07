@@ -3,9 +3,12 @@ from abc import ABC, abstractmethod
 class User(ABC):
 
     @abstractmethod
-    def __init__(self, email, password, patient):
+    def __init__(self, email, password, first_name, last_name, phone, patient):
         self._email = email
         self._password = password
+        self._firstName = first_name
+        self._lastName = last_name
+        self._phone = phone
         self._isPatient = patient
         self._appointments = []
 
@@ -44,9 +47,30 @@ class User(ABC):
         self._password = password
         return self._password
 
+    def getPhone(self):
+        return self._phone
+
+    def set_phone(self, phone):
+        self._phone = phone
+        return self._phone
+
+    def getFirstName(self):
+        return self._firstName
+
+    def set_FirstName(self, first_name):
+        self._firstName = first_name
+        return self._firstName
+
+    def getLastName(self):
+        return self._lastName
+
+    def set_LastName(self, last_name):
+        self._lastName = last_name
+        return self._lastName
+
 class Patient(User):
-    def __init__(self, email, password, medicare):
-        super().__init__(email, password, True)
+    def __init__(self, email, password, first_name, last_name, phone, medicare):
+        super().__init__(email, password, first_name, last_name, phone, True)
         self._medicare = medicare
 
     def get_medicare(self):
@@ -57,8 +81,8 @@ class Patient(User):
         return self._medicare
 
 class HealthProvider(User):
-    def __init__(self, email, password, providerNum, profession, workingHours, centres):
-        super().__init__(email, password, False)
+    def __init__(self, email, password, first_name, last_name, phone, providerNum, profession, workingHours, centres):
+        super().__init__(email, password, first_name, last_name, phone, False)
         self._providerNum = providerNum
         self._profession = profession
         self._overallRating = 5
@@ -90,11 +114,10 @@ class HealthProvider(User):
     def updateRating(self, username, newRating):
         self._listOfRatings[username] = newRating
         self._overallRating = self._getAverageOfDict(self._listOfRatings)
-        return self._overallRating    
+        return self._overallRating
 
     def get_rating(self):
         return self._overallRating
-
 
     def get_workingHours(self):
         return self._workingHours
