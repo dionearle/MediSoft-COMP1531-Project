@@ -1,0 +1,57 @@
+{% extends 'base.html' %}
+{% block book_banner %}
+<a class="item" href="/">
+    Home
+</a>
+<a class="item" href="/search">
+    Search
+</a>
+<a class="active item" href="/appointments">
+    Appointments
+</a>
+<a class="item" href="/profile/self/{{current_user.get_id()}}">
+    Profile
+</a>
+<div class="right menu">
+    <a class="ui item" href="/logout">
+        Logout
+    </a>
+</div>
+{% endblock %}
+{% block book %}
+
+<table class="table" id="table">
+			<thead>
+				<tr>
+					<th scope="col">#</th>
+                    {% if current_user.isPatient() == True %}
+                        <th scope="col">Provider</th>
+                    {% else %}
+                        <th scope="col">Patient</th>
+                    {% endif %}
+					<th scope="col">Date</th>
+					<th scope="col">Time</th>
+					<th scope="col">Reason</th>
+
+				</tr>
+			</thead>
+			<tbody>
+			    {% for item in appointments %}
+
+			    <tr>
+			    	<th scope="row">{{ loop.index }}</th>
+			    	<!-- def __init__(self, provider, patient, date, time, reason): -->
+                    {% if current_user.isPatient() == True %}
+                        <td>{{ item.provider }}</td>
+                    {% else %}
+                        <td>{{ item.patient }}</td>
+                    {% endif %}
+			    	<td>{{ item.time }}</td>
+			    	<td>{{ item.date }}</td>
+			    	<td>{{ item.reason }}</td>
+			    </tr>
+			    {% endfor %}
+			</tbody>
+		</table>
+
+{% endblock %}

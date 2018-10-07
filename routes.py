@@ -156,8 +156,24 @@ def reason():
 
 @app.route('/appointments', methods=['GET', 'POST'])
 def showBookings():
+    if request.method == 'POST':
+        appointmentIndex = int(request.form['appointmentIndex'])
+        appointmentNotes = str(request.form['notes'])
+        appointmentPrescribedMedicine = str(request.form['prescribedMedicine'])
+        current_user.getSpecificAppointment(appointmentIndex).notes = appointmentNotes
+        current_user.getSpecificAppointment(appointmentIndex).prescribedMedicine = appointmentPrescribedMedicine
+        return render_template('appointments.html', appointments=appointmentManager.getAppointments(current_user), updated="Appointment Updated")
     return render_template('appointments.html', appointments=appointmentManager.getAppointments(current_user))
 
+#current_user.getSpecificAppointment(appointmentIndex)
+
+@app.route('/accessedAppointment', methods=['GET', 'POST'])
+@login_required
+def accessedAppointment():
+    if request.method == 'POST':
+        appointmentIndex = (int(request.form['appointment']) - 1)
+        return render_template('accessedAppointment.html', appointment=current_user.getSpecificAppointment(appointmentIndex), appointmentIndex=appointmentIndex)
+    return render_template('accessedAppointment.html')
 
 @app.route('/profile/updateRatings/<typeUser>/<name>', methods=['POST'])
 @login_required
