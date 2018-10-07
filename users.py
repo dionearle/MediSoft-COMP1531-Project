@@ -33,6 +33,9 @@ class User(ABC):
     def getListOfAppointments(self):
         return self._appointments
 
+    def getSpecificAppointment(self, appointmentIndex):
+        return self._appointments[appointmentIndex]
+
     def set_email(self, email):
         self._email = email
         return self._email

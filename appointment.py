@@ -5,6 +5,8 @@ class Appointment(object):
 		self._date = date
 		self._time = time
 		self._reason = reason
+		self._notes = None
+		self._prescribedMedicine = None
         
 	@property
 	def provider(self):
@@ -25,3 +27,21 @@ class Appointment(object):
 	@property
 	def reason(self):
 		return self._reason
+
+	@property
+	def notes(self):
+		return self._notes
+
+	@notes.setter
+	def notes(self, notes):
+		self._notes = notes
+
+	@property
+	def prescribedMedicine(self):
+		return self._prescribedMedicine
+
+	@prescribedMedicine.setter
+	def prescribedMedicine(self, prescribedMedicine):
+		self._prescribedMedicine = prescribedMedicine
+
+

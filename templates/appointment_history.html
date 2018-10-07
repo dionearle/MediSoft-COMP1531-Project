@@ -19,6 +19,7 @@
 </div>
 {% endblock %}
 {% block book %}
+
 <table class="table" id="table">
 			<thead>
 				<tr>
@@ -31,9 +32,6 @@
 					<th scope="col">Date</th>
 					<th scope="col">Time</th>
 					<th scope="col">Reason</th>
-					{% if current_user.isPatient() == False %}
-                        <th scope="col">Access Appointment</th>
-                    {% endif %}
 
 				</tr>
 			</thead>
@@ -50,18 +48,10 @@
                     {% endif %}
 			    	<td>{{ item.time }}</td>
 			    	<td>{{ item.date }}</td>
-					<td>{{ item.reason }}</td>
-					<td> 
-						<form method="POST" action="/accessedAppointment">
-							<input type="hidden" name="appointment" value='{{loop.index}}'/>
-							<input type="submit" name="startAppointment" class="ui basic button" value="Start Appointment"/>
-						</form>
-					</td>
+			    	<td>{{ item.reason }}</td>
 			    </tr>
 			    {% endfor %}
 			</tbody>
 		</table>
-
-<h4 align="center">{{updated}}</h4>
 
 {% endblock %}

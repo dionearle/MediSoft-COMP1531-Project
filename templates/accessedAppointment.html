@@ -1,0 +1,35 @@
+{% extends 'base.html' %}
+{% block book_banner %}
+<a class="item" href="/">
+    Home
+</a>
+<a class="item" href="/search">
+    Search
+</a>
+<a class="active item" href="/appointments">
+    Appointments
+</a>
+<a class="item" href="/profile/self/{{current_user.get_id()}}">
+    Profile
+</a>
+<div class="right menu">
+    <a class="ui item" href="/logout">
+        Logout
+    </a>
+</div>
+{% endblock %}
+{% block accessedAppointment %}
+
+<h2>{{ appointment.patient }}'s Appointment</h2>
+
+<form method='POST' action="/appointments">
+    <h3>Notes</h3>
+    <textarea name="notes" rows="15" cols="40" id="notes"></textarea>
+    <h3>Prescribed Medicine</h3>
+    <textarea name="prescribedMedicine" rows="15" cols="40" id="prescribedMedicine"></textarea>
+    <input type="hidden" name="appointmentIndex" value='{{appointmentIndex}}'/>
+    <input type="submit" name="submitAppointment" class="ui basic button" value="Submit appointment"/>
+</form>
+
+{% endblock%}
+
