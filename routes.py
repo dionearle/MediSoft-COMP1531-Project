@@ -126,13 +126,7 @@ def update_profile(name):
 @app.route('/book/<email>', methods=['GET', 'POST'])
 @login_required
 def book(email):
-    fmt='%H:%M'
-    time=datetime.datetime.strptime('00:00',fmt)
-    min30=datetime.timedelta(minutes=30)
-    times=[]
-    for i in range(48):
-        times.append('%s-%s' % ( time.strftime(fmt), (time+min30).strftime(fmt)))
-        time+=min30
+    
            
     return render_template('book.html', times=times, name=email)
 
