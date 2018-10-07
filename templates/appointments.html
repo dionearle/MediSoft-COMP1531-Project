@@ -38,7 +38,6 @@
 			</thead>
 			<tbody>
 			    {% for item in appointments %}
-
 			    <tr>
 			    	<th scope="row">{{ loop.index }}</th>
 			    	<!-- def __init__(self, provider, patient, date, time, reason): -->
@@ -59,13 +58,15 @@
                     {% endif %}
 			    	<td>{{ item.time }}</td>
 			    	<td>{{ item.date }}</td>
-					<td>{{ item.reason }}</td>
+                    <td>{{ item.reason }}</td>
+                    {% if current_user.isPatient() == False %}
 					<td> 
 						<form method="POST" action="/accessedAppointment">
 							<input type="hidden" name="appointment" value='{{loop.index}}'/>
 							<input type="submit" name="startAppointment" class="ui basic button" value="Start Appointment"/>
 						</form>
-					</td>
+                    </td>
+                    {% endif %}
 			    </tr>
 			    {% endfor %}
 			</tbody>
