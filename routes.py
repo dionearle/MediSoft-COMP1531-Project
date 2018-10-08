@@ -168,6 +168,7 @@ def showBookings():
         patient = userManager.getID(currentAppointment.patient)
         patientAppointment = patient.findSpecificAppointment(currentAppointment)
         patientAppointment.accessed = True
+        saveData(centreManager, userManager, appointmentManager)
         return render_template('appointments.html', appointments=appointmentManager.getAppointments(current_user), updated="Appointment Updated")
     return render_template('appointments.html', appointments=appointmentManager.getAppointments(current_user))
 
@@ -178,6 +179,7 @@ def showBookings():
 def accessedAppointment():
     if request.method == 'POST':
         appointmentIndex = (int(request.form['appointment']) - 1)
+        saveData(centreManager, userManager, appointmentManager)
         return render_template('accessedAppointment.html', appointment=current_user.getSpecificAppointment(appointmentIndex), appointmentIndex=appointmentIndex)
     return render_template('accessedAppointment.html')
 
