@@ -20,15 +20,21 @@
 {% endblock %}
 {% block accessedAppointment %}
 
-<h2>{{ appointment.patient }}'s Appointment</h2>
+<h2 class = "ui header">{{ appointment.patient }}'s Appointment</h2>
 
 <form method='POST' action="/appointments">
-    <h3>Notes</h3>
-    <textarea name="notes" rows="15" cols="40" id="notes"></textarea>
-    <h3>Prescribed Medicine</h3>
-    <textarea name="prescribedMedicine" rows="15" cols="40" id="prescribedMedicine"></textarea>
-    <input type="hidden" name="appointmentIndex" value='{{appointmentIndex}}'/>
-    <input type="submit" name="submitAppointment" class="ui basic button" value="Submit appointment"/>
+    <div class="ui form">
+        <div class="field">
+            <label>Notes</label>
+            <textarea name="notes"></textarea>
+        </div>
+        <div class="field">
+            <label>Add Medicine</label>
+            <textarea name="prescribedMedicine"></textarea>
+        </div>
+        <input type="hidden" name="appointmentIndex" value='{{appointmentIndex}}'/>
+        <input type="submit" name="submitAppointment" class="ui basic button" value="Submit appointment"/>
+    </div>
 </form>
 
 {% endblock%}
