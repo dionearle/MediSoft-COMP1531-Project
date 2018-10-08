@@ -8,6 +8,7 @@ class Appointment(object):
 
 		self._notes = None
 		self._prescribedMedicine = None
+		self._accessed = False
 
 	@property
 	def provider(self):
@@ -44,5 +45,13 @@ class Appointment(object):
 	@prescribedMedicine.setter
 	def prescribedMedicine(self, prescribedMedicine):
 		self._prescribedMedicine = prescribedMedicine
+
+	@property
+	def accessed(self):
+		return self._accessed
+
+	@accessed.setter
+	def accessed(self, boolean):
+		self._accessed = boolean
 
 

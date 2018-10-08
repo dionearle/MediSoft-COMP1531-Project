@@ -39,6 +39,13 @@ class User(ABC):
     def getSpecificAppointment(self, appointmentIndex):
         return self._appointments[appointmentIndex]
 
+    def findSpecificAppointment(self, appointmentFind):
+        specificAppointment = None
+        for appointment in self._appointments:
+            if appointment == appointmentFind:
+                specificAppointment = appointment
+        return specificAppointment
+
     def set_email(self, email):
         self._email = email
         return self._email

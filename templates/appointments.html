@@ -12,6 +12,9 @@
 <a class="item" href="/profile/self/{{current_user.get_id()}}">
     Profile
 </a>
+<a class="item" href="/history">
+    History
+</a>
 <div class="right menu">
     <a class="ui item" href="/logout">
         Logout
@@ -37,37 +40,39 @@
 				</tr>
 			</thead>
 			<tbody>
-			    {% for item in appointments %}
-			    <tr>
-			    	<th scope="row">{{ loop.index }}</th>
-			    	<!-- def __init__(self, provider, patient, date, time, reason): -->
-                    {% if current_user.isPatient() == True %}
-                        <td>{{ item.provider }}
-                            <p></p>
-                            <form method='POST' action='/profile/provider/{{ item.provider }}'>
-                                <input type="submit" class="ui basic button" value="View Profile"/>
+                {% for item in appointments %}
+                    {% if item.accessed == False %}
+                    <tr>
+                        <th scope="row">{{ loop.index }}</th>
+                        <!-- def __init__(self, provider, patient, date, time, reason): -->
+                        {% if current_user.isPatient() == True %}
+                            <td>{{ item.provider }}
+                                <p></p>
+                                <form method='POST' action='/profile/provider/{{ item.provider }}'>
+                                    <input type="submit" class="ui basic button" value="View Profile"/>
+                                </form>
+                            </td>
+                        {% else %}
+                            <td>{{ item.patient }}
+                                <p></p>
+                                <form method='POST' action='/profile/patient/{{ item.patient }}'>
+                                    <input type="submit" class="ui basic button" value="View Profile"/>
+                                </form>
+                            </td>
+                        {% endif %}
+                        <td>{{ item.time }}</td>
+                        <td>{{ item.date }}</td>
+                        <td>{{ item.reason }}</td>
+                        {% if current_user.isPatient() == False %}
+                        <td> 
+                            <form method="POST" action="/accessedAppointment">
+                                <input type="hidden" name="appointment" value='{{loop.index}}'/>
+                                <input type="submit" name="startAppointment" class="ui basic button" value="Start Appointment"/>
                             </form>
                         </td>
-                    {% else %}
-                        <td>{{ item.patient }}
-                            <p></p>
-                            <form method='POST' action='/profile/patient/{{ item.patient }}'>
-                                <input type="submit" class="ui basic button" value="View Profile"/>
-                            </form>
-                        </td>
+                        {% endif %}
+                    </tr>
                     {% endif %}
-			    	<td>{{ item.time }}</td>
-			    	<td>{{ item.date }}</td>
-                    <td>{{ item.reason }}</td>
-                    {% if current_user.isPatient() == False %}
-					<td> 
-						<form method="POST" action="/accessedAppointment">
-							<input type="hidden" name="appointment" value='{{loop.index}}'/>
-							<input type="submit" name="startAppointment" class="ui basic button" value="Start Appointment"/>
-						</form>
-                    </td>
-                    {% endif %}
-			    </tr>
 			    {% endfor %}
 			</tbody>
 		</table>

@@ -160,8 +160,14 @@ def showBookings():
         appointmentIndex = int(request.form['appointmentIndex'])
         appointmentNotes = str(request.form['notes'])
         appointmentPrescribedMedicine = str(request.form['prescribedMedicine'])
-        current_user.getSpecificAppointment(appointmentIndex).notes = appointmentNotes
-        current_user.getSpecificAppointment(appointmentIndex).prescribedMedicine = appointmentPrescribedMedicine
+        currentAppointment = current_user.getSpecificAppointment(appointmentIndex)
+        currentAppointment.notes = appointmentNotes
+        currentAppointment.prescribedMedicine = appointmentPrescribedMedicine
+        currentAppointment.accessed = True
+        #updating the patient's appointment accessed field to true
+        patient = userManager.getID(currentAppointment.patient)
+        patientAppointment = patient.findSpecificAppointment(currentAppointment)
+        patientAppointment.accessed = True
         return render_template('appointments.html', appointments=appointmentManager.getAppointments(current_user), updated="Appointment Updated")
     return render_template('appointments.html', appointments=appointmentManager.getAppointments(current_user))
 
@@ -188,3 +194,8 @@ def updateRatings(name, typeUser):
         provider.updateRating(current_user.get_id(), int(request.form['updateRatingBox']))
         saveData(centreManager, userManager, appointmentManager)
         return redirect(url_for('profile', typeUser=typeUser, name=name), code=307)
+
+@app.route('/history', methods=['GET'])
+@login_required
+def history():
+    return render_template('appointment_history.html', appointments=appointmentManager.getAppointments(current_user))
