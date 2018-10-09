@@ -201,3 +201,15 @@ def updateRatings(name, typeUser):
 @login_required
 def history():
     return render_template('appointment_history.html', appointments=appointmentManager.getAppointments(current_user))
+
+@app.route('/historyDetails', methods=['GET', 'POST'])
+@login_required
+def historyDetails():
+    if request.method == 'POST':
+        date = request.form['date']
+        time = request.form['time']
+        user = userManager.getID(request.form['user'])
+
+        appointment = appointmentManager.getAppointmentUsingDate(user, date, time)
+        
+        return render_template('appointmentDetails.html', appointment=appointment)

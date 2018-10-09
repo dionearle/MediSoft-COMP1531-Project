@@ -14,3 +14,9 @@ class AppointmentManager():
 				user.addAppointment(appointment)
 	def getAppointments(self, user):
 		return user.getListOfAppointments()
+
+	def getAppointmentUsingDate(self, user, date, time):
+		Appointments = user.getListOfAppointments()
+		for appointment in Appointments:
+			if appointment.date == date and appointment.time == time:
+				return appointment

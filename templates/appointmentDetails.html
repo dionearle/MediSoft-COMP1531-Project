@@ -1,0 +1,60 @@
+{% extends 'base.html' %}
+{% block book_banner %}
+<a class="item" href="/">
+    Home
+</a>
+<a class="item" href="/search">
+    Search
+</a>
+<a class="item" href="/appointments">
+    Appointments
+</a>
+<a class="item" href="/profile/self/{{current_user.get_id()}}">
+    Profile
+</a>
+<a class="active item" href="/history">
+    History
+</a>
+<div class="right menu">
+    <a class="ui item" href="/logout">
+        Logout
+    </a>
+</div>
+{% endblock %}
+{% block accessedAppointment %}
+
+<h2 class = "ui header">{{ appointment.patient }}'s Appointment</h2>
+<table class="table" id="information">
+    <tr>
+        <th>Provider</th>
+        <td>{{appointment.provider}}</td>
+    </tr>
+    <tr>
+        <th>Patient</th>
+        <td>{{appointment.patient}}</td>
+    </tr>
+    <tr>
+        <th>Date</th>
+        <td>{{appointment.date}}</td>
+    </tr>
+    <tr>
+        <th>Time</th>
+        <td>{{appointment.time}}</td>
+    </tr>
+    <tr>
+        <th>Reason</th>
+        <td>{{appointment.reason}}</td>
+    </tr>
+    <tr>
+        <th>Notes</th>
+        <td>{{appointment.notes}}</td>
+    </tr>
+    <tr>
+        <th>Prescribed Medicine</th>
+        <td>{{appointment.prescribedMedicine}}</td>
+    </tr>
+
+</table>
+
+{% endblock%}
+

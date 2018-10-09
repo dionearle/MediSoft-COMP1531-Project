@@ -35,11 +35,14 @@
 					<th scope="col">Date</th>
 					<th scope="col">Time</th>
 					<th scope="col">Reason</th>
+					<th scope="col">Details</th>
 				</tr>
 			</thead>
 			<tbody>
+
 			    {% for item in appointments %}
 					{% if item.accessed == True %}
+					<form method='POST' action='/historyDetails'>
 					<tr>
 						<th scope="row">{{ loop.index }}</th>
 						<!-- def __init__(self, provider, patient, date, time, reason): -->
@@ -48,10 +51,19 @@
 						{% else %}
 							<td>{{ item.patient }}</td>
 						{% endif %}
+						<input type="hidden" name="user" value="{{ item.patient }}" />
+						<input type="hidden" name="time" value="{{ item.time }}" />
+						<input type="hidden" name="date" value="{{ item.date }}" />
 						<td>{{ item.time }}</td>
 						<td>{{ item.date }}</td>
 						<td>{{ item.reason }}</td>
+
+
+						<td>
+							<input type="submit" name="viewDetails" class="ui basic button" value="View Details"/>
+						</td>
 					</tr>
+					</form>
 					{% endif %}
 			    {% endfor %}
 			</tbody>
