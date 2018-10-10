@@ -1,3 +1,36 @@
+import unittest
+from routes import app
+from flask.ext.testing import TestCase
+# Currently fiddling around with test cases to fully understand how to implement
+# adapted from https://github.com/realpython/discover-flask/blob/master/tests/test_basic.py
+# https://github.com/realpython/discover-flask/blob/master/tests/base.py
+
+
+class my_test(TestCase):
+    app = Flask(__name__)
+    app.config['TESTING'] = True
+    return app
+
+class test_cases(my_test):
+    
+    # tests that flask is set up correct
+    def test_user_login(self):
+        response = self.client.get('/login', content_type='html/text')
+        self.assertEqual(response.status_code, 200)
+        
+    # Ensure that main page requires user login
+    def test_main_route_requires_login(self):
+        response = self.client.get('/', follow_redirects=True)
+        self.assertIn(b'Log-in to your account', response.data)
+        
+    # Ensure that welcome page loads
+    def test_welcome_route_works_as_expected(self):
+        response = self.client.get('/welcome', follow_redirects=True)
+        self.assertIn(b'Welcome to MediSoft!', response.data)
+    
+if __name__ == '__main__':
+    unittest.main()
+        
 #this will be where tests for user stories are conducted
 # According to the google doc
     # 1: Book and Appointment
@@ -9,7 +42,7 @@
             # Be able to book an appointment through a healthcare provider?s or centre?s profile page
             # Have an option of 48 equally sized time slots, each of which is 30 minutes long
             # Be able to enter brief information for the appointment
-            # Be able to display a confirmation that the appointment has been booked to the user
+            # Be able to display a confirmation that the appointment has been booked to the user          
 
     # 2: View Patient History
     # US13
