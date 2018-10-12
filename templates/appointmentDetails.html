@@ -27,11 +27,21 @@
 <table class="table" id="information">
     <tr>
         <th>Provider</th>
-        <td>{{appointment.provider}}</td>
+        <td>{{appointment.provider}}
+            <p></p>
+            <form method='POST' action='/profile/provider/{{ appointment.provider }}'>
+                <input type="submit" class="ui basic button" value="View Profile"/>
+            </form>
+        </td>
     </tr>
     <tr>
         <th>Patient</th>
-        <td>{{appointment.patient}}</td>
+        <td>{{appointment.patient}}
+            <p></p>
+            <form method='POST' action='/profile/patient/{{ appointment.patient }}'>
+                <input type="submit" class="ui basic button" value="View Profile"/>
+            </form>
+        </td>
     </tr>
     <tr>
         <th>Date</th>
@@ -57,4 +67,3 @@
 </table>
 
 {% endblock%}
-

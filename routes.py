@@ -182,9 +182,11 @@ def showBookings():
 @login_required
 def accessedAppointment():
     if request.method == 'POST':
+        appointments = appointmentManager.getAppointments(current_user)
         appointmentIndex = (int(request.form['appointment']) - 1)
         saveData(centreManager, userManager, appointmentManager)
-        return render_template('accessedAppointment.html', appointment=current_user.getSpecificAppointment(appointmentIndex), appointmentIndex=appointmentIndex)
+        return render_template('accessedAppointment.html', appointment=current_user.getSpecificAppointment(appointmentIndex), appointmentIndex=appointmentIndex,
+        appointments=appointments)
     return render_template('accessedAppointment.html')
 
 @app.route('/profile/updateRatings/<typeUser>/<name>', methods=['POST'])

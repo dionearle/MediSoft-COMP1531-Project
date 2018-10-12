@@ -35,6 +35,29 @@
             <label>Add Medicine</label>
             <textarea name="prescribedMedicine"></textarea>
         </div>
+        <table class="table" id="table">
+        	<thead>
+        		<tr>
+                <th scope="col">#</th>
+        		<th scope="col">Previous Appointments</th>
+        	    </tr>
+        	</thead>
+        	<tbody>
+                {% set count = [0] %}
+        			{% for item in appointments[1:] %}
+        			    {% if item.accessed == True %}
+                        {% if count.append(count.pop() + 1) %}{% endif %}
+        				<tr>
+                            <th>{{ count[0] }}</th>
+                            <th>Notes:</th>
+                            <td>{{item.notes}}</td>
+                            <th>Medicine:</th>
+                            <td>{{item.prescribedMedicine}}</td>
+        				</tr>
+                        {% endif %}
+        			{% endfor %}
+        	</tbody>
+        </table>
         <input type="hidden" name="appointmentIndex" value='{{appointmentIndex}}'/>
         <input type="submit" name="submitAppointment" class="ui basic button" value="Submit appointment"/>
     </div>

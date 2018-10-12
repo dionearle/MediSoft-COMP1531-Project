@@ -43,15 +43,25 @@
 			    {% for item in appointments %}
 					{% if item.accessed == True %}
                     {% if count.append(count.pop() + 1) %}{% endif %}
-					<form method='POST' action='/historyDetails'>
 					<tr>
                         <th>{{ count[0] }}</th>
 						<!-- def __init__(self, provider, patient, date, time, reason): -->
 						{% if current_user.isPatient() == True %}
-							<td>{{ item.provider }}</td>
+                            <td>{{ item.provider }}
+                                <p></p>
+                                <form method='POST' action='/profile/provider/{{ item.provider }}'>
+                                    <input type="submit" class="ui basic button" value="View Profile"/>
+                                </form>
+                            </td>
 						{% else %}
-							<td>{{ item.patient }}</td>
+                        <td>{{ item.patient }}
+                            <p></p>
+                            <form method='POST' action='/profile/patient/{{ item.patient }}'>
+                                <input type="submit" class="ui basic button" value="View Profile"/>
+                            </form>
+                        </td>
 						{% endif %}
+                        <form method='POST' action='/historyDetails'>
 						<input type="hidden" name="user" value="{{ item.patient }}" />
 						<input type="hidden" name="time" value="{{ item.time }}" />
 						<input type="hidden" name="date" value="{{ item.date }}" />
