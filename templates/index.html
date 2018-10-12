@@ -40,6 +40,15 @@
           </div>
           {% endif %}
 
+          {% if updated == true %}
+          <div class="ui success message">
+              <div class="header">
+                  Your appointment was successfully updated.
+              </div>
+              <p>You can view past appointments from the history tab</p>
+          </div>
+          {% endif %}
+
           {% else %}
           Please login to access MediSoft
           {% endif %}

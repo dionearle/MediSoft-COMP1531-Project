@@ -53,6 +53,7 @@ def login():
 
 
 @app.route('/profile/<typeUser>/<name>', methods=['GET', 'POST'])
+@login_required
 def profile(typeUser, name):
     if request.method == "POST":
         if typeUser == "centre":
@@ -67,7 +68,8 @@ def profile(typeUser, name):
             if name == current_user.get_id():
                 return render_template("profile.html", option="self")
             patient = userManager.searchPatient(name)
-            return render_template("profile.html", option="patient", patient=patient[0])
+            appointments=appointmentManager.getAppointments(current_user)
+            return render_template("profile.html", option="patient", patient=patient[0], appointments=appointments)
 
         option = request.form["option"]
         name = request.form["name"]
@@ -91,6 +93,7 @@ def profile(typeUser, name):
     return render_template("profile.html", option="self")
 
 @app.route('/update/<name>', methods=['GET', 'POST'])
+@login_required
 def update_profile(name):
 
     if request.method == "POST":
@@ -133,7 +136,7 @@ def book(email):
     for i in range(48):
         times.append('%s-%s' % ( time.strftime(fmt), (time+min30).strftime(fmt)))
         time+=min30
-           
+
     return render_template('book.html', times=times, name=email)
 
 @app.route('/bookAppointment/<email>', methods=['GET', 'POST'])
@@ -155,6 +158,7 @@ def reason():
     return processedText
 
 @app.route('/appointments', methods=['GET', 'POST'])
+@login_required
 def showBookings():
     if request.method == 'POST':
         appointmentIndex = int(request.form['appointmentIndex'])
@@ -169,7 +173,7 @@ def showBookings():
         patientAppointment = patient.findSpecificAppointment(currentAppointment)
         patientAppointment.accessed = True
         saveData(centreManager, userManager, appointmentManager)
-        return render_template('appointments.html', appointments=appointmentManager.getAppointments(current_user), updated="Appointment Updated")
+        return render_template('index.html', updated=True)
     return render_template('appointments.html', appointments=appointmentManager.getAppointments(current_user))
 
 #current_user.getSpecificAppointment(appointmentIndex)
@@ -211,5 +215,5 @@ def historyDetails():
         user = userManager.getID(request.form['user'])
 
         appointment = appointmentManager.getAppointmentUsingDate(user, date, time)
-        
+
         return render_template('appointmentDetails.html', appointment=appointment)

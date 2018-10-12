@@ -160,6 +160,23 @@
             <th>Medicare</th>
             <td>{{ patient.get_medicare() }}</td>
         </tr>
+        <tr>
+            <th>Past appointment history:</th>
+            <td ></td>
+        </tr>
+        {% set count = [0] %}
+        {% for appointment in appointments %}
+        {% if appointment.accessed == True %}
+            {% if count.append(count.pop() + 1) %}{% endif %}
+            <tr>
+                <th>{{ count[0] }}</th>
+                <th>Notes:</th>
+                <td>{{appointment.notes}}</td>
+                <th>Medicine:</th>
+                <td>{{appointment.prescribedMedicine}}</td>
+            </tr>
+        {% endif %}
+        {% endfor %}
     {% endif %}
     {% if option == "healthCentre" %}
         <tr>
