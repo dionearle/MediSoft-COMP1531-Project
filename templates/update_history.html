@@ -9,10 +9,10 @@
 <a class="item" href="/appointments">
     Appointments
 </a>
-<a class="active item" href="/profile/self/{{current_user.get_id()}}">
+<a class="item" href="/profile/self/{{current_user.get_id()}}">
     Profile
 </a>
-<a class="item" href="/history">
+<a class="active item" href="/history">
     History
 </a>
 <div class="right menu">
@@ -47,7 +47,7 @@
         <input type="hidden" name="patient" value='{{patient}}'/>
         <input type="hidden" name="date" value='{{date}}'/>
         <input type="hidden" name="time" value='{{time}}'/>
-        <input type="submit" class="ui basic button" value="Submit appointment"/>
+        <input type="submit" class="ui basic button" value="Edit History"/>
     </div>
 </form>
 {% endblock %}
