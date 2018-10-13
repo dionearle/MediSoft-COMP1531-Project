@@ -1,0 +1,53 @@
+{% extends 'base.html' %}
+{% block update_profile_banner %}
+<a class="item" href="/">
+    Home
+</a>
+<a class="item" href="/search">
+    Search
+</a>
+<a class="item" href="/appointments">
+    Appointments
+</a>
+<a class="active item" href="/profile/self/{{current_user.get_id()}}">
+    Profile
+</a>
+<a class="item" href="/history">
+    History
+</a>
+<div class="right menu">
+    <a class="ui item" href="/logout">
+        Logout
+    </a>
+</div>
+{% endblock %}
+{% block updateHistory %}
+    <style>
+        #information {
+            display: block;
+            position: relative;
+            margin: 40px auto;
+            height: auto;
+            width: 500px;
+            padding: 20px;
+            border: 1px solid;
+        }
+    </style>
+<form method='POST' action="/successfulUpdate">
+    <h2 style="text-align: center">Edit History</h2>
+    <div class="ui form">
+        <div class="field">
+            <label>Add Notes</label>
+            <textarea name="addedNotes"></textarea>
+        </div>
+        <div class="field">
+            <label>Add Medicine</label>
+            <textarea name="addedMedicine"></textarea>
+        </div>
+        <input type="hidden" name="patient" value='{{patient}}'/>
+        <input type="hidden" name="date" value='{{date}}'/>
+        <input type="hidden" name="time" value='{{time}}'/>
+        <input type="submit" class="ui basic button" value="Submit appointment"/>
+    </div>
+</form>
+{% endblock %}
