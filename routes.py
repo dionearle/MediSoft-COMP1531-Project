@@ -155,13 +155,13 @@ def bookAppointment(email):
     # def addAppointment(provider_email, patient_email, date, time):
     # addAppointment(request.form['email'])
 
-    if request.form['date'] == "":
+    if request.form['date'] == "": # empty date field
         times = getTimes()
         return render_template('book.html', times=times, name=email, error="Error: Enter a date!")
 
     success = appointmentManager.addAppointment(userManager, email, current_user.get_id(), str(request.form['time']), request.form["date"], request.form['bookReason'])
     
-    if success == False:
+    if success == False: # no time slots available
         print("email: %s" % (email))
         times = getTimes()
         return render_template('book.html', times=times, name=email, error="Error: Time slot taken!")
