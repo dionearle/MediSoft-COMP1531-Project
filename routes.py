@@ -129,9 +129,7 @@ def update_profile(name):
         return render_template("profile.html", option="self")
     return render_template("update_profile.html")
 
-@app.route('/book/<email>', methods=['GET', 'POST'])
-@login_required
-def book(email):
+def getTimes():
     fmt='%H:%M'
     time=datetime.datetime.strptime('00:00',fmt)
     min30=datetime.timedelta(minutes=30)
@@ -140,7 +138,14 @@ def book(email):
         times.append('%s-%s' % ( time.strftime(fmt), (time+min30).strftime(fmt)))
         time+=min30
 
-    return render_template('book.html', times=times, name=email)
+    return times    
+
+@app.route('/book/<email>', methods=['GET', 'POST'])
+@login_required
+def book(email):
+    times = getTimes()
+
+    return render_template('book.html', times=times, name=email, error="")
 
 @app.route('/bookAppointment/<email>', methods=['GET', 'POST'])
 @login_required
@@ -149,7 +154,18 @@ def bookAppointment(email):
     # find current user logged in and add the appointment
     # def addAppointment(provider_email, patient_email, date, time):
     # addAppointment(request.form['email'])
-    appointmentManager.addAppointment(userManager, email, current_user.get_id(), str(request.form['time']), request.form["date"], request.form['bookReason'])
+
+    if request.form['date'] == "":
+        times = getTimes()
+        return render_template('book.html', times=times, name=email, error="Error: Enter a date!")
+
+    success = appointmentManager.addAppointment(userManager, email, current_user.get_id(), str(request.form['time']), request.form["date"], request.form['bookReason'])
+    
+    if success == False:
+        print("email: %s" % (email))
+        times = getTimes()
+        return render_template('book.html', times=times, name=email, error="Error: Time slot taken!")
+
     saveData(centreManager, userManager, appointmentManager)
     return render_template('index.html', booked=True)
 
