@@ -120,6 +120,9 @@ def update_profile(name):
             new_providerNum = request.form["new_providerNum"]
             if new_providerNum != "":
                 current_user.set_providerNum(new_providerNum)
+            new_expertise = request.form["new_expertise"]
+            if new_expertise != "":
+                current_user.set_expertise(new_expertise)
 
         # write all data to files
         saveData(centreManager, userManager, appointmentManager)
@@ -172,6 +175,11 @@ def showBookings():
         patient = userManager.getID(currentAppointment.patient)
         patientAppointment = patient.findSpecificAppointment(currentAppointment)
         patientAppointment.accessed = True
+        #if a referral was made, we want to store the patient in the list of referrals for the specialist chosen
+        if current_user.getProfession() == "GP":
+            newReferral = str(request.form['radioRefer'])
+            if newReferral != "NoRefer":
+                patient.addReferral(newReferral)
         saveData(centreManager, userManager, appointmentManager)
         return render_template('index.html', updated=True)
     return render_template('appointments.html', appointments=appointmentManager.getAppointments(current_user))
@@ -184,9 +192,10 @@ def accessedAppointment():
     if request.method == 'POST':
         appointments = appointmentManager.getAppointments(current_user)
         appointmentIndex = (int(request.form['appointment']) - 1)
+        specialists = userManager.searchExpertise("")
         saveData(centreManager, userManager, appointmentManager)
         return render_template('accessedAppointment.html', appointment=current_user.getSpecificAppointment(appointmentIndex), appointmentIndex=appointmentIndex,
-        appointments=appointments)
+        appointments=appointments, specialists = specialists)
     return render_template('accessedAppointment.html')
 
 @app.route('/profile/updateRatings/<typeUser>/<name>', methods=['POST'])

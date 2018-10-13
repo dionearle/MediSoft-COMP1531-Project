@@ -47,6 +47,7 @@
 		<tr>
 			<th scope="col">#</th>
 			<th scope="col">Email</th>
+            <th scope="col">Service</th>
 			<th scope="col">Health Centre</th>
 			<th scope="col">Name</th>
 			<th scope="col">ABN</th>
@@ -61,6 +62,7 @@
 	    <tr>
 	    	<th scope="row">{{ loop.index }}</th>
 	    	<td>{{ item["user"] }} </td>
+            <td>{{ item["service"] }} </td>
 	    	<td>{{ item["typeCentre"] }}</td>
 	    	<td>{{ item["name"] }}</td>
 	    	<td>{{ item["abn"] }}</td>
@@ -76,7 +78,6 @@
 	</tbody>
 </table>
 {% endif %}
-
 {% if option == "service" %}
 <table class="ui celled table" id="table">
 	<thead>
@@ -109,6 +110,51 @@
 					<input type="hidden" value='{{ option }}' name="option"/>
 					<input type="hidden" value="{{ item["user"] }}" name="user"/>
 					<input type="hidden" value="{{ item["service"] }}" name="service"/>
+					<input type="hidden" value="{{ item["typeCentre"] }}" name="typeCentre"/>
+					<input type="hidden" value="{{ item["name"] }}" name="name"/>
+					<input type="hidden" value="{{ item["abn"] }}" name="abn"/>
+					<input type="hidden" value="{{ item["phone"] }}" name="phone"/>
+					<input type="hidden" value="{{ item["suburb"] }}" name="suburb"/>
+                    <input type="submit" class="ui basic button" value="View Profile"/>
+                </form>
+			</td>
+	    </tr>
+	    {% endfor %}
+	</tbody>
+</table>
+{% endif %}
+{% if option == "healthcareDomain" %}
+<table class="ui celled table" id="table">
+	<thead>
+		<tr>
+			<th scope="col">#</th>
+			<th scope="col">Email</th>
+			<th scope="col">Healthcare Domain</th>
+			<th scope="col">Health Centre</th>
+			<th scope="col">Name</th>
+			<th scope="col">ABN</th>
+			<th scope="col">Phone</th>
+			<th scope="col">Suburb</th>
+			<th scope="col">Profile</th>
+		</tr>
+	</thead>
+	<tbody>
+	    {% for item in searchArray[1] %}
+
+	    <tr>
+	    	<th scope="row">{{ loop.index }}</th>
+	    	<td>{{ item["user"] }} </td>
+	    	<td>{{ item["healthcareDomain"] }} </td>
+	    	<td>{{ item["typeCentre"] }}</td>
+	    	<td>{{ item["name"] }}</td>
+	    	<td>{{ item["abn"] }}</td>
+	    	<td>{{ item["phone"] }}</td>
+	    	<td>{{ item["suburb"] }}</td>
+			<td>
+		    	<form method='POST' action='/profile/provider/{{ item["user"] }}'>
+					<input type="hidden" value='{{ option }}' name="option"/>
+					<input type="hidden" value="{{ item["user"] }}" name="user"/>
+					<input type="hidden" value="{{ item["healthcareDomain"] }}" name="healthcareDomain"/>
 					<input type="hidden" value="{{ item["typeCentre"] }}" name="typeCentre"/>
 					<input type="hidden" value="{{ item["name"] }}" name="name"/>
 					<input type="hidden" value="{{ item["abn"] }}" name="abn"/>

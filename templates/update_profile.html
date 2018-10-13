@@ -96,6 +96,16 @@
         </div>
         </td>
     </tr>
+    {% if current_user.get_expertise() != None %}
+    <tr>
+        <th>Update expertise</th>
+        <td>
+        <div class="ui input">
+            <input type="text" id="searchText" name="new_expertise" placeholder="New expertise ">
+        </div>
+        </td>
+    </tr>
+    {% endif %}
     {% endif %}
         <tr>
             <td>

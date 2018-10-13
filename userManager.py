@@ -50,3 +50,13 @@ class UserManager(object):
                 if user.getProfession().lower().find(searchTerm) != -1:
                     returnArray.append(user)
         return returnArray
+
+    def searchExpertise(self, searchTerm):
+        searchTerm = searchTerm.lower()
+        returnArray = []
+        for user in self._users:
+            if user.isPatient() == False:
+                if user.get_expertise() != None:
+                    if user.get_expertise().lower().find(searchTerm) != -1:
+                        returnArray.append(user)
+        return returnArray
