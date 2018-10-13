@@ -63,6 +63,16 @@
         <th>Prescribed Medicine</th>
         <td>{{appointment.prescribedMedicine}}</td>
     </tr>
+    <tr>
+        <td>
+            <form method='POST' action='/updateHistory'>
+                <input type="hidden" name="patient" value='{{appointment.patient}}'/>
+                <input type="hidden" name="date" value='{{appointment.date}}'/>
+                <input type="hidden" name="time" value='{{appointment.time}}'/>
+                <input type="submit" name="submitEdit" class="ui basic button" value="Edit History"/>
+            </form>
+        </td>
+    </tr>
 
 </table>
 

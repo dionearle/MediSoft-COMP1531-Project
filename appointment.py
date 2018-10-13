@@ -9,6 +9,7 @@ class Appointment(object):
 		self._notes = None
 		self._prescribedMedicine = None
 		self._accessed = False
+		self._providerList = []
 
 	@property
 	def provider(self):
@@ -38,6 +39,9 @@ class Appointment(object):
 	def notes(self, notes):
 		self._notes = notes
 
+	def addNotes(self, notes):
+		self._notes + notes
+
 	@property
 	def prescribedMedicine(self):
 		return self._prescribedMedicine
@@ -46,6 +50,9 @@ class Appointment(object):
 	def prescribedMedicine(self, prescribedMedicine):
 		self._prescribedMedicine = prescribedMedicine
 
+	def addMedicine(self, medicine):
+		self._prescribedMedicine + medicine
+
 	@property
 	def accessed(self):
 		return self._accessed
@@ -53,5 +60,8 @@ class Appointment(object):
 	@accessed.setter
 	def accessed(self, boolean):
 		self._accessed = boolean
+
+	def addProviderList(self, provider):
+		self._providerList.append(provider)
 
 

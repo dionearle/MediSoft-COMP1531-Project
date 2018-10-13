@@ -219,3 +219,25 @@ def historyDetails():
         appointment = appointmentManager.getAppointmentUsingDate(user, date, time)
 
         return render_template('appointmentDetails.html', appointment=appointment)
+
+@app.route('/updateHistory', methods=['GET', 'POST'])
+@login_required
+def updateHistory():
+    if request.method == 'POST':
+        date = request.form['date']
+        time = request.form['time']
+        patient = request.form['patient']
+        return render_template('update_history.html', date=date, time=time, patient=patient)
+    return render_template('update_history.html')
+
+@app.route('/successfulUpdate', methods=['GET', 'POST'])
+@login_required
+def successfulUpdate():
+    if request.method == 'POST':
+        date = request.form['date']
+        time = request.form['time']
+        user = userManager.getID(request.form['patient'])
+        appointment = appointmentManager.getAppointmentUsingDate(user, date, time)
+
+        return render_template('update_history.html', date=appointment)
+    return render_template('index.html')
