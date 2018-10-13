@@ -1,10 +1,11 @@
 import unittest
-from routes import app
+import pytest
+from routes import login
 from flask.ext.testing import TestCase
 # Currently fiddling around with test cases to fully understand how to implement
-# adapted from https://github.com/realpython/discover-flask/blob/master/tests/test_basic.py
 # https://github.com/realpython/discover-flask/blob/master/tests/base.py
-
+# https://github.com/realpython/discover-flask/blob/master/tests/base.py
+# structure based on above links
 
 class my_test(TestCase):
     app = Flask(__name__)
@@ -15,18 +16,29 @@ class test_cases(my_test):
     
     # tests that flask is set up correct
     def test_user_login(self):
-        response = self.client.get('/login', content_type='html/text')
-        self.assertEqual(response.status_code, 200)
+        #login_user(user)        
+        #response = self.client.get('/login', content_type='html/text')
+        #self.assertEqual(response.status_code, 200)
         
     # Ensure that main page requires user login
     def test_main_route_requires_login(self):
-        response = self.client.get('/', follow_redirects=True)
-        self.assertIn(b'Log-in to your account', response.data)
+        # response = self.client.get('/', follow_redirects=True)
+        # the function supposedly tests for the texts on the screen
+        # self.assertIn(b'Log-in to your account', response.data)
         
     # Ensure that welcome page loads
     def test_welcome_route_works_as_expected(self):
-        response = self.client.get('/welcome', follow_redirects=True)
-        self.assertIn(b'Welcome to MediSoft!', response.data)
+    
+    
+    def book_an_appointment(self):
+    
+    
+    def view_patient_history(self):
+    
+    
+    def manage_patient_history(self):
+    
+    
     
 if __name__ == '__main__':
     unittest.main()
@@ -60,5 +72,4 @@ if __name__ == '__main__':
             # A description of what occured in a specific appointment should be viewable, including any medication prescribed and notes taken at the previous visit
   
     # 3: Manage a patient history
-    
-# for vincent to start on    
+   
