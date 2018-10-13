@@ -239,7 +239,7 @@ def successfulUpdate():
         addedNotes = str(request.form['addedNotes'])
         addedMedicine = str(request.form['addedMedicine'])
 
-        appointmentManager.updateAppointment(appointmentManager, appointment, addedNotes, addedMedicine)
+        appointmentManager.updateAppointment(appointment, addedNotes, addedMedicine)
 
         saveData(centreManager, userManager, appointmentManager)
         return render_template('appointmentDetails.html', appointment=appointment)

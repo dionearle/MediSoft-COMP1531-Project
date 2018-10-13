@@ -63,6 +63,7 @@
         <th>Prescribed Medicine</th>
         <td>{{appointment.prescribedMedicine}}</td>
     </tr>
+    {% if current_user.isPatient() == False %}
     <tr>
         <td>
             <form method='POST' action='/updateHistory'>
@@ -73,6 +74,7 @@
             </form>
         </td>
     </tr>
+    {% endif %}
 
 </table>
 
