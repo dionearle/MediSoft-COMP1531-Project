@@ -68,28 +68,27 @@ def profile(typeUser, name):
             if name == current_user.get_id():
                 return render_template("profile.html", option="self")
             patient = userManager.searchPatient(name)
-            appointments=appointmentManager.getAppointments(current_user)
-            return render_template("profile.html", option="patient", patient=patient[0], appointments=appointments)
+            return render_template("profile.html", option="patient", patient=patient[0])
 
-        option = request.form["option"]
-        name = request.form["name"]
-        typeCentre = request.form["typeCentre"]
-        phone = request.form["phone"]
-        suburb = request.form["suburb"]
-        abn = request.form["abn"]
-        if option == "healthCentre" or option == "suburb":
-            centre = centreManager.searchHealthCentresByName(name)
-            return render_template("profile.html",option=option, typeCentre=typeCentre, name=name, abn=abn,
-            phone=phone, suburb=suburb, rating = 0, providers=centre[0].getProviders())
-        elif option == "healthProvider":
-            email = request.form["user"]
-            return render_template("profile.html",option=option, email=email, typeCentre=typeCentre, name=name, abn=abn,
-            phone=phone, suburb=suburb, rating = 0)
-        elif option == "service":
-            email = request.form["user"]
-            service = request.form["service"]
-            return render_template("profile.html",option=option, email=email, service=service, typeCentre=typeCentre, name=name, abn=abn,
-            phone=phone, suburb=suburb, rating = 0)
+        # option = request.form["option"]
+        # name = request.form["name"]
+        # typeCentre = request.form["typeCentre"]
+        # phone = request.form["phone"]
+        # suburb = request.form["suburb"]
+        # abn = request.form["abn"]
+        # if option == "healthCentre" or option == "suburb":
+        #     centre = centreManager.searchHealthCentresByName(name)
+        #     return render_template("profile.html",option=option, typeCentre=typeCentre, name=name, abn=abn,
+        #     phone=phone, suburb=suburb, rating = 0, providers=centre[0].getProviders())
+        # elif option == "healthProvider":
+        #     email = request.form["user"]
+        #     return render_template("profile.html",option=option, email=email, typeCentre=typeCentre, name=name, abn=abn,
+        #     phone=phone, suburb=suburb, rating = 0)
+        # elif option == "service":
+        #     email = request.form["user"]
+        #     service = request.form["service"]
+        #     return render_template("profile.html",option=option, email=email, service=service, typeCentre=typeCentre, name=name, abn=abn,
+        #     phone=phone, suburb=suburb, rating = 0)
     return render_template("profile.html", option="self")
 
 @app.route('/update/<name>', methods=['GET', 'POST'])
@@ -162,7 +161,6 @@ def bookAppointment(email):
     success = appointmentManager.addAppointment(userManager, email, current_user.get_id(), str(request.form['time']), request.form["date"], request.form['bookReason'])
     
     if success == False: # no time slots available
-        print("email: %s" % (email))
         times = getTimes()
         return render_template('book.html', times=times, name=email, error="Error: Time slot taken!")
 
@@ -203,8 +201,14 @@ def showBookings():
 @login_required
 def accessedAppointment():
     if request.method == 'POST':
-        appointments = appointmentManager.getAppointments(current_user)
+        
         appointmentIndex = (int(request.form['appointment']) - 1)
+        # Get patient appointments
+        patient_id = current_user.getSpecificAppointment(appointmentIndex).patient
+        patient = userManager.getID(patient_id)
+        appointments = appointmentManager.getAppointments(patient)
+
+        
         specialists = userManager.searchExpertise("")
         saveData(centreManager, userManager, appointmentManager)
         return render_template('accessedAppointment.html', appointment=current_user.getSpecificAppointment(appointmentIndex), appointmentIndex=appointmentIndex,
