@@ -168,10 +168,7 @@ def showBookings():
         currentAppointment.notes = appointmentNotes
         currentAppointment.prescribedMedicine = appointmentPrescribedMedicine
         currentAppointment.accessed = True
-        #updating the patient's appointment accessed field to true
-        patient = userManager.getID(currentAppointment.patient)
-        patientAppointment = patient.findSpecificAppointment(currentAppointment)
-        patientAppointment.accessed = True
+
         saveData(centreManager, userManager, appointmentManager)
         return render_template('index.html', updated=True)
     return render_template('appointments.html', appointments=appointmentManager.getAppointments(current_user))
@@ -239,5 +236,11 @@ def successfulUpdate():
         user = userManager.getID(request.form['patient'])
         appointment = appointmentManager.getAppointmentUsingDate(user, date, time)
 
-        return render_template('update_history.html', date=appointment)
+        addedNotes = str(request.form['addedNotes'])
+        addedMedicine = str(request.form['addedMedicine'])
+
+        appointmentManager.updateAppointment(appointmentManager, appointment, addedNotes, addedMedicine)
+
+        saveData(centreManager, userManager, appointmentManager)
+        return render_template('appointmentDetails.html', appointment=appointment)
     return render_template('index.html')

@@ -23,8 +23,9 @@ class AppointmentManager():
 				return appointment
 
 	def updateAppointment(self, appointment, notes, medicine):
-		appointment.addNotes(notes)
-		appointment.addNotes(medicine)
+		appointment.addNotes = notes
+		appointment.addMedicine = medicine
+
 
 
 
