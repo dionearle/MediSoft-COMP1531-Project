@@ -93,6 +93,10 @@
         <td name="profession">{{ current_user.getProfession() }}</td>
     </tr>
     <tr>
+        <th>Expertise</th>
+        <td name="expertise">{{ current_user.get_expertise() }}</td>
+    </tr>
+    <tr>
         <th>Provider Number</th>
         <td name="profession">{{ current_user.get_providerNum() }}</td>
     </tr>
@@ -229,6 +233,10 @@
             <td>{{ provider.getProfession() }}</td>
         </tr>
         <tr>
+            <th>Expertise</th>
+            <td>{{ provider.get_expertise() }}</td>
+        </tr>
+        <tr>
             <th>Provider Number</th>
             <td>{{ provider.get_providerNum() }}</td>
         </tr>
@@ -242,14 +250,27 @@
         </tr>
 
         {% if current_user.isPatient() == True %}
-                <tr>
-                    <td>
-                        <button class="ui labeled icon button">
-                          <i class="pencil icon"></i>
-                            Book appointment
-                        </button>
-                    </td>
-                </tr>
+            {% if provider.getProfession() != "Specialist" %}
+                    <tr>
+                        <td>
+                            <button class="ui labeled icon button">
+                              <i class="pencil icon"></i>
+                                Book appointment
+                            </button>
+                        </td>
+                    </tr>
+            {% elif provider.getProfession() == "Specialist" %}
+                {% if current_user.searchReferrals(provider.get_id()) == True %}
+                    <tr>
+                        <td>
+                            <button class="ui labeled icon button">
+                              <i class="pencil icon"></i>
+                                Book appointment
+                            </button>
+                        </td>
+                    </tr>
+                {% endif %}
+            {% endif %}
         {% endif %}
     {% endif %}
 

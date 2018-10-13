@@ -55,6 +55,28 @@ def searchFiles(searchTerm, option):
         else:
             returnDict = [found, []]
             return returnDict
+    elif (option == "healthcareDomain"):
+        resultArray = []
+        resultDict = {}
+
+        providers = userManager.searchExpertise(searchTerm)
+        if providers:
+            for provider in providers:
+                centres = provider.getListOfCentres()
+                for centre in centres:
+                    found = True
+                    returnArray = searchFiles(centre.getName(), "healthCentre")
+                    returnDict = returnArray[1][0]
+                    returnDict["user"] = provider.get_id()
+                    returnDict["healthcareDomain"] = provider.get_expertise()
+                    resultArray.append(returnDict)
+
+        if found == True:
+            returnDict = [found, resultArray]
+            return returnDict
+        else:
+            returnDict = [found, []]
+            return returnDict
 
 if __name__ == '__main__':
     print(str(searchFiles("Hospital", "healthCentre")))

@@ -79,6 +79,7 @@ class Patient(User):
     def __init__(self, email, password, first_name, last_name, phone, medicare):
         super().__init__(email, password, first_name, last_name, phone, True)
         self._medicare = medicare
+        self._referrals = []
 
     def get_medicare(self):
         return self._medicare
@@ -87,8 +88,20 @@ class Patient(User):
         self._medicare = medicare
         return self._medicare
 
+    def addReferral(self, specialist):
+        self._referrals.append(specialist)
+
+    def getListOfReferrals(self):
+        return self._referrals
+
+    def searchReferrals(self, specialist):
+        for item in self._referrals:
+            if item == specialist:
+                return True
+        return False
+
 class HealthProvider(User):
-    def __init__(self, email, password, first_name, last_name, phone, providerNum, profession, workingHours, centres):
+    def __init__(self, email, password, first_name, last_name, phone, providerNum, profession, workingHours, centres, expertise):
         super().__init__(email, password, first_name, last_name, phone, False)
         self._providerNum = providerNum
         self._profession = profession
@@ -96,6 +109,7 @@ class HealthProvider(User):
         self._listOfRatings = {}
         self._workingHours = workingHours
         self._centres = []
+        self._expertise = expertise
 
     # private function only used by own class functions
     def _getAverageOfDict(self, dictionary):
@@ -136,3 +150,10 @@ class HealthProvider(User):
     def set_profession(self, profession):
         self._profession = profession
         return self._profession
+
+    def get_expertise(self):
+        return self._expertise
+
+    def set_expertise(self, expertise):
+        self._expertise = expertise
+        return self._expertise
