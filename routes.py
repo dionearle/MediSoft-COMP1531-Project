@@ -223,8 +223,9 @@ def accessedAppointment():
         
         specialists = userManager.searchExpertise("")
         saveData(centreManager, userManager, appointmentManager)
-        return render_template('accessedAppointment.html', loggedInUser=current_user.get_id(), appointment=current_user.getSpecificAppointment(appointmentIndex), appointmentIndex=appointmentIndex,
-        appointments=appointments, specialists = specialists)
+        return render_template('accessedAppointment.html', loggedInUser=current_user.get_id(), 
+            appointment=current_user.getSpecificAppointment(appointmentIndex), 
+            appointmentIndex=appointmentIndex, appointments=appointments, specialists = specialists)
     return render_template('accessedAppointment.html', loggedInUser=current_user.get_id())
 
 @app.route('/profile/updateRatings/<typeUser>/<name>', methods=['POST'])
