@@ -9,7 +9,6 @@ class Appointment(object):
 		self._notes = None
 		self._prescribedMedicine = None
 		self._accessed = False
-		self._providerList = []
 
 	@property
 	def provider(self):
@@ -63,7 +62,5 @@ class Appointment(object):
 	def accessed(self, boolean):
 		self._accessed = boolean
 
-	def addProviderList(self, provider):
-		self._providerList.append(provider)
 
 
