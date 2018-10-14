@@ -24,10 +24,15 @@ class AppointmentManager():
 		if (datetime_object - datetime.now()).total_seconds() < 0:
 			return "Date in the past"
 
+		# check that the patient email isn't a provider
+		if (userManager.getID(patient_email).isPatient() == False):
+			return "Provider making appointment"
+
 
 		appointment = Appointment(provider_email, patient_email, date, time, reason)
 
 		users = userManager.getUsers()
+
 		for user in users:
 			if self.checkPreviousAppointment(user, appointment, patient_email, provider_email) == False:
 

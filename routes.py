@@ -166,6 +166,10 @@ def bookAppointment(email):
     elif success == "Date in the past":
         times = getTimes()
         return render_template('book.html', times=times, name=email, error="Error: Date in the past!")
+    elif success == "Provider making appointment":
+        times = getTimes()
+        return render_template('book.html', times=times, name=email, error="Error: Provider cannot make appointment with provider")
+
 
     saveData(centreManager, userManager, appointmentManager)
     return render_template('index.html', booked=True)
@@ -188,6 +192,7 @@ def showBookings():
         currentAppointment.notes = appointmentNotes
         currentAppointment.prescribedMedicine = appointmentPrescribedMedicine
         currentAppointment.accessed = True
+        patient = userManager.getID(currentAppointment.patient)
 
         #if a referral was made, we want to store the patient in the list of referrals for the specialist chosen
         if current_user.getProfession() == "GP":

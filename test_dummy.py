@@ -80,3 +80,20 @@ class Tests(object):
 			"jack@gmail.com",  "00.00-00.30", "09/24/2018","Biopsy Required")
 
 		assert(status == "Date in the past")
+
+	# provider makes an appointment for himself/herself
+	def test_provider_makes_appointment(self):
+		status = self.appointmentManager.addAppointment(self.userManager, "toby@gmail.com",
+			"toby@gmail.com", "00.00-00.30", "12/1/2018", "Biopsy Required")
+
+		assert(status == "Provider making appointment")
+
+	def test_get_appointment_history(self):
+		self.appointmentManager.addAppointment(self.userManager, "toby@gmail.com",
+			"jack@gmail.com",  "00.00-00.30", "12/31/2018", "Biopsy Required")
+
+		self.appointmentManager.addAppointment(self.userManager, "toby@gmail.com",
+			"hao@gmail.com",  "00.30-01.00", "12/31/2018","Mole on foot")
+
+		user = self.userManager.getID("toby@gmail.com")
+		assert(len(self.appointmentManager.getAppointments(user)) == 2)
