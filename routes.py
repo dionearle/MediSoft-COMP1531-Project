@@ -160,9 +160,12 @@ def bookAppointment(email):
 
     success = appointmentManager.addAppointment(userManager, email, current_user.get_id(), str(request.form['time']), request.form["date"], request.form['bookReason'])
     
-    if success == False: # no time slots available
+    if success == "Time Slot Taken": # no time slots available
         times = getTimes()
         return render_template('book.html', times=times, name=email, error="Error: Time slot taken!")
+    elif success == "Date in the past":
+        times = getTimes()
+        return render_template('book.html', times=times, name=email, error="Error: Date in the past!")
 
     saveData(centreManager, userManager, appointmentManager)
     return render_template('index.html', booked=True)

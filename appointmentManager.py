@@ -1,5 +1,5 @@
 from appointment import Appointment
-
+from datetime import datetime, timedelta
 # 	def __init__(self, provider, patient, date, time)
 class AppointmentManager():
 	def checkPreviousAppointment(self, user, appointment, patient_email, provider_email):
@@ -18,7 +18,11 @@ class AppointmentManager():
 		return False
 
 
-	def addAppointment(self, userManager, provider_email, patient_email, date, time, reason):
+	def addAppointment(self, userManager, provider_email, patient_email, time, date, reason):
+		# check that date isn't in the past
+		datetime_object = datetime.strptime(date, "%m/%d/%Y")
+		if (datetime_object - datetime.now()).total_seconds() < 0:
+			return "Date in the past"
 
 
 		appointment = Appointment(provider_email, patient_email, date, time, reason)
@@ -35,7 +39,7 @@ class AppointmentManager():
 
 					user.addAppointment(appointment)
 			else:
-				return False # return that there was an error
+				return "Time Slot Taken" # return that there was an error
 		return True # return that it succeeded
 
 		
