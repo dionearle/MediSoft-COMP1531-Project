@@ -3,5 +3,6 @@
   "test_dummy.py::Tests::()::test_book_same_time_slot_appointment",
   "test_dummy.py::Tests::()::test_book_past_appointment",
   "test_dummy.py::Tests::()::test_provider_makes_appointment",
-  "test_dummy.py::Tests::()::test_get_appointment_history"
+  "test_dummy.py::Tests::()::test_get_appointment_history",
+  "test_dummy.py::Tests::()::test_get_wrong_id_history"
 ]

@@ -88,6 +88,7 @@ class Tests(object):
 
 		assert(status == "Provider making appointment")
 
+	# Test that getting the history works
 	def test_get_appointment_history(self):
 		self.appointmentManager.addAppointment(self.userManager, "toby@gmail.com",
 			"jack@gmail.com",  "00.00-00.30", "12/31/2018", "Biopsy Required")
@@ -97,3 +98,16 @@ class Tests(object):
 
 		user = self.userManager.getID("toby@gmail.com")
 		assert(len(self.appointmentManager.getAppointments(user)) == 2)
+
+	# Test getting the history with an email that does not have any appointments
+	def test_get_wrong_id_history(self):
+		self.appointmentManager.addAppointment(self.userManager, "toby@gmail.com",
+			"jack@gmail.com",  "00.00-00.30", "12/31/2018", "Biopsy Required")
+
+		self.appointmentManager.addAppointment(self.userManager, "toby@gmail.com",
+			"hao@gmail.com",  "00.30-01.00", "12/31/2018","Mole on foot")
+
+		user = self.userManager.getID("gary@gmail.com")
+		assert(len(self.appointmentManager.getAppointments(user)) == 0)
+
+	
