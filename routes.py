@@ -20,7 +20,7 @@ def load_user(user_id):
 
 @app.route('/', methods=['GET','POST'])
 def index():
-    return render_template('index.html')
+    return render_template('index.html', loggedInUser=current_user.get_id())
 
 @app.route('/search', methods=['GET', 'POST'])
 @login_required
@@ -28,9 +28,9 @@ def search():
     if request.method == "POST":
         searchArray = searchFiles(request.form["searchText"], request.form["radioSearch"])
         if (searchArray[0] == True):
-            return render_template("searchResults.html", searchArray=searchArray, option=request.form["radioSearch"])
+            return render_template("searchResults.html", loggedInUser=current_user.get_id(), searchArray=searchArray, option=request.form["radioSearch"])
 
-    return render_template('search.html', username=current_user.get_id())
+    return render_template('search.html', loggedInUser=current_user.get_id(), username=current_user.get_id())
 
 @app.route('/logout')
 @login_required
@@ -46,7 +46,7 @@ def login():
                 user = userManager.getID(request.form["loginEmail"])
                 login_user(user)
                 return redirect(url_for('index'))
-            return render_template("login.html", success=False) # if login failed, return an alert saying "Wrong email/password"
+            return render_template("login.html",  success=False) # if login failed, return an alert saying "Wrong email/password"
         return render_template("login.html") # runs when the user first opens the page
     else:
         return redirect(url_for('index'))
@@ -58,17 +58,17 @@ def profile(typeUser, name):
     if request.method == "POST":
         if typeUser == "centre":
             centre = centreManager.searchHealthCentresByName(name)
-            return render_template("profile.html", option="healthCentre", centre=centre[0])
+            return render_template("profile.html", loggedInUser=current_user.get_id(), option="healthCentre", centre=centre[0])
         elif typeUser == "provider":
             if name == current_user.get_id():
-                return render_template("profile.html", option="self")
+                return render_template("profile.html", loggedInUser=current_user.get_id(), option="self")
             provider = userManager.searchID(name)
-            return render_template("profile.html", option="provider", provider=provider[0])
+            return render_template("profile.html", loggedInUser=current_user.get_id(), option="provider", provider=provider[0])
         elif typeUser == "patient":
             if name == current_user.get_id():
-                return render_template("profile.html", option="self")
+                return render_template("profile.html", loggedInUser=current_user.get_id(), option="self")
             patient = userManager.searchPatient(name)
-            return render_template("profile.html", option="patient", patient=patient[0])
+            return render_template("profile.html", loggedInUser=current_user.get_id(),  option="patient", patient=patient[0])
 
         # option = request.form["option"]
         # name = request.form["name"]
@@ -89,7 +89,7 @@ def profile(typeUser, name):
         #     service = request.form["service"]
         #     return render_template("profile.html",option=option, email=email, service=service, typeCentre=typeCentre, name=name, abn=abn,
         #     phone=phone, suburb=suburb, rating = 0)
-    return render_template("profile.html", option="self")
+    return render_template("profile.html", loggedInUser=current_user.get_id(), option="self")
 
 @app.route('/update/<name>', methods=['GET', 'POST'])
 @login_required
@@ -125,8 +125,8 @@ def update_profile(name):
 
         # write all data to files
         saveData(centreManager, userManager, appointmentManager)
-        return render_template("profile.html", option="self")
-    return render_template("update_profile.html")
+        return render_template("profile.html", loggedInUser=current_user.get_id(), option="self")
+    return render_template("update_profile.html", loggedInUser=current_user.get_id())
 
 def getTimes():
     fmt='%H:%M'
@@ -144,7 +144,7 @@ def getTimes():
 def book(email):
     times = getTimes()
 
-    return render_template('book.html', times=times, name=email, error="")
+    return render_template('book.html', loggedInUser=current_user.get_id(), times=times, name=email, error="")
 
 @app.route('/bookAppointment/<email>', methods=['GET', 'POST'])
 @login_required
@@ -156,23 +156,23 @@ def bookAppointment(email):
 
     if request.form['date'] == "": # empty date field
         times = getTimes()
-        return render_template('book.html', times=times, name=email, error="Error: Enter a date!")
+        return render_template('book.html', loggedInUser=current_user.get_id(), times=times, name=email, error="Error: Enter a date!")
 
     success = appointmentManager.addAppointment(userManager, email, current_user.get_id(), str(request.form['time']), request.form["date"], request.form['bookReason'])
     
     if success == "Time Slot Taken": # no time slots available
         times = getTimes()
-        return render_template('book.html', times=times, name=email, error="Error: Time slot taken!")
+        return render_template('book.html', loggedInUser=current_user.get_id(), times=times, name=email, error="Error: Time slot taken!")
     elif success == "Date in the past":
         times = getTimes()
-        return render_template('book.html', times=times, name=email, error="Error: Date in the past!")
+        return render_template('book.html', loggedInUser=current_user.get_id(), times=times, name=email, error="Error: Date in the past!")
     elif success == "Provider making appointment":
         times = getTimes()
-        return render_template('book.html', times=times, name=email, error="Error: Provider cannot make appointment with provider")
+        return render_template('book.html', loggedInUser=current_user.get_id(), times=times, name=email, error="Error: Provider cannot make appointment with provider")
 
 
     saveData(centreManager, userManager, appointmentManager)
-    return render_template('index.html', booked=True)
+    return render_template('index.html', loggedInUser=current_user.get_id(), booked=True)
 
 @app.route('/book', methods=['POST'])
 @login_required
@@ -200,12 +200,12 @@ def showBookings():
             if newReferral != "NoRefer":
                 patient.addReferral(newReferral)
         saveData(centreManager, userManager, appointmentManager)
-        return render_template('index.html', updated=True)
+        return render_template('index.html', loggedInUser=current_user.get_id(), updated=True)
 
     # sorted function converts the date attribute in the appointment to a "datetime" object,
     # which then can be used to compare two dates
     # the sorted function returns the new sorted list, and the lambda function is used to get the date attribute
-    return render_template('appointments.html', appointments=appointmentManager.getAppointments(current_user))
+    return render_template('appointments.html', loggedInUser=current_user.get_id(), appointments=appointmentManager.getAppointments(current_user))
 
 #current_user.getSpecificAppointment(appointmentIndex)
 
@@ -223,9 +223,9 @@ def accessedAppointment():
         
         specialists = userManager.searchExpertise("")
         saveData(centreManager, userManager, appointmentManager)
-        return render_template('accessedAppointment.html', appointment=current_user.getSpecificAppointment(appointmentIndex), appointmentIndex=appointmentIndex,
+        return render_template('accessedAppointment.html', loggedInUser=current_user.get_id(), appointment=current_user.getSpecificAppointment(appointmentIndex), appointmentIndex=appointmentIndex,
         appointments=appointments, specialists = specialists)
-    return render_template('accessedAppointment.html')
+    return render_template('accessedAppointment.html', loggedInUser=current_user.get_id())
 
 @app.route('/profile/updateRatings/<typeUser>/<name>', methods=['POST'])
 @login_required
@@ -234,17 +234,17 @@ def updateRatings(name, typeUser):
         centre = centreManager.searchHealthCentresByName(name)[0]
         centre.updateRating(current_user.get_id(), int(request.form['updateRatingBox']))
         saveData(centreManager, userManager, appointmentManager)
-        return redirect(url_for('profile', typeUser=typeUser, name=name), code=307)
+        return redirect(url_for('profile', loggedInUser=current_user.get_id(), typeUser=typeUser, name=name), code=307)
     elif typeUser == 'provider':
         provider = userManager.getID(name)
         provider.updateRating(current_user.get_id(), int(request.form['updateRatingBox']))
         saveData(centreManager, userManager, appointmentManager)
-        return redirect(url_for('profile', typeUser=typeUser, name=name), code=307)
+        return redirect(url_for('profile', loggedInUser=current_user.get_id(), typeUser=typeUser, name=name), code=307)
 
 @app.route('/history', methods=['GET'])
 @login_required
 def history():
-    return render_template('appointment_history.html', appointments=appointmentManager.getAppointments(current_user))
+    return render_template('appointment_history.html', loggedInUser=current_user.get_id(), appointments=appointmentManager.getAppointments(current_user))
 
 @app.route('/historyDetails', methods=['GET', 'POST'])
 @login_required
@@ -256,7 +256,7 @@ def historyDetails():
 
         appointment = appointmentManager.getAppointmentUsingDate(user, date, time) #the appointment history instance
 
-        return render_template('appointmentDetails.html', appointment=appointment)
+        return render_template('appointmentDetails.html', loggedInUser=current_user.get_id(), appointment=appointment)
 
 @app.route('/viewHistoryFromAppointment', methods=['GET', 'POST'])
 @login_required
@@ -274,8 +274,8 @@ def viewHistoryFromAppointment():
         appointment = appointmentManager.getAppointmentUsingDate(user, date, time) #the appointment history instance
         currentAppointment = appointmentManager.getAppointmentUsingDate(currentUser, currentDate, currentTime) #the appointment that the edit is happening from
 
-        return render_template('appointmentDetails.html', appointment=appointment, activeAppointment=activeAppointment, currentAppointment=currentAppointment)
-    return render_template('appointmentDetails.html')
+        return render_template('appointmentDetails.html', loggedInUser=current_user.get_id(), appointment=appointment, activeAppointment=activeAppointment, currentAppointment=currentAppointment)
+    return render_template('appointmentDetails.html', loggedInUser=current_user.get_id())
 
 @app.route('/updateHistory', methods=['GET', 'POST'])
 @login_required
@@ -292,8 +292,8 @@ def updateHistory():
         currentPatient = userManager.getID(request.form['currentPatient'])
 
         currentAppointment = appointmentManager.getAppointmentUsingDate(currentPatient, currentDate, currentTime) #the appointment that the edit is happening from
-        return render_template('update_history.html', appointment=appointment, currentAppointment=currentAppointment)
-    return render_template('update_history.html')
+        return render_template('update_history.html', loggedInUser=current_user.get_id(), appointment=appointment, currentAppointment=currentAppointment)
+    return render_template('update_history.html', loggedInUser=current_user.get_id())
 
 @app.route('/successfulUpdate', methods=['GET', 'POST'])
 @login_required
@@ -320,5 +320,5 @@ def successfulUpdate():
         currentAppointment.prescribedMedicine = appointment.prescribedMedicine
 
         saveData(centreManager, userManager, appointmentManager)
-        return render_template('appointmentDetails.html', appointment=appointment)
-    return render_template('index.html')
+        return render_template('appointmentDetails.html', loggedInUser=current_user.get_id(), appointment=appointment)
+    return render_template('index.html', loggedInUser=current_user.get_id())
