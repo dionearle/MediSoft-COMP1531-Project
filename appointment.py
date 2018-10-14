@@ -41,7 +41,7 @@ class Appointment(object):
 
 	@notes.setter
 	def addNotes(self, notes):
-		self._notes = self._notes + notes
+		self._notes = self._notes + "\n" + notes
 
 	@property
 	def prescribedMedicine(self):
@@ -53,7 +53,7 @@ class Appointment(object):
 
 	@prescribedMedicine.setter
 	def addMedicine(self, medicine):
-		self._prescribedMedicine = self._prescribedMedicine + medicine
+		self._prescribedMedicine = self._prescribedMedicine + "\n" + medicine
 
 	@property
 	def accessed(self):

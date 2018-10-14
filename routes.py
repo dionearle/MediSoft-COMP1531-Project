@@ -245,9 +245,28 @@ def historyDetails():
         time = request.form['time']
         user = userManager.getID(request.form['user'])
 
-        appointment = appointmentManager.getAppointmentUsingDate(user, date, time)
+        appointment = appointmentManager.getAppointmentUsingDate(user, date, time) #the appointment history instance
 
         return render_template('appointmentDetails.html', appointment=appointment)
+
+@app.route('/viewHistoryFromAppointment', methods=['GET', 'POST'])
+@login_required
+def viewHistoryFromAppointment():
+    if request.method == 'POST':
+        date = request.form['date']
+        time = request.form['time']
+        user = userManager.getID(request.form['user'])
+
+        currentDate = request.form['currentDate']
+        currentTime = request.form['currentTime']
+        currentUser = userManager.getID(request.form['currentPatient'])
+
+        activeAppointment = int(request.form['activeAppointment']) #is the appointment currently happening boolean
+        appointment = appointmentManager.getAppointmentUsingDate(user, date, time) #the appointment history instance
+        currentAppointment = appointmentManager.getAppointmentUsingDate(currentUser, currentDate, currentTime) #the appointment that the edit is happening from
+
+        return render_template('appointmentDetails.html', appointment=appointment, activeAppointment=activeAppointment, currentAppointment=currentAppointment)
+    return render_template('appointmentDetails.html')
 
 @app.route('/updateHistory', methods=['GET', 'POST'])
 @login_required
@@ -255,8 +274,16 @@ def updateHistory():
     if request.method == 'POST':
         date = request.form['date']
         time = request.form['time']
-        patient = request.form['patient']
-        return render_template('update_history.html', date=date, time=time, patient=patient)
+        user = userManager.getID(request.form['patient'])
+
+        appointment = appointmentManager.getAppointmentUsingDate(user, date, time) #the appointment history instance
+
+        currentDate = request.form['currentDate']
+        currentTime = request.form['currentTime']
+        currentPatient = userManager.getID(request.form['currentPatient'])
+
+        currentAppointment = appointmentManager.getAppointmentUsingDate(currentPatient, currentDate, currentTime) #the appointment that the edit is happening from
+        return render_template('update_history.html', appointment=appointment, currentAppointment=currentAppointment)
     return render_template('update_history.html')
 
 @app.route('/successfulUpdate', methods=['GET', 'POST'])
@@ -266,12 +293,22 @@ def successfulUpdate():
         date = request.form['date']
         time = request.form['time']
         user = userManager.getID(request.form['patient'])
+        
         appointment = appointmentManager.getAppointmentUsingDate(user, date, time)
+
+        currentDate = request.form['currentDate']
+        currentTime = request.form['currentTime']
+        currentPatient = userManager.getID(request.form['currentPatient'])
+        currentAppointment = appointmentManager.getAppointmentUsingDate(currentPatient, currentDate, currentTime) #the appointment that the edit is happening from
 
         addedNotes = str(request.form['addedNotes'])
         addedMedicine = str(request.form['addedMedicine'])
 
         appointmentManager.updateAppointment(appointment, addedNotes, addedMedicine)
+
+        currentAppointment.accessed = True
+        currentAppointment.notes = appointment.notes
+        currentAppointment.prescribedMedicine = appointment.prescribedMedicine
 
         saveData(centreManager, userManager, appointmentManager)
         return render_template('appointmentDetails.html', appointment=appointment)

@@ -44,9 +44,12 @@
             <label>Add Medicine</label>
             <textarea name="addedMedicine"></textarea>
         </div>
-        <input type="hidden" name="patient" value='{{patient}}'/>
-        <input type="hidden" name="date" value='{{date}}'/>
-        <input type="hidden" name="time" value='{{time}}'/>
+        <input type="hidden" name="patient" value='{{appointment.patient}}'/>
+        <input type="hidden" name="date" value='{{appointment.date}}'/>
+        <input type="hidden" name="time" value='{{appointment.time}}'/>
+        <input type="hidden" name="currentPatient" value='{{currentAppointment.patient}}'/>
+        <input type="hidden" name="currentDate" value='{{currentAppointment.date}}'/>
+        <input type="hidden" name="currentTime" value='{{currentAppointment.time}}'/>
         <input type="submit" class="ui basic button" value="Edit History"/>
     </div>
 </form>
