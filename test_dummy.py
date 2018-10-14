@@ -110,4 +110,35 @@ class Tests(object):
 		user = self.userManager.getID("gary@gmail.com")
 		assert(len(self.appointmentManager.getAppointments(user)) == 0)
 
+	# Test updating an appointment
+	def test_update_appointment(self):
+		self.appointmentManager.addAppointment(self.userManager, "toby@gmail.com",
+			"jack@gmail.com",  "00.00-00.30", "12/31/2018", "Biopsy Required")
+
+		# def getAppointmentUsingDate(self, user, date, time)
+		user = self.userManager.getID("jack@gmail.com")
+		appointment = self.appointmentManager.getAppointmentUsingDate(user, "12/31/2018", "00.00-00.30")
+		appointment.notes = "Original Notes"
+		appointment.prescribedMedicine = "Original Medicine"
+		notes = "Updated Notes"
+		medicine = "Updated Medicine"
+		self.appointmentManager.updateAppointment(appointment, notes, medicine)
+		assert(appointment.notes == "Original Notes\nUpdated Notes")
+		assert(appointment.prescribedMedicine == "Original Medicine\nUpdated Medicine")
+
+	# Test updating history with nothing
+	def test_update_appointment_nothing(self):
+		self.appointmentManager.addAppointment(self.userManager, "toby@gmail.com",
+			"jack@gmail.com",  "00.00-00.30", "12/31/2018", "Biopsy Required")
+
+		# def getAppointmentUsingDate(self, user, date, time)
+		user = self.userManager.getID("jack@gmail.com")
+		appointment = self.appointmentManager.getAppointmentUsingDate(user, "12/31/2018", "00.00-00.30")
+		appointment.notes = "Original Notes"
+		appointment.prescribedMedicine = "Original Medicine"
+
+		self.appointmentManager.updateAppointment(appointment, "", "")
+		assert(appointment.notes == "Original Notes\n")
+		assert(appointment.prescribedMedicine == "Original Medicine\n")
+
 	
