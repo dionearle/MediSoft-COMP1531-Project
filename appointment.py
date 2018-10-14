@@ -1,3 +1,5 @@
+from datetime import datetime, timedelta
+
 class Appointment(object):
 	def __init__(self, provider, patient, date, time, reason):
 		self._provider = provider
@@ -65,5 +67,8 @@ class Appointment(object):
 
 	def addProviderList(self, provider):
 		self._providerList.append(provider)
+
+	def getDateTime(self):
+		return datetime.strptime(self._date, "%m/%d/%Y")
 
 

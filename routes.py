@@ -196,7 +196,12 @@ def showBookings():
                 patient.addReferral(newReferral)
         saveData(centreManager, userManager, appointmentManager)
         return render_template('index.html', updated=True)
-    return render_template('appointments.html', appointments=appointmentManager.getAppointments(current_user))
+
+    # sorted function converts the date attribute in the appointment to a "datetime" object,
+    # which then can be used to compare two dates
+    # the sorted function returns the new sorted list, and the lambda function is used to get the date attribute
+    return render_template('appointments.html', appointments=sorted(appointmentManager.getAppointments(current_user), 
+        key=lambda x: x.getDateTime()))
 
 #current_user.getSpecificAppointment(appointmentIndex)
 
