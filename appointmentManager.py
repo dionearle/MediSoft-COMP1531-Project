@@ -26,7 +26,6 @@ class AppointmentManager():
 
 
 		appointment = Appointment(provider_email, patient_email, date, time, reason)
-		appointment.addProviderList(provider_email)
 
 		users = userManager.getUsers()
 		for user in users:
