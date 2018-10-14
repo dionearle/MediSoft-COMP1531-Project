@@ -12,7 +12,6 @@ try:
 	centreManager = pickle.load(open("pickleFiles/centreManager.p","rb"))
 	userManager = pickle.load(open("pickleFiles/userManager.p", "rb"))
 	appointmentManager = pickle.load(open("pickleFiles/appointmentManager.p", "rb"))
-	print("used pickle!")
 except FileNotFoundError:
 	centreManager = CentreManager()
 	userManager = UserManager(centreManager)

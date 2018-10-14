@@ -1,5 +1,5 @@
 patient_email,password,first_name,last_name,phone,medicare
-jack@gmail.com,cs1531, Jack, Black, 0491570156, 6771653701
-tom@gmail.com,cs1531, Tom, Hanks, 0433918110, 2138852231
-isaac@gmail.com, cs1531, Isaac, Cohen, 0481500159, 5444130921
-hao@gmail.com,cs1531, Hao, Zhang, 0465897224, 6836559801
+jack@gmail.com,cs1531,Jack,Black,0491570156,6771653701
+tom@gmail.com,cs1531,Tom,Hanks,0433918110,2138852231
+isaac@gmail.com,cs1531,Isaac,Cohen,0481500159,5444130921
+hao@gmail.com,cs1531,Hao,Zhang,0465897224,6836559801

@@ -103,13 +103,14 @@ class Patient(User):
         return False
 
 class HealthProvider(User):
-    def __init__(self, email, password, first_name, last_name, phone, providerNum, profession, workingHours, centres, expertise):
+    def __init__(self, email, password, first_name, last_name, phone, providerNum, profession, startWorkingHours,endWorkingHours, centres, expertise):
         super().__init__(email, password, first_name, last_name, phone, False)
         self._providerNum = providerNum
         self._profession = profession
         self._overallRating = 5
         self._listOfRatings = {}
-        self._workingHours = workingHours
+        self._startWorkingHours = startWorkingHours
+        self._endWorkingHours = endWorkingHours
         self._centres = []
         self._expertise = expertise
 
@@ -142,8 +143,11 @@ class HealthProvider(User):
     def get_rating(self):
         return self._overallRating
 
-    def get_workingHours(self):
-        return self._workingHours
+    def get_startWorkingHours(self):
+        return self._startWorkingHours
+
+    def get_endWorkingHours(self):
+        return self._endWorkingHours
 
     def set_providerNum(self, providerNum):
         self._providerNum = providerNum

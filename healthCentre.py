@@ -24,12 +24,16 @@ class HealthCentre(object):
 
 	def getSuburb(self):
 		return self._suburb
+
 	def getPhone(self):
 		return self._phone
+        
 	def getABN(self):
 		return self._abn
+
 	def getRating(self):
 		return self._overallRating
+
 	def updateRating(self, username, newRating):
 		self._listOfRatings[username] = newRating
 		self._overallRating = self._getAverageOfDict(self._listOfRatings)
@@ -37,10 +41,13 @@ class HealthCentre(object):
 
 	def getProviders(self):
 		return self._providers
+
 	def getCentreType(self):
 		return self._centre_type
+
 	def addProvider(self, provider):
 		self._providers.append(provider)
+
 	def __str__(self):
 		return "Health Centre " + self._name + ": " + self._suburb + ", " + self._phone + ", " + \
 		self._abn + ", " + str(self._rating) + ", " + self._centre_type + ", providers: " + str(self._providers)

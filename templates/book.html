@@ -31,14 +31,11 @@
 <a class="item" href="/appointments">
     Appointments
 </a>
-<a class="item" href="/profile/self/{{current_user.get_id()}}">
-    Profile
-</a>
 <a class="item" href="/history">
     History
 </a>
 <div class="right menu">
-    <a class="ui item">
+    <a class="item" href="/profile/self/{{current_user.get_id()}}">
         {{ loggedInUser }}
     </a>
     <a class="ui item" href="/logout">

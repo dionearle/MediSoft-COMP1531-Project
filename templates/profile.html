@@ -15,22 +15,19 @@
 <a class="item" href="/appointments">
     Appointments
 </a>
-{% if option == "self" %}
-<a class="active item" href="/profile/self/{{current_user.get_id()}}">
-    Profile
-</a>
-{% else %}
-<a class="item" href="/profile/self/{{current_user.get_id()}}">
-    Profile
-</a>
-{% endif %}
 <a class="item" href="/history">
     History
 </a>
 <div class="right menu">
-    <a class="ui item">
+    {% if option == "self" %}
+    <a class="active item" href="/profile/self/{{current_user.get_id()}}">
         {{ loggedInUser }}
     </a>
+    {% else %}
+    <a class="item" href="/profile/self/{{current_user.get_id()}}">
+        {{ loggedInUser }}
+    </a>
+    {% endif %}
     <a class="ui item" href="/logout">
         Logout
     </a>
@@ -101,15 +98,15 @@
     </tr>
     <tr>
         <th>Provider Number</th>
-        <td name="profession">{{ current_user.get_providerNum() }}</td>
+        <td name="provider_num">{{ current_user.get_providerNum() }}</td>
     </tr>
     <tr>
         <th>Working Hours</th>
-        <td name="profession">{{ current_user.get_workingHours() }}</td>
+        <td name="workinghours">{{ current_user.get_startWorkingHours()}}-{{current_user.get_endWorkingHours()  }}</td>
     </tr>
     <tr>
         <th>Rating</th>
-        <td name="profession">{{ current_user.get_rating() }}</td>
+        <td name="rating">{{ current_user.get_rating() }}</td>
     </tr>
     {% endif %}
         <tr>
@@ -167,7 +164,7 @@
             <th>Medicare</th>
             <td>{{ patient.get_medicare() }}</td>
         </tr>
-        
+
     {% endif %}
     {% if option == "healthCentre" %}
         <tr>
@@ -226,7 +223,7 @@
         </tr>
         <tr>
             <th>Working Hours</th>
-            <td>{{ provider.get_workingHours() }}</td>
+            <td>{{ provider.get_startWorkingHours()}}-{{provider.get_endWorkingHours()}}</td>
         </tr>
         <tr>
             <th>Rating</th>

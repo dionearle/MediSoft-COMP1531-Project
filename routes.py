@@ -128,21 +128,25 @@ def update_profile(name):
         return render_template("profile.html", loggedInUser=current_user.get_id(), option="self")
     return render_template("update_profile.html", loggedInUser=current_user.get_id())
 
-def getTimes():
+def getTimes(email):
+    provider = userManager.getID(email)
+    start_time = provider.get_startWorkingHours()
+    end_time = provider.get_endWorkingHours()
     fmt='%H:%M'
-    time=datetime.datetime.strptime('00:00',fmt)
+    time=datetime.datetime.strptime(start_time,fmt)
+    end=datetime.datetime.strptime(end_time,fmt)
     min30=datetime.timedelta(minutes=30)
     times=[]
-    for i in range(48):
+    while time < end:
         times.append('%s-%s' % ( time.strftime(fmt), (time+min30).strftime(fmt)))
         time+=min30
 
-    return times    
+    return times
 
 @app.route('/book/<email>', methods=['GET', 'POST'])
 @login_required
 def book(email):
-    times = getTimes()
+    times = getTimes(email)
 
     return render_template('book.html', loggedInUser=current_user.get_id(), times=times, name=email, error="")
 
@@ -155,19 +159,19 @@ def bookAppointment(email):
     # addAppointment(request.form['email'])
 
     if request.form['date'] == "": # empty date field
-        times = getTimes()
+        times = getTimes(email)
         return render_template('book.html', loggedInUser=current_user.get_id(), times=times, name=email, error="Error: Enter a date!")
 
     success = appointmentManager.addAppointment(userManager, email, current_user.get_id(), str(request.form['time']), request.form["date"], request.form['bookReason'])
-    
+
     if success == "Time Slot Taken": # no time slots available
-        times = getTimes()
+        times = getTimes(email)
         return render_template('book.html', loggedInUser=current_user.get_id(), times=times, name=email, error="Error: Time slot taken!")
     elif success == "Date in the past":
-        times = getTimes()
+        times = getTimes(email)
         return render_template('book.html', loggedInUser=current_user.get_id(), times=times, name=email, error="Error: Date in the past!")
     elif success == "Provider making appointment":
-        times = getTimes()
+        times = getTimes(email)
         return render_template('book.html', loggedInUser=current_user.get_id(), times=times, name=email, error="Error: Provider cannot make appointment with provider")
 
 
@@ -213,14 +217,14 @@ def showBookings():
 @login_required
 def accessedAppointment():
     if request.method == 'POST':
-        
+
         appointmentIndex = (int(request.form['appointment']) - 1)
         # Get patient appointments
         patient_id = current_user.getSpecificAppointment(appointmentIndex).patient
         patient = userManager.getID(patient_id)
         appointments = appointmentManager.getAppointments(patient)
 
-        
+
         specialists = userManager.searchExpertise("")
         saveData(centreManager, userManager, appointmentManager)
         return render_template('accessedAppointment.html', loggedInUser=current_user.get_id(), appointment=current_user.getSpecificAppointment(appointmentIndex), appointmentIndex=appointmentIndex,
@@ -302,7 +306,7 @@ def successfulUpdate():
         date = request.form['date']
         time = request.form['time']
         user = userManager.getID(request.form['patient'])
-        
+
         appointment = appointmentManager.getAppointmentUsingDate(user, date, time)
 
         currentDate = request.form['currentDate']
