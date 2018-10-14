@@ -45,7 +45,11 @@
             border: 1px solid;
         }
     </style>
-
+{% if error != None %}
+<div class="alert alert-danger" role="alert">
+    {{error}}
+</div>
+{% endif %}
     {% if option == "provider" or option == "service" %}
     <form method="POST" action="/book/{{ provider.get_id() }}">
     <h2 style="text-align: center">{{ provider.get_id() }}'s Profile</h2>

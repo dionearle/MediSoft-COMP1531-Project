@@ -58,17 +58,17 @@ def profile(typeUser, name):
     if request.method == "POST":
         if typeUser == "centre":
             centre = centreManager.searchHealthCentresByName(name)
-            return render_template("profile.html", loggedInUser=current_user.get_id(), option="healthCentre", centre=centre[0])
+            return render_template("profile.html", error = None, loggedInUser=current_user.get_id(), option="healthCentre", centre=centre[0])
         elif typeUser == "provider":
             if name == current_user.get_id():
-                return render_template("profile.html", loggedInUser=current_user.get_id(), option="self")
+                return render_template("profile.html", error = None, loggedInUser=current_user.get_id(), option="self")
             provider = userManager.searchID(name)
-            return render_template("profile.html", loggedInUser=current_user.get_id(), option="provider", provider=provider[0])
+            return render_template("profile.html", error = None, loggedInUser=current_user.get_id(), option="provider", provider=provider[0])
         elif typeUser == "patient":
             if name == current_user.get_id():
-                return render_template("profile.html", loggedInUser=current_user.get_id(), option="self")
+                return render_template("profile.html", error = None, loggedInUser=current_user.get_id(), option="self")
             patient = userManager.searchPatient(name)
-            return render_template("profile.html", loggedInUser=current_user.get_id(),  option="patient", patient=patient[0])
+            return render_template("profile.html", error = None, loggedInUser=current_user.get_id(),  option="patient", patient=patient[0])
 
         # option = request.form["option"]
         # name = request.form["name"]
@@ -241,10 +241,16 @@ def updateRatings(name, typeUser):
         saveData(centreManager, userManager, appointmentManager)
         return redirect(url_for('profile', loggedInUser=current_user.get_id(), typeUser=typeUser, name=name), code=307)
     elif typeUser == 'provider':
-        provider = userManager.getID(name)
-        provider.updateRating(current_user.get_id(), int(request.form['updateRatingBox']))
-        saveData(centreManager, userManager, appointmentManager)
-        return redirect(url_for('profile', loggedInUser=current_user.get_id(), typeUser=typeUser, name=name), code=307)
+        if appointmentManager.appointmentCompleted(current_user, name) == True:
+            provider = userManager.getID(name)
+            provider.updateRating(current_user.get_id(), int(request.form['updateRatingBox']))
+            saveData(centreManager, userManager, appointmentManager)
+            return redirect(url_for('profile', loggedInUser=current_user.get_id(), typeUser=typeUser, name=name), code=307)
+        else:
+            provider = userManager.searchID(name)
+            return render_template("profile.html", loggedInUser=current_user.get_id(), option="provider", provider=provider[0],
+                error="No History with this provider! No Rating can be provided.")
+
 
 @app.route('/history', methods=['GET'])
 @login_required

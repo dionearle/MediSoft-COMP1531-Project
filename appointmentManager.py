@@ -60,6 +60,12 @@ class AppointmentManager():
 		appointment.addNotes = notes
 		appointment.addMedicine = medicine
 
+	def appointmentCompleted(self, patient, provider):
+		for appointment in patient.getListOfAppointments():
+			if appointment.accessed == True and appointment.provider == provider:
+				return True
+		return False
+
 
 
 
