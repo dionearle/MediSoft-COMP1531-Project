@@ -30,13 +30,13 @@ class test_cases(my_test):
     def test_welcome_route_works_as_expected(self):
     
     
-    def book_an_appointment(self):
+    def test_book_an_appointment(self):
     
     
-    def view_patient_history(self):
+    def test_view_patient_history(self):
     
     
-    def manage_patient_history(self):
+    def test_manage_patient_history(self):
     
     
     

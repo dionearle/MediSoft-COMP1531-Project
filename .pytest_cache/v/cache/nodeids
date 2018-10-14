@@ -1,0 +1,5 @@
+[
+  "test_dummy.py::Tests::()::test_book_appointment",
+  "test_dummy.py::Tests::()::test_book_same_time_slot_appointment",
+  "test_dummy.py::Tests::()::test_book_past_appointment"
+]
