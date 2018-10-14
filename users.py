@@ -33,6 +33,8 @@ class User(ABC):
     def addAppointment(self, appointment):
         self._appointments.append(appointment)
 
+        self._appointments.sort(key=lambda x: x.getDateTime())
+
     def getListOfAppointments(self):
         return self._appointments
 
