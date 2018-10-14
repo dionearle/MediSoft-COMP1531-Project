@@ -35,36 +35,6 @@
             <label>Add Medicine</label>
             <textarea name="prescribedMedicine"></textarea>
         </div>
-        <h3>Previous Appointments</h3>
-        <table class="table" id="table">
-        	<thead>
-        		<tr>
-                <th scope="col">#</th>
-        		<th scope="col">Provider</th>
-                <th scope="col">Date</th>
-                <th scope="col">Time</th>
-                <th scope="col">Notes</th>
-                <th scope="col">Prescribed Medicine</th>
-
-        	    </tr>
-        	</thead>
-        	<tbody>
-                {% set count = [0] %}
-        			{% for item in appointments %}
-        			    {% if item.accessed == True %}
-                        {% if count.append(count.pop() + 1) %}{% endif %}
-        				<tr>
-                            <th>{{ count[0] }}</th>
-                            <td>{{item.provider}}</td>
-                            <td>{{item.date}}</td>
-                            <td>{{item.time}}</td>
-                            <td>{{item.notes}}</td>
-                            <td>{{item.prescribedMedicine}}</td>
-        				</tr>
-                        {% endif %}
-        			{% endfor %}
-        	</tbody>
-        </table>
         {% if current_user.getProfession() == "GP" %}
         <div class="field">
             <label>Refer to a specialist:</label>
@@ -110,5 +80,48 @@
         <input type="submit" name="submitAppointment" class="ui basic button" value="Submit appointment"/>
     </div>
 </form>
+<br>
+<h3>Previous Appointments</h3>
+    <table class="table" id="table">
+        <thead>
+            <tr>
+            <th scope="col">#</th>
+            <th scope="col">Provider</th>
+            <th scope="col">Date</th>
+            <th scope="col">Time</th>
+            <th scope="col">Notes</th>
+            <th scope="col">Prescribed Medicine</th>
+
+            </tr>
+        </thead>
+        <tbody>
+            {% set count = [0] %}
+                {% for item in appointments %}
+                    {% if item.accessed == True %}
+                    {% if count.append(count.pop() + 1) %}{% endif %}
+                    <tr>
+                        <th>{{ count[0] }}</th>
+                        <td>{{item.provider}}</td>
+                        <td>{{item.date}}</td>
+                        <td>{{item.time}}</td>
+                        <td>{{item.notes}}</td>
+                        <td>{{item.prescribedMedicine}}</td>
+                        <td>
+                            <form method='POST' action='/viewHistoryFromAppointment'>
+                                <input type="hidden" name="user" value='{{item.patient}}'/>
+                                <input type="hidden" name="date" value='{{item.date}}'/>
+                                <input type="hidden" name="time" value='{{item.time}}'/>
+                                <input type="hidden" name="currentPatient" value='{{appointment.patient}}'/>
+                                <input type="hidden" name="currentDate" value='{{appointment.date}}'/>
+                                <input type="hidden" name="currentTime" value='{{appointment.time}}'/>
+                                <input type="hidden" name="activeAppointment" value = '1'/>
+                                <input type="submit" class="ui basic button" value="View Details"/>
+                            </form>
+                        </td>
+                    </tr>
+                    {% endif %}
+                {% endfor %}
+        </tbody>
+    </table>
 
 {% endblock%}

@@ -63,13 +63,18 @@
         <th>Prescribed Medicine</th>
         <td>{{appointment.prescribedMedicine}}</td>
     </tr>
-    {% if current_user.isPatient() == False %}
+    {% if current_user.isPatient() == False and activeAppointment == 1 %}
     <tr>
         <td>
             <form method='POST' action='/updateHistory'>
                 <input type="hidden" name="patient" value='{{appointment.patient}}'/>
                 <input type="hidden" name="date" value='{{appointment.date}}'/>
                 <input type="hidden" name="time" value='{{appointment.time}}'/>
+
+                <input type="hidden" name="currentPatient" value='{{currentAppointment.patient}}'/>
+                <input type="hidden" name="currentDate" value='{{currentAppointment.date}}'/>
+                <input type="hidden" name="currentTime" value='{{currentAppointment.time}}'/>
+
                 <input type="submit" name="submitEdit" class="ui basic button" value="Edit History"/>
             </form>
         </td>
